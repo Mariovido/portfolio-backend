@@ -59,7 +59,7 @@ _The steps to get working the project are the following ones:_
 
 1. Clone the repo
     ```bash
-    git clone https://github.com/Spam-App/node-backend.git <!-- TODO - CAMBIAR LINK -->
+    git clone https://github.com/Mariovido/portfolio-backend.git
     ```
 2. Run the following command.
     ```bash
@@ -137,6 +137,6 @@ Distributed under the MIT License. See `LICENSE` for more information.
 ## Contact
 Your Name - [@mariovido](https://github.com/Mariovido) - mario.vidaldom@gmail.com
 
-Project Link: [https://github.com/your_username/repo_name](https://github.com/Spam-App/node-backend) <!-- TODO - CAMBIAR EL LINK -->
+Project Link: [https://github.com/Mariovido/portfolio-backend.git](https://github.com/Mariovido/portfolio-backend.git)
 
 <p align="right">(<a href="#portfolio-api">Back to top</a>)</p>
