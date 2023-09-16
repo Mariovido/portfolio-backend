@@ -1,0 +1,1567 @@
+openapi: 3.0.0
+paths:
+  /portfolio/{id}/personal-information:
+    get:
+      operationId: PortfolioController_getPersonalInformation
+      summary: Returns the personal information of a user
+      parameters:
+        - name: id
+          required: true
+          in: path
+          schema:
+            type: string
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PersonalInformationDto'
+      tags:
+        - portfolio
+      security:
+        - bearer: []
+  /portfolio/{id}/education:
+    get:
+      operationId: PortfolioController_getEducation
+      summary: Returns the education of a user
+      parameters:
+        - name: id
+          required: true
+          in: path
+          schema:
+            type: string
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/EducationPortfolioDto'
+      tags:
+        - portfolio
+      security:
+        - bearer: []
+  /portfolio/{id}/work-experience:
+    get:
+      operationId: PortfolioController_getWorkExperience
+      summary: Returns the work experience of a user
+      parameters:
+        - name: id
+          required: true
+          in: path
+          schema:
+            type: string
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/WorkExperiencePortfolioDto'
+      tags:
+        - portfolio
+      security:
+        - bearer: []
+  /portfolio/{id}/skills:
+    get:
+      operationId: PortfolioController_getSkills
+      summary: Returns the skills of a user
+      parameters:
+        - name: id
+          required: true
+          in: path
+          schema:
+            type: string
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/SkillPortfolioDto'
+      tags:
+        - portfolio
+      security:
+        - bearer: []
+  /portfolio/{id}/projects:
+    get:
+      operationId: PortfolioController_getProjects
+      summary: Returns the projects of a user
+      parameters:
+        - name: id
+          required: true
+          in: path
+          schema:
+            type: string
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/ProjectPortfolioDto'
+      tags:
+        - portfolio
+      security:
+        - bearer: []
+  /portfolio/{id}/contacts:
+    get:
+      operationId: PortfolioController_getContacts
+      summary: Returns the contacts of a user
+      parameters:
+        - name: id
+          required: true
+          in: path
+          schema:
+            type: string
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ContactPortfolioDto'
+      tags:
+        - portfolio
+      security:
+        - bearer: []
+  /portfolio/{id}/banner:
+    get:
+      operationId: PortfolioController_getBanner
+      summary: Returns the banners of a user
+      parameters:
+        - name: id
+          required: true
+          in: path
+          schema:
+            type: string
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BannerDto'
+      tags:
+        - portfolio
+      security:
+        - bearer: []
+  /auth/signup:
+    post:
+      operationId: AuthController_signUp
+      summary: Sign up a new user
+      parameters: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AuthSignUpDto'
+      responses:
+        '201':
+          description: ''
+      tags:
+        - auth
+  /auth/login:
+    post:
+      operationId: AuthController_logIn
+      summary: Log in a user
+      parameters: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AuthLogInDto'
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AuthTokenResponseDto'
+      tags:
+        - auth
+  /admin/{id}/user:
+    get:
+      operationId: AdminController_getUser
+      summary: Get a user
+      parameters:
+        - name: id
+          required: true
+          in: path
+          schema:
+            type: string
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UserDto'
+      tags:
+        - admin
+    patch:
+      operationId: AdminController_updateUser
+      summary: Update a user
+      parameters:
+        - name: id
+          required: true
+          in: path
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdateUserDto'
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UserDto'
+      tags:
+        - admin
+  /admin/{id}/education:
+    get:
+      operationId: AdminController_getEducations
+      summary: Get educations
+      parameters:
+        - name: id
+          required: true
+          in: path
+          schema:
+            type: string
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/EducationDto'
+      tags:
+        - admin
+    post:
+      operationId: AdminController_createEducation
+      summary: Creates a new education
+      parameters:
+        - name: id
+          required: true
+          in: path
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateEducationDto'
+      responses:
+        '201':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/EducationDto'
+      tags:
+        - admin
+  /admin/{id}/education/{idEducation}:
+    put:
+      operationId: AdminController_updateEducation
+      summary: Updates an education
+      parameters:
+        - name: id
+          required: true
+          in: path
+          schema:
+            type: string
+        - name: idEducation
+          required: true
+          in: path
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdateEducationDto'
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/EducationDto'
+      tags:
+        - admin
+    delete:
+      operationId: AdminController_deleteEducation
+      summary: Deletes an education
+      parameters:
+        - name: id
+          required: true
+          in: path
+          schema:
+            type: string
+        - name: idEducation
+          required: true
+          in: path
+          schema:
+            type: string
+      responses:
+        '200':
+          description: ''
+      tags:
+        - admin
+  /admin/{id}/work-experience:
+    get:
+      operationId: AdminController_getWorkExperiences
+      summary: Get work experiences
+      parameters:
+        - name: id
+          required: true
+          in: path
+          schema:
+            type: string
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/WorkExperienceDto'
+      tags:
+        - admin
+    post:
+      operationId: AdminController_createWorkExperience
+      summary: Creates a work experience
+      parameters:
+        - name: id
+          required: true
+          in: path
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateWorkExperienceDto'
+      responses:
+        '201':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/WorkExperienceDto'
+      tags:
+        - admin
+  /admin/{id}/work-experience/{idWorkExperience}:
+    put:
+      operationId: AdminController_updateWorkExperience
+      summary: Updates a work experience
+      parameters:
+        - name: id
+          required: true
+          in: path
+          schema:
+            type: string
+        - name: idWorkExperience
+          required: true
+          in: path
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdateWorkExperienceDto'
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/WorkExperienceDto'
+      tags:
+        - admin
+    delete:
+      operationId: AdminController_deleteWorkExperience
+      summary: Deletes a work experience
+      parameters:
+        - name: id
+          required: true
+          in: path
+          schema:
+            type: string
+        - name: idWorkExperience
+          required: true
+          in: path
+          schema:
+            type: string
+      responses:
+        '200':
+          description: ''
+      tags:
+        - admin
+  /admin/{id}/project:
+    get:
+      operationId: AdminController_getProjects
+      summary: Get projects
+      parameters:
+        - name: id
+          required: true
+          in: path
+          schema:
+            type: string
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/ProjectDto'
+      tags:
+        - admin
+    post:
+      operationId: AdminController_createProject
+      summary: Creates a project
+      parameters:
+        - name: id
+          required: true
+          in: path
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateProjectDto'
+      responses:
+        '201':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProjectDto'
+      tags:
+        - admin
+  /admin/{id}/project/{idProject}:
+    put:
+      operationId: AdminController_updateProject
+      summary: Updates a project
+      parameters:
+        - name: id
+          required: true
+          in: path
+          schema:
+            type: string
+        - name: idProject
+          required: true
+          in: path
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdateProjectDto'
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProjectDto'
+      tags:
+        - admin
+    delete:
+      operationId: AdminController_deleteProject
+      summary: Deletes a project
+      parameters:
+        - name: id
+          required: true
+          in: path
+          schema:
+            type: string
+        - name: idProject
+          required: true
+          in: path
+          schema:
+            type: string
+      responses:
+        '200':
+          description: ''
+      tags:
+        - admin
+  /admin/{id}/skill:
+    get:
+      operationId: AdminController_getSkills
+      summary: Get skills
+      parameters:
+        - name: id
+          required: true
+          in: path
+          schema:
+            type: string
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/SkillDto'
+      tags:
+        - admin
+    post:
+      operationId: AdminController_createSkill
+      summary: Creates a skill
+      parameters:
+        - name: id
+          required: true
+          in: path
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateSkillDto'
+      responses:
+        '201':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SkillDto'
+      tags:
+        - admin
+  /admin/{id}/skill/{idSkill}:
+    put:
+      operationId: AdminController_updateSkill
+      summary: Updates a skill
+      parameters:
+        - name: id
+          required: true
+          in: path
+          schema:
+            type: string
+        - name: idSkill
+          required: true
+          in: path
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdateSkillDto'
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SkillDto'
+      tags:
+        - admin
+    delete:
+      operationId: AdminController_deleteSkill
+      summary: Deletes a skill
+      parameters:
+        - name: id
+          required: true
+          in: path
+          schema:
+            type: string
+        - name: idSkill
+          required: true
+          in: path
+          schema:
+            type: string
+      responses:
+        '200':
+          description: ''
+      tags:
+        - admin
+  /admin/{id}/contact:
+    get:
+      operationId: AdminController_getContact
+      summary: Get contacts
+      parameters:
+        - name: id
+          required: true
+          in: path
+          schema:
+            type: string
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ContactDto'
+      tags:
+        - admin
+    post:
+      operationId: AdminController_createContact
+      summary: Creates a contact
+      parameters:
+        - name: id
+          required: true
+          in: path
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateContactDto'
+      responses:
+        '201':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ContactDto'
+      tags:
+        - admin
+  /admin/{id}/contact/{idContact}:
+    put:
+      operationId: AdminController_updateContact
+      summary: Updates a contact
+      parameters:
+        - name: id
+          required: true
+          in: path
+          schema:
+            type: string
+        - name: idContact
+          required: true
+          in: path
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdateContactDto'
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ContactDto'
+      tags:
+        - admin
+    delete:
+      operationId: AdminController_deleteContact
+      summary: Deletes a contact
+      parameters:
+        - name: id
+          required: true
+          in: path
+          schema:
+            type: string
+        - name: idContact
+          required: true
+          in: path
+          schema:
+            type: string
+      responses:
+        '200':
+          description: ''
+      tags:
+        - admin
+  /admin/{id}/bullet-point:
+    get:
+      operationId: AdminController_getBulletPoints
+      summary: Get bullet points
+      parameters:
+        - name: id
+          required: true
+          in: path
+          schema:
+            type: string
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/BulletPointDto'
+      tags:
+        - admin
+    post:
+      operationId: AdminController_createBulletPoint
+      summary: Creates a bullet point
+      parameters:
+        - name: id
+          required: true
+          in: path
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateBulletPointDto'
+      responses:
+        '201':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BulletPointDto'
+      tags:
+        - admin
+  /admin/{id}/bullet-point/{idBulletPoint}:
+    put:
+      operationId: AdminController_updateBulletPoint
+      summary: Updates a bullet point
+      parameters:
+        - name: id
+          required: true
+          in: path
+          schema:
+            type: string
+        - name: idBulletPoint
+          required: true
+          in: path
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdateBulletPointDto'
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/EducationDto'
+      tags:
+        - admin
+    delete:
+      operationId: AdminController_deleteBulletPoint
+      summary: Deletes a bullet point
+      parameters:
+        - name: id
+          required: true
+          in: path
+          schema:
+            type: string
+        - name: idBulletPoint
+          required: true
+          in: path
+          schema:
+            type: string
+      responses:
+        '200':
+          description: ''
+      tags:
+        - admin
+  /admin/{id}/interest:
+    get:
+      operationId: AdminController_getInterests
+      summary: Get interests
+      parameters:
+        - name: id
+          required: true
+          in: path
+          schema:
+            type: string
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/InterestDto'
+      tags:
+        - admin
+    post:
+      operationId: AdminController_createInterest
+      summary: Creates an interest
+      parameters:
+        - name: id
+          required: true
+          in: path
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateInterestDto'
+      responses:
+        '201':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InterestDto'
+      tags:
+        - admin
+  /admin/{id}/interest/{idInterest}:
+    put:
+      operationId: AdminController_updateInterest
+      summary: Updates an interest
+      parameters:
+        - name: id
+          required: true
+          in: path
+          schema:
+            type: string
+        - name: idInterest
+          required: true
+          in: path
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdateInterestDto'
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InterestDto'
+      tags:
+        - admin
+    delete:
+      operationId: AdminController_deleteInterest
+      summary: Deletes an interest
+      parameters:
+        - name: id
+          required: true
+          in: path
+          schema:
+            type: string
+        - name: idInterest
+          required: true
+          in: path
+          schema:
+            type: string
+      responses:
+        '200':
+          description: ''
+      tags:
+        - admin
+  /admin/{id}/technology:
+    get:
+      operationId: AdminController_getTechnologies
+      summary: Get technologies
+      parameters:
+        - name: id
+          required: true
+          in: path
+          schema:
+            type: string
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/TechnologyDto'
+      tags:
+        - admin
+    post:
+      operationId: AdminController_createTechnology
+      summary: Creates a technology
+      parameters:
+        - name: id
+          required: true
+          in: path
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateTechnologyDto'
+      responses:
+        '201':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TechnologyDto'
+      tags:
+        - admin
+  /admin/{id}/technology/{idTechnology}:
+    put:
+      operationId: AdminController_updateTechnology
+      summary: Updates a technology
+      parameters:
+        - name: id
+          required: true
+          in: path
+          schema:
+            type: string
+        - name: idTechnology
+          required: true
+          in: path
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdateTechnologyDto'
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TechnologyDto'
+      tags:
+        - admin
+    delete:
+      operationId: AdminController_deleteTechnology
+      summary: Deletes a technology
+      parameters:
+        - name: id
+          required: true
+          in: path
+          schema:
+            type: string
+        - name: idTechnology
+          required: true
+          in: path
+          schema:
+            type: string
+      responses:
+        '200':
+          description: ''
+      tags:
+        - admin
+info:
+  title: Portfolio API
+  description: The OpenAPI of the Portoflio API
+  version: '1.0'
+  contact: {}
+tags:
+  - name: portfolio
+    description: ''
+servers: []
+components:
+  securitySchemes:
+    bearer:
+      scheme: bearer
+      bearerFormat: JWT
+      type: http
+  schemas:
+    PersonalInformationDto:
+      type: object
+      properties:
+        fullName:
+          type: string
+        dateOfBirth:
+          format: date-time
+          type: string
+        workExperience:
+          type: string
+        education:
+          type: string
+        interests:
+          type: array
+          items:
+            type: string
+        aboutMe:
+          type: string
+      required:
+        - fullName
+        - dateOfBirth
+        - workExperience
+        - education
+        - interests
+        - aboutMe
+    EducationPortfolioDto:
+      type: object
+      properties:
+        courseName:
+          type: string
+        institute:
+          type: string
+        startDate:
+          format: date-time
+          type: string
+        endDate:
+          format: date-time
+          type: string
+        grade:
+          type: number
+      required:
+        - courseName
+        - institute
+        - startDate
+        - endDate
+        - grade
+    WorkExperiencePortfolioDto:
+      type: object
+      properties:
+        role:
+          type: string
+        company:
+          type: string
+        startDate:
+          format: date-time
+          type: string
+        endDate:
+          format: date-time
+          type: string
+        bulletPoints:
+          type: array
+          items:
+            type: string
+      required:
+        - role
+        - company
+        - startDate
+        - endDate
+        - bulletPoints
+    SkillPortfolioDto:
+      type: object
+      properties:
+        skillName:
+          type: string
+        level:
+          type: string
+        rating:
+          type: number
+      required:
+        - skillName
+        - level
+        - rating
+    ProjectPortfolioDto:
+      type: object
+      properties:
+        projectName:
+          type: string
+        technologies:
+          type: array
+          items:
+            type: string
+        bulletPoints:
+          type: array
+          items:
+            type: string
+      required:
+        - projectName
+        - technologies
+        - bulletPoints
+    ContactPortfolioDto:
+      type: object
+      properties:
+        email:
+          type: string
+        linkedinUrl:
+          type: string
+        githubUrl:
+          type: string
+      required:
+        - email
+        - linkedinUrl
+        - githubUrl
+    BannerDto:
+      type: object
+      properties:
+        fullName:
+          type: string
+        role:
+          type: string
+      required:
+        - fullName
+        - role
+    AuthSignUpDto:
+      type: object
+      properties:
+        username:
+          type: string
+        password:
+          type: string
+        firstName:
+          type: string
+        lastName:
+          type: string
+        dateOfBirth:
+          format: date-time
+          type: string
+      required:
+        - username
+        - password
+        - firstName
+        - lastName
+        - dateOfBirth
+    AuthLogInDto:
+      type: object
+      properties:
+        username:
+          type: string
+        password:
+          type: string
+      required:
+        - username
+        - password
+    AuthTokenResponseDto:
+      type: object
+      properties:
+        idUser:
+          type: string
+        accessToken:
+          type: string
+      required:
+        - idUser
+        - accessToken
+    UserDto:
+      type: object
+      properties:
+        id:
+          type: string
+        username:
+          type: string
+        firstName:
+          type: string
+        lastName:
+          type: string
+        dateOfBirth:
+          format: date-time
+          type: string
+        aboutMe:
+          type: string
+      required:
+        - id
+        - username
+        - firstName
+        - lastName
+        - dateOfBirth
+        - aboutMe
+    UpdateUserDto:
+      type: object
+      properties:
+        firstName:
+          type: string
+        lastName:
+          type: string
+        dateOfBirth:
+          format: date-time
+          type: string
+        aboutMe:
+          type: string
+      required:
+        - firstName
+        - lastName
+        - dateOfBirth
+        - aboutMe
+    EducationDto:
+      type: object
+      properties:
+        id:
+          type: string
+        courseName:
+          type: string
+        typeOfDegree:
+          type: string
+        institute:
+          type: string
+        startDate:
+          format: date-time
+          type: string
+        endDate:
+          format: date-time
+          type: string
+        grade:
+          type: number
+        user:
+          type: string
+      required:
+        - id
+        - courseName
+        - typeOfDegree
+        - institute
+        - startDate
+        - endDate
+        - grade
+        - user
+    CreateEducationDto:
+      type: object
+      properties:
+        courseName:
+          type: string
+        typeOfDegree:
+          type: string
+        institute:
+          type: string
+        startDate:
+          format: date-time
+          type: string
+        endDate:
+          format: date-time
+          type: string
+        grade:
+          type: number
+      required:
+        - courseName
+        - typeOfDegree
+        - institute
+        - startDate
+        - endDate
+        - grade
+    UpdateEducationDto:
+      type: object
+      properties:
+        courseName:
+          type: string
+        typeOfDegree:
+          type: string
+        institute:
+          type: string
+        startDate:
+          format: date-time
+          type: string
+        endDate:
+          format: date-time
+          type: string
+        grade:
+          type: number
+      required:
+        - courseName
+        - typeOfDegree
+        - institute
+        - startDate
+        - endDate
+        - grade
+    WorkExperienceDto:
+      type: object
+      properties:
+        id:
+          type: string
+        role:
+          type: string
+        company:
+          type: string
+        startDate:
+          format: date-time
+          type: string
+        endDate:
+          format: date-time
+          type: string
+        bulletPoints:
+          type: array
+          items:
+            type: string
+        user:
+          type: string
+      required:
+        - id
+        - role
+        - company
+        - startDate
+        - endDate
+        - bulletPoints
+        - user
+    CreateWorkExperienceDto:
+      type: object
+      properties:
+        role:
+          type: string
+        company:
+          type: string
+        startDate:
+          format: date-time
+          type: string
+        endDate:
+          format: date-time
+          type: string
+      required:
+        - role
+        - company
+        - startDate
+        - endDate
+    UpdateWorkExperienceDto:
+      type: object
+      properties:
+        role:
+          type: string
+        company:
+          type: string
+        startDate:
+          format: date-time
+          type: string
+        endDate:
+          format: date-time
+          type: string
+      required:
+        - role
+        - company
+        - startDate
+        - endDate
+    ProjectDto:
+      type: object
+      properties:
+        id:
+          type: string
+        projectName:
+          type: string
+        technologies:
+          type: array
+          items:
+            type: string
+        bulletPoints:
+          type: array
+          items:
+            type: string
+        user:
+          type: string
+      required:
+        - id
+        - projectName
+        - technologies
+        - bulletPoints
+        - user
+    CreateProjectDto:
+      type: object
+      properties:
+        projectName:
+          type: string
+      required:
+        - projectName
+    UpdateProjectDto:
+      type: object
+      properties:
+        projectName:
+          type: string
+      required:
+        - projectName
+    SkillDto:
+      type: object
+      properties:
+        id:
+          type: string
+        skillName:
+          type: string
+        level:
+          type: string
+        rating:
+          type: number
+        user:
+          type: string
+      required:
+        - id
+        - skillName
+        - level
+        - rating
+        - user
+    CreateSkillDto:
+      type: object
+      properties:
+        skillName:
+          type: string
+        level:
+          type: string
+        rating:
+          type: number
+      required:
+        - skillName
+        - level
+        - rating
+    UpdateSkillDto:
+      type: object
+      properties:
+        skillName:
+          type: string
+        level:
+          type: string
+        rating:
+          type: number
+      required:
+        - skillName
+        - level
+        - rating
+    ContactDto:
+      type: object
+      properties:
+        id:
+          type: string
+        email:
+          type: string
+        linkedinUrl:
+          type: string
+        githubUrl:
+          type: string
+        user:
+          type: string
+      required:
+        - id
+        - email
+        - linkedinUrl
+        - githubUrl
+        - user
+    CreateContactDto:
+      type: object
+      properties:
+        email:
+          type: string
+        linkedinUrl:
+          type: string
+        githubUrl:
+          type: string
+      required:
+        - email
+        - linkedinUrl
+        - githubUrl
+    UpdateContactDto:
+      type: object
+      properties:
+        email:
+          type: string
+        linkedinUrl:
+          type: string
+        githubUrl:
+          type: string
+      required:
+        - email
+        - linkedinUrl
+        - githubUrl
+    BulletPointDto:
+      type: object
+      properties:
+        id:
+          type: string
+        bulletPoint:
+          type: string
+        workExperience:
+          type: string
+        project:
+          type: string
+      required:
+        - id
+        - bulletPoint
+        - workExperience
+        - project
+    CreateBulletPointDto:
+      type: object
+      properties:
+        bulletPoint:
+          type: string
+        workExperience:
+          type: string
+        project:
+          type: string
+      required:
+        - bulletPoint
+        - workExperience
+        - project
+    UpdateBulletPointDto:
+      type: object
+      properties:
+        bulletPoint:
+          type: string
+      required:
+        - bulletPoint
+    InterestDto:
+      type: object
+      properties:
+        id:
+          type: string
+        interestName:
+          type: string
+        user:
+          type: string
+      required:
+        - id
+        - interestName
+        - user
+    CreateInterestDto:
+      type: object
+      properties:
+        interestName:
+          type: string
+      required:
+        - interestName
+    UpdateInterestDto:
+      type: object
+      properties:
+        interestName:
+          type: string
+      required:
+        - interestName
+    TechnologyDto:
+      type: object
+      properties:
+        id:
+          type: string
+        technologyName:
+          type: string
+        project:
+          type: string
+      required:
+        - id
+        - technologyName
+        - project
+    CreateTechnologyDto:
+      type: object
+      properties:
+        technologyName:
+          type: string
+        project:
+          type: string
+      required:
+        - technologyName
+        - project
+    UpdateTechnologyDto:
+      type: object
+      properties:
+        technologyName:
+          type: string
+      required:
+        - technologyName
