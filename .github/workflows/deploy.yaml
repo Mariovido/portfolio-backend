@@ -1,0 +1,49 @@
+name: Deploy
+
+on:
+  push:
+    branches:
+      - main
+  workflow_dispatch:
+
+jobs:
+  build-and-deploy:
+    environment: prod
+    env:
+      STAGE: ${{secrets.STAGE}}
+      DB_URL: ${{secrets.DB_URL}}
+      DB_HOST: ${{secrets.DB_HOST}}
+      DB_PORT: ${{secrets.DB_PORT}}
+      DB_DATABASE: ${{secrets.DB_DATABASE}}
+      DB_USERNAME: ${{secrets.DB_USERNAME}}
+
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js with Yarn
+        uses: actions/setup-node@v3
+        with:
+          node-version: 18
+          cache: 'yarn'
+
+      - name: Install cross-env globally
+        run: yarn global add cross-env
+
+      - name: Install dependencies
+        run: yarn install
+
+      - name: Lint code
+        run: yarn lint
+
+      - name: Run tests
+        run: yarn test
+
+      - name: Build NestJS app
+        run: yarn build
+
+      - name: Run database migrations
+        run: |
+          yarn migration:run
