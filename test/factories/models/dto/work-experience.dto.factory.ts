@@ -1,5 +1,6 @@
 import { CreateWorkExperienceDto } from '../../../../src/models/dto/admin/create-work-experience.dto';
 import { UpdateWorkExperienceDto } from '../../../../src/models/dto/admin/update-work-experience.dto';
+import { BulletPointDto } from '../../../../src/models/dto/bullet-point.dto';
 import { WorkExperienceDto } from '../../../../src/models/dto/work-experience.dto';
 import { WorkExperience } from '../../../../src/repositories/entities/work-experience.entity';
 
@@ -18,6 +19,9 @@ export class WorkExperienceDtoFactory {
     workExperienceDto.company = mockWorkExperienceUpdate
       ? mockWorkExperienceUpdate.company
       : mockWorkExperience.company;
+    workExperienceDto.companyLink = mockWorkExperienceUpdate
+      ? mockWorkExperienceUpdate.companyLink
+      : mockWorkExperience.companyLink;
     workExperienceDto.startDate = mockWorkExperienceUpdate
       ? mockWorkExperienceUpdate.startDate
       : mockWorkExperience.startDate;
@@ -25,9 +29,13 @@ export class WorkExperienceDtoFactory {
       ? mockWorkExperienceUpdate.endDate
       : mockWorkExperience.endDate;
 
-    const bulletPoints = mockWorkExperience.bulletPoints.map(
-      (bulletPoint) => bulletPoint.bulletPoint,
-    );
+    const bulletPoints = mockWorkExperience.bulletPoints.map((bulletPoint) => {
+      const bulletPointDto = new BulletPointDto();
+      bulletPointDto.id = bulletPoint.id;
+      bulletPointDto.bulletPoint = bulletPoint.bulletPoint;
+
+      return bulletPointDto;
+    });
     workExperienceDto.bulletPoints = bulletPoints;
     workExperienceDto.user = mockWorkExperience.user.id;
 

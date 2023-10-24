@@ -4,8 +4,6 @@ export class CreateContactDtoFactory {
   static build(): CreateContactDto {
     const createContactDto = new CreateContactDto();
     createContactDto.email = 'test1@test.com';
-    createContactDto.linkedinUrl = 'http://test.com';
-    createContactDto.githubUrl = 'http://test.com';
 
     return createContactDto;
   }

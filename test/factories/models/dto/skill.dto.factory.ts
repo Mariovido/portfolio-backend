@@ -13,9 +13,6 @@ export class SkillDtoFactory {
     skillDto.skillName = mockSkillUpdateDto
       ? mockSkillUpdateDto.skillName
       : mockSkill.skillName;
-    skillDto.level = mockSkillUpdateDto
-      ? mockSkillUpdateDto.level
-      : mockSkill.level;
     skillDto.rating = mockSkillUpdateDto
       ? mockSkillUpdateDto.rating
       : mockSkill.rating;

@@ -1,5 +1,7 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { IsEmail, IsOptional, IsUUID, IsUrl } from 'class-validator';
+import { Type } from 'class-transformer';
+import { IsArray, IsEmail, IsOptional, IsUUID } from 'class-validator';
+import { LinkDto } from './link.dto';
 
 export class ContactDto {
   @IsUUID()
@@ -10,15 +12,10 @@ export class ContactDto {
   @ApiProperty()
   email: string;
 
-  @IsUrl()
+  @IsArray()
   @IsOptional()
-  @ApiProperty()
-  linkedinUrl?: string;
-
-  @IsUrl()
-  @IsOptional()
-  @ApiProperty()
-  githubUrl?: string;
+  @Type(() => LinkDto)
+  links?: LinkDto[];
 
   @IsUUID()
   @ApiProperty()

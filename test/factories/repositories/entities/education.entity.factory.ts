@@ -6,8 +6,8 @@ export class EducationFactory {
     const education = new Education();
     education.id = '1fd7786f-7dda-4f0a-8319-0008b5f55bb0';
     education.courseName = 'distant';
-    education.typeOfDegree = 'willing';
     education.institute = 'smile';
+    education.instituteLink = 'http://suvcu.ee/ubu';
 
     const startDate = new Date();
     startDate.setFullYear(startDate.getFullYear() - 1);

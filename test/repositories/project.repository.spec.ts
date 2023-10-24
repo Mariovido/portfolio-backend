@@ -13,6 +13,7 @@ import { CreateProjectDtoFactory } from '../factories/models/dto/admin/create-pr
 import { UpdateResultFactory } from '../factories/database/update-result.factory';
 import { InternalServerErrorException } from '@nestjs/common';
 
+// TODO - RETOCAR
 describe('ProjectRepository', () => {
   let projectRepository: ProjectRepository;
 

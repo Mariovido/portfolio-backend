@@ -30,24 +30,23 @@ import { ProjectRepository } from '../../../src/repositories/project.repository'
 import { SkillRepository } from '../../../src/repositories/skill.repository';
 import { ContactRepository } from '../../../src/repositories/contact.repository';
 import { BulletPointRepository } from '../../../src/repositories/bullet-point.repository';
-import { InterestRepository } from '../../../src/repositories/interest.repository';
+import { TagRepository } from '../../../src/repositories/tag.repository';
 import { TechnologyRepository } from '../../../src/repositories/technology.repository';
 import { mockBulletPointRepository } from '../../factories/repositories/bullet-point.repository.factory';
-import { mockInterestRepository } from '../../factories/repositories/interest.repository.factory';
+import { mockTagRepository } from '../../factories/repositories/tag.repository.factory';
 import { mockTechnologyRepository } from '../../factories/repositories/technology.repository.factory';
 import { WorkExperience } from '../../../src/repositories/entities/work-experience.entity';
 import { Project } from '../../../src/repositories/entities/project.entity';
 import { Skill } from '../../../src/repositories/entities/skill.entity';
 import { Contact } from '../../../src/repositories/entities/contact.entity';
 import { BulletPoint } from '../../../src/repositories/entities/bullet-point.entity';
-import { Interest } from '../../../src/repositories/entities/interest.entity';
 import { Technology } from '../../../src/repositories/entities/technology.entity';
 import { CreateWorkExperienceDto } from '../../../src/models/dto/admin/create-work-experience.dto';
 import { CreateProjectDto } from '../../../src/models/dto/admin/create-project.dto';
 import { CreateSkillDto } from '../../../src/models/dto/admin/create-skill.dto';
 import { CreateContactDto } from '../../../src/models/dto/admin/create-contact.dto';
 import { CreateBulletPointDto } from '../../../src/models/dto/admin/create-bullet-point.dto';
-import { CreateInterestDto } from '../../../src/models/dto/admin/create-interest.dto';
+import { CreateTagDto } from '../../../src/models/dto/admin/create-tag.dto';
 import { CreateTechnologyDto } from '../../../src/models/dto/admin/create-technology.dto';
 import { UpdateEducationDto } from '../../../src/models/dto/admin/update-education.dto';
 import { UpdateWorkExperienceDto } from '../../../src/models/dto/admin/update-work-experience.dto';
@@ -55,28 +54,27 @@ import { UpdateProjectDto } from '../../../src/models/dto/admin/update-project.d
 import { UpdateSkillDto } from '../../../src/models/dto/admin/update-skill.dto';
 import { UpdateContactDto } from '../../../src/models/dto/admin/update-contact.dto';
 import { UpdateBulletPointDto } from '../../../src/models/dto/admin/update-bullet-point.dto';
-import { UpdateInterestDto } from '../../../src/models/dto/admin/update-interest.dto';
+import { UpdateTagDto } from '../../../src/models/dto/admin/update-tag.dto';
 import { UpdateTechnologyDto } from '../../../src/models/dto/admin/update-technology.dto';
 import { WorkExperienceDto } from '../../../src/models/dto/work-experience.dto';
 import { ProjectDto } from '../../../src/models/dto/project.dto';
 import { SkillDto } from '../../../src/models/dto/skill.dto';
 import { ContactDto } from '../../../src/models/dto/contact.dto';
 import { BulletPointDto } from '../../../src/models/dto/bullet-point.dto';
-import { InterestDto } from '../../../src/models/dto/interest.dto';
 import { TechnologyDto } from '../../../src/models/dto/technology.dto';
 import { WorkExperienceFactory } from '../../factories/repositories/entities/work-experience.entity.factory';
 import { ProjectFactory } from '../../factories/repositories/entities/project.entity.factory';
 import { SkillFactory } from '../../factories/repositories/entities/skill.entity.factory';
 import { ContactFactory } from '../../factories/repositories/entities/contact.entity.factory';
 import { BulletPointFactory } from '../../factories/repositories/entities/bullet-point.entity.factory';
-import { InterestFactory } from '../../factories/repositories/entities/interest.entity.factory';
+import { TagFactory } from '../../factories/repositories/entities/interest.entity.factory';
 import { TechnologyFactory } from '../../factories/repositories/entities/technology.entity.factory';
 import { CreateWorkExperienceDtoFactory } from '../../factories/models/dto/admin/create-work-experience.dto.factory';
 import { CreateProjectDtoFactory } from '../../factories/models/dto/admin/create-project.dto.factory';
 import { CreateSkillDtoFactory } from '../../factories/models/dto/admin/create-skill.dto.factory';
 import { CreateContactDtoFactory } from '../../factories/models/dto/admin/create-contact.dto.factory';
 import { CreateBulletPointDtoFactory } from '../../factories/models/dto/admin/create-bullet-point.dto.factory';
-import { CreateInterestDtoFactory } from '../../factories/models/dto/admin/create-interest.dto';
+import { CreateTagDtoFactory } from '../../factories/models/dto/admin/create-tag.dto.factory';
 import { CreateTechnologyDtoFactory } from '../../factories/models/dto/admin/create-technology.dto.factory';
 import { UpdateEducationDtoFactory } from '../../factories/models/dto/admin/update-education.dto.factory';
 import { UpdateWorkExperienceDtoFactory } from '../../factories/models/dto/admin/update-work-experience.dto.factory';
@@ -84,17 +82,19 @@ import { UpdateProjectDtoFactory } from '../../factories/models/dto/admin/update
 import { UpdateSkillDtoFactory } from '../../factories/models/dto/admin/update-skill.dto.factory';
 import { UpdateContactDtoFactory } from '../../factories/models/dto/admin/update-contact.dto.factory';
 import { UpdateBulletPointDtoFactory } from '../../factories/models/dto/admin/update-bullet-point.dto.factory';
-import { UpdateInterestDtoFactory } from '../../factories/models/dto/admin/update-interest.dto.factory';
+import { UpdateTagDtoFactory } from '../../factories/models/dto/admin/update-tag.dto.factory';
 import { UpdateTechnologyDtoFactory } from '../../factories/models/dto/admin/update-technology.dto.factory';
 import { WorkExperienceDtoFactory } from '../../factories/models/dto/work-experience.dto.factory';
 import { ProjectDtoFactory } from '../../factories/models/dto/project.dto.factory';
 import { SkillDtoFactory } from '../../factories/models/dto/skill.dto.factory';
 import { ContactDtoFactory } from '../../factories/models/dto/contact.dto.factory';
 import { BulletPointDtoFactory } from '../../factories/models/dto/bullet-point.dto.factory';
-import { InterestDtoFactory } from '../../factories/models/dto/interest.dto.factory';
+import { TagDtoFactory } from '../../factories/models/dto/tag.dto.factory';
 import { TechnologyDtoFactory } from '../../factories/models/dto/technology.dto.factory';
 import { DeleteResultFactory } from '../../factories/database/delete-result.factory';
 import { DeleteResult } from 'typeorm';
+import { Tag } from '../../../src/repositories/entities/tag.entity';
+import { TagDto } from '../../../src/models/dto/tag.dto';
 
 describe('AdminService', () => {
   let adminService: AdminService;
@@ -106,7 +106,7 @@ describe('AdminService', () => {
   let skillRepository: jest.Mocked<SkillRepository>;
   let contactRepository: jest.Mocked<ContactRepository>;
   let bulletPointRepository: jest.Mocked<BulletPointRepository>;
-  let interestRepository: jest.Mocked<InterestRepository>;
+  let tagRepository: jest.Mocked<TagRepository>;
   let technologyRepository: jest.Mocked<TechnologyRepository>;
 
   let mockUser: User;
@@ -121,8 +121,8 @@ describe('AdminService', () => {
   let mockContact: Contact;
   let mockBulletPoint: BulletPoint;
   let mockBulletPointList: BulletPoint[];
-  let mockInterest: Interest;
-  let mockInterestList: Interest[];
+  let mockTag: Tag;
+  let mockTagList: Tag[];
   let mockTechnology: Technology;
   let mockTechnologyList: Technology[];
 
@@ -132,7 +132,7 @@ describe('AdminService', () => {
   let mockCreateSkillDto: CreateSkillDto;
   let mockCreateContactDto: CreateContactDto;
   let mockCreateBulletPointDto: CreateBulletPointDto;
-  let mockCreateInterestDto: CreateInterestDto;
+  let mockCreateTagDto: CreateTagDto;
   let mockCreateTechnologyDto: CreateTechnologyDto;
 
   let mockUpdateUserDto: UpdateUserDto;
@@ -142,7 +142,7 @@ describe('AdminService', () => {
   let mockUpdateSkillDto: UpdateSkillDto;
   let mockUpdateContactDto: UpdateContactDto;
   let mockUpdateBulletPointDto: UpdateBulletPointDto;
-  let mockUpdateInterestDto: UpdateInterestDto;
+  let mockUpdateTagDto: UpdateTagDto;
   let mockUpdateTechnologyDto: UpdateTechnologyDto;
 
   let mockUserDto: UserDto;
@@ -157,8 +157,8 @@ describe('AdminService', () => {
   let mockContactDto: ContactDto;
   let mockBulletPointDto: BulletPointDto;
   let mockBulletPointDtoList: BulletPointDto[];
-  let mockInterestDto: InterestDto;
-  let mockInterestDtoList: InterestDto[];
+  let mockTagDto: TagDto;
+  let mockTagDtolist: TagDto[];
   let mockTechnologyDto: TechnologyDto;
   let mockTechnologyDtoList: TechnologyDto[];
 
@@ -181,7 +181,7 @@ describe('AdminService', () => {
           provide: BulletPointRepository,
           useFactory: mockBulletPointRepository,
         },
-        { provide: InterestRepository, useFactory: mockInterestRepository },
+        { provide: TagRepository, useFactory: mockTagRepository },
         { provide: TechnologyRepository, useFactory: mockTechnologyRepository },
       ],
     }).compile();
@@ -195,7 +195,7 @@ describe('AdminService', () => {
     skillRepository = module.get(SkillRepository);
     contactRepository = module.get(ContactRepository);
     bulletPointRepository = module.get(BulletPointRepository);
-    interestRepository = module.get(InterestRepository);
+    tagRepository = module.get(TagRepository);
     technologyRepository = module.get(TechnologyRepository);
 
     mockUser = UserFactory.build();
@@ -210,8 +210,8 @@ describe('AdminService', () => {
     mockContact = ContactFactory.build();
     mockBulletPoint = BulletPointFactory.build(true);
     mockBulletPointList = BulletPointFactory.buildList(2, true);
-    mockInterest = InterestFactory.build();
-    mockInterestList = InterestFactory.buildList(2);
+    mockTag = TagFactory.build();
+    mockTagList = TagFactory.buildList(2);
     mockTechnology = TechnologyFactory.build();
     mockTechnologyList = TechnologyFactory.buildList(2);
 
@@ -221,7 +221,7 @@ describe('AdminService', () => {
     mockCreateSkillDto = CreateSkillDtoFactory.build();
     mockCreateContactDto = CreateContactDtoFactory.build();
     mockCreateBulletPointDto = CreateBulletPointDtoFactory.build(true);
-    mockCreateInterestDto = CreateInterestDtoFactory.build();
+    mockCreateTagDto = CreateTagDtoFactory.build();
     mockCreateTechnologyDto = CreateTechnologyDtoFactory.build();
 
     mockUpdateUserDto = UpdateUserDtoFactory.build();
@@ -231,7 +231,7 @@ describe('AdminService', () => {
     mockUpdateSkillDto = UpdateSkillDtoFactory.build();
     mockUpdateContactDto = UpdateContactDtoFactory.build();
     mockUpdateBulletPointDto = UpdateBulletPointDtoFactory.build();
-    mockUpdateInterestDto = UpdateInterestDtoFactory.build();
+    mockUpdateTagDto = UpdateTagDtoFactory.build();
     mockUpdateTechnologyDto = UpdateTechnologyDtoFactory.build();
 
     mockUserDto = UserDtoFactory.build(mockUser, mockUpdateUserDto);
@@ -261,12 +261,8 @@ describe('AdminService', () => {
     );
     mockBulletPointDtoList =
       BulletPointDtoFactory.buildListByBulletPointList(mockBulletPointList);
-    mockInterestDto = InterestDtoFactory.build(
-      mockInterest,
-      mockCreateInterestDto,
-    );
-    mockInterestDtoList =
-      InterestDtoFactory.buildListByInterestList(mockInterestList);
+    mockTagDto = TagDtoFactory.build(mockTag, mockCreateTagDto);
+    mockTagDtolist = TagDtoFactory.buildListByTagList(mockTagList);
     mockTechnologyDto = TechnologyDtoFactory.build(
       mockTechnology,
       mockCreateTechnologyDto,
@@ -280,12 +276,6 @@ describe('AdminService', () => {
   describe('getUser', () => {
     it('calls the service to get a user. -> OK', async () => {
       mockUserDto = UserDtoFactory.build(mockUser);
-      const interests = mockUser.interests.map((interest) => {
-        const interestAux = new InterestDto();
-        interestAux.id = interest.id;
-        return interestAux;
-      });
-      mockUserDto.interests = interests;
       const educations = mockUser.educations.map((education) => {
         const educationAux = new EducationDto();
         educationAux.id = education.id;
@@ -1127,51 +1117,49 @@ describe('AdminService', () => {
     });
   });
 
-  describe('getInterests', () => {
-    it('calls the service to get an interest. -> OK', async () => {
-      mockInterestDtoList.forEach(
-        (mockInterestAux) => (mockInterestAux.user = mockUser.id),
+  describe('getTags', () => {
+    it('calls the service to get a tag. -> OK', async () => {
+      mockTagDtolist.forEach(
+        (mockTagAux) => (mockTagAux.workExperience = mockWorkExperience.id),
       );
-      interestRepository.findInterestByUserId.mockResolvedValue(
-        mockInterestList,
-      );
-      const result = await adminService.getInterests(mockUser.id, mockUser);
-      expect(result).toEqual(mockInterestDtoList);
+      tagRepository.findTagByWorkExperiences.mockResolvedValue(mockTagList);
+      const result = await adminService.getTags(mockUser.id, mockUser);
+      expect(result).toEqual(mockTagDtolist);
     });
-    it('calls the service to get the interests but the user is not authorized. -> KO', async () => {
+    it('calls the service to get the tags but the user is not authorized. -> KO', async () => {
       const result = async () => {
-        await adminService.getInterests(
+        await adminService.getTags(
           'ff5d8359-b6f7-4a08-893f-fbdbb53a79b3',
           mockUser,
         );
       };
       await expect(result).rejects.toThrow(UnauthorizedException);
     });
-    it('calls the service to get the interests but the interests are not found. -> KO', async () => {
-      interestRepository.findInterestByUserId.mockResolvedValue([]);
+    it('calls the service to get the interests but the tags are not found. -> KO', async () => {
+      tagRepository.findTagByWorkExperiences.mockResolvedValue([]);
       const result = async () => {
-        await adminService.getInterests(mockUser.id, mockUser);
+        await adminService.getTags(mockUser.id, mockUser);
       };
       await expect(result).rejects.toThrow(NotFoundException);
     });
   });
 
-  describe('createInterest', () => {
-    it('calls the service to create an interest. -> OK', async () => {
-      mockInterestDto = InterestDtoFactory.build(mockInterest);
-      interestRepository.createInterest.mockResolvedValue(mockInterest);
-      const result = await adminService.createInterest(
+  describe('createTag', () => {
+    it('calls the service to create a tag. -> OK', async () => {
+      mockTagDto = TagDtoFactory.build(mockTag);
+      tagRepository.createTag.mockResolvedValue(mockTag);
+      const result = await adminService.createTag(
         mockUser.id,
-        mockCreateInterestDto,
+        mockCreateTagDto,
         mockUser,
       );
-      expect(result).toEqual(mockInterestDto);
+      expect(result).toEqual(mockTagDto);
     });
-    it('calls the service to create an interest but the user is not authorized. -> KO', async () => {
+    it('calls the service to create a tag but the user is not authorized. -> KO', async () => {
       const result = async () => {
-        await adminService.createInterest(
+        await adminService.createTag(
           'ff5d8359-b6f7-4a08-893f-fbdbb53a79b3',
-          mockCreateInterestDto,
+          mockCreateTagDto,
           mockUser,
         );
       };
@@ -1179,37 +1167,37 @@ describe('AdminService', () => {
     });
   });
 
-  describe('updateInterest', () => {
-    it('calls the service to update an interest. -> OK', async () => {
-      mockInterestDto = InterestDtoFactory.build(mockInterest);
-      interestRepository.updateInterest.mockResolvedValue(mockInterest);
-      interestRepository.findOneBy.mockResolvedValue(mockInterest);
-      const result = await adminService.updateInterest(
+  describe('updateTag', () => {
+    it('calls the service to update a tag. -> OK', async () => {
+      mockTagDto = TagDtoFactory.build(mockTag);
+      tagRepository.updateTag.mockResolvedValue(mockTag);
+      tagRepository.findOneBy.mockResolvedValue(mockTag);
+      const result = await adminService.updateTag(
         mockUser.id,
-        mockInterest.id,
-        mockUpdateInterestDto,
+        mockTag.id,
+        mockUpdateTagDto,
         mockUser,
       );
-      expect(result).toEqual(mockInterestDto);
+      expect(result).toEqual(mockTagDto);
     });
-    it('calls the service to update an interest but the user is not authorized. -> KO', async () => {
+    it('calls the service to update a tag but the user is not authorized. -> KO', async () => {
       const result = async () => {
-        await adminService.updateInterest(
+        await adminService.updateTag(
           'ff5d8359-b6f7-4a08-893f-fbdbb53a79b3',
-          mockInterest.id,
-          mockUpdateInterestDto,
+          mockTag.id,
+          mockUpdateTagDto,
           mockUser,
         );
       };
       await expect(result).rejects.toThrow(UnauthorizedException);
     });
-    it('calls the service to update an interest but the interest is not found. -> KO', async () => {
-      interestRepository.findOneBy.mockResolvedValue(null);
+    it('calls the service to update a tag but the interest is not found. -> KO', async () => {
+      tagRepository.findOneBy.mockResolvedValue(null);
       const result = async () => {
-        await adminService.updateInterest(
+        await adminService.updateTag(
           mockUser.id,
-          mockInterest.id,
-          mockUpdateInterestDto,
+          mockTag.id,
+          mockUpdateTagDto,
           mockUser,
         );
       };
@@ -1217,19 +1205,19 @@ describe('AdminService', () => {
     });
   });
 
-  describe('deleteInterest', () => {
-    it('calls the service to delete an interest. -> OK', async () => {
-      interestRepository.delete.mockResolvedValue(mockDeleteResult);
-      const result = await adminService.deleteInterest(
+  describe('deleteTag', () => {
+    it('calls the service to delete a tag. -> OK', async () => {
+      tagRepository.delete.mockResolvedValue(mockDeleteResult);
+      const result = await adminService.deleteTag(
         mockUser.id,
-        mockInterest.id,
+        mockTag.id,
         mockUser,
       );
       expect(result).toBeUndefined();
     });
-    it('calls the service to delete an interest but the user is not authorized. -> KO', async () => {
+    it('calls the service to delete a tag but the user is not authorized. -> KO', async () => {
       const result = async () => {
-        await adminService.deleteInterest(
+        await adminService.deleteTag(
           'ff5d8359-b6f7-4a08-893f-fbdbb53a79b3',
           mockEducation.id,
           mockUser,
@@ -1237,15 +1225,11 @@ describe('AdminService', () => {
       };
       await expect(result).rejects.toThrow(UnauthorizedException);
     });
-    it('calls the service to delete an interest but the interest is not found. -> KO', async () => {
+    it('calls the service to delete a tag but the interest is not found. -> KO', async () => {
       mockDeleteResult.affected = 0;
-      interestRepository.delete.mockResolvedValue(mockDeleteResult);
+      tagRepository.delete.mockResolvedValue(mockDeleteResult);
       const result = async () => {
-        await adminService.deleteInterest(
-          mockUser.id,
-          mockInterest.id,
-          mockUser,
-        );
+        await adminService.deleteTag(mockUser.id, mockTag.id, mockUser);
       };
       await expect(result).rejects.toThrow(NotFoundException);
     });

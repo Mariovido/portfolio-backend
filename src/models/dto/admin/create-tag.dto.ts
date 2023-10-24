@@ -1,17 +1,13 @@
 import { ApiProperty } from '@nestjs/swagger';
 import { IsAlphanumeric, IsUUID, MaxLength } from 'class-validator';
 
-export class InterestDto {
-  @IsUUID()
-  @ApiProperty()
-  id: string;
-
+export class CreateTagDto {
   @IsAlphanumeric()
-  @MaxLength(20)
+  @MaxLength(30)
   @ApiProperty()
-  interestName: string;
+  tag: string;
 
   @IsUUID()
   @ApiProperty()
-  user: string;
+  workExperience: string;
 }

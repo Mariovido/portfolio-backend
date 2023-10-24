@@ -5,6 +5,7 @@ export class CreateWorkExperienceDtoFactory {
     const createWorkExperienceDto = new CreateWorkExperienceDto();
     createWorkExperienceDto.role = 'developer';
     createWorkExperienceDto.company = 'The company';
+    createWorkExperienceDto.companyLink = 'http://wan.pr/jol';
     createWorkExperienceDto.startDate = new Date();
     createWorkExperienceDto.endDate = new Date();
 

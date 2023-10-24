@@ -13,12 +13,12 @@ export class EducationDtoFactory {
     educationDto.courseName = mockUpdateEducation
       ? mockUpdateEducation.courseName
       : mockEducation.courseName;
-    educationDto.typeOfDegree = mockUpdateEducation
-      ? mockUpdateEducation.typeOfDegree
-      : mockEducation.typeOfDegree;
     educationDto.institute = mockUpdateEducation
       ? mockUpdateEducation.institute
       : mockEducation.institute;
+    educationDto.instituteLink = mockUpdateEducation
+      ? mockUpdateEducation.instituteLink
+      : mockEducation.instituteLink;
     educationDto.startDate = mockUpdateEducation
       ? mockUpdateEducation.startDate
       : mockEducation.startDate;

@@ -3,6 +3,7 @@ import { User } from '../../../../src/repositories/entities/user.entity';
 import { BulletPointFactory } from './bullet-point.entity.factory';
 import { TechnologyFactory } from './technology.entity.factory';
 
+// TODO - RETOCAR
 export class ProjectFactory {
   static build(): Project {
     const project = new Project();

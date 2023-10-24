@@ -1,19 +1,18 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { IsString, IsEnum, IsNumber, Max, Min } from 'class-validator';
-import { LevelSkillEnum } from '../../enums/LevelSkill.enum';
+import { IsString, IsNumber, Max, Min, IsUUID } from 'class-validator';
 
 export class SkillPortfolioDto {
+  @IsUUID()
+  @ApiProperty()
+  id: string;
+
   @IsString()
   @ApiProperty()
-  skillName: string;
-
-  @IsEnum(LevelSkillEnum)
-  @ApiProperty()
-  level: LevelSkillEnum;
+  name: string;
 
   @IsNumber()
   @Min(1)
   @Max(100)
   @ApiProperty()
-  rating: number;
+  progress: number;
 }

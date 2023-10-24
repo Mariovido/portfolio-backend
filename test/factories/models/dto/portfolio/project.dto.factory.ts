@@ -1,6 +1,7 @@
 import { ProjectPortfolioDto } from '../../../../../src/models/dto/portfolio/project-portfolio.dto';
 import { Project } from '../../../../../src/repositories/entities/project.entity';
 
+// TODO - RETOCAR
 export class ProjectPortfolioDtoFactory {
   static build(mockProject: Project): ProjectPortfolioDto {
     const projectPortfolioDto = new ProjectPortfolioDto();

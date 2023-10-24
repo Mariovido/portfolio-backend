@@ -19,5 +19,5 @@ export class UpdateUserDto {
   @IsString()
   @MaxLength(1000)
   @ApiProperty()
-  aboutMe: string;
+  description: string;
 }

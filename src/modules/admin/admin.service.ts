@@ -28,9 +28,8 @@ import { ContactRepository } from '../../repositories/contact.repository';
 import { CreateBulletPointDto } from '../../models/dto/admin/create-bullet-point.dto';
 import { BulletPointDto } from '../../models/dto/bullet-point.dto';
 import { BulletPointRepository } from '../../repositories/bullet-point.repository';
-import { InterestDto } from '../../models/dto/interest.dto';
-import { CreateInterestDto } from '../../models/dto/admin/create-interest.dto';
-import { InterestRepository } from '../../repositories/interest.repository';
+import { CreateTagDto } from '../../models/dto/admin/create-tag.dto';
+import { TagRepository } from '../../repositories/tag.repository';
 import { CreateTechnologyDto } from '../../models/dto/admin/create-technology.dto';
 import { TechnologyDto } from '../../models/dto/technology.dto';
 import { TechnologyRepository } from '../../repositories/technology.repository';
@@ -39,9 +38,13 @@ import { UpdateProjectDto } from '../../models/dto/admin/update-project.dto';
 import { UpdateSkillDto } from '../../models/dto/admin/update-skill.dto';
 import { UpdateContactDto } from '../../models/dto/admin/update-contact.dto';
 import { UpdateBulletPointDto } from '../../models/dto/admin/update-bullet-point.dto';
-import { UpdateInterestDto } from '../../models/dto/admin/update-interest.dto';
+import { UpdateTagDto } from '../../models/dto/admin/update-tag.dto';
 import { UpdateTechnologyDto } from '../../models/dto/admin/update-technology.dto';
 import { BulletPoint } from '../../repositories/entities/bullet-point.entity';
+import { FooterDto } from '../../models/dto/footer.dto';
+import { ParagraphDto } from '../../models/dto/paragraph.dto';
+import { LinkDto } from '../../models/dto/link.dto';
+import { TagDto } from '../../models/dto/tag.dto';
 
 @Injectable()
 export class AdminService {
@@ -55,7 +58,7 @@ export class AdminService {
     private readonly skillRepository: SkillRepository,
     private readonly contactRepository: ContactRepository,
     private readonly bulletPointRepository: BulletPointRepository,
-    private readonly interestRepository: InterestRepository,
+    private readonly tagRepository: TagRepository,
     private readonly technologyRepository: TechnologyRepository,
   ) {}
 
@@ -78,14 +81,14 @@ export class AdminService {
     userDto.firstName = userFound.firstName;
     userDto.lastName = userFound.lastName;
     userDto.dateOfBirth = userFound.dateOfBirth;
-    userDto.aboutMe = userFound.aboutMe;
+    userDto.description = userFound.description;
 
-    const interests = userFound.interests.map((interest) => {
-      const interestAux = new InterestDto();
-      interestAux.id = interest.id;
-      return interestAux;
+    const about = userFound.about.map((paragraph) => {
+      const paragraphAux = new ParagraphDto();
+      paragraphAux.id = paragraph.id;
+      return paragraphAux;
     });
-    userDto.interests = interests;
+    userDto.about = about;
 
     const educations = userFound.educations.map((education) => {
       const educationAux = new EducationDto();
@@ -119,6 +122,10 @@ export class AdminService {
     contact.id = userFound.contact?.id;
     userDto.contact = contact;
 
+    const footer = new FooterDto();
+    footer.id = userFound.footer.id;
+    userDto.footer = footer;
+
     return userDto;
   }
 
@@ -148,7 +155,7 @@ export class AdminService {
     userDto.firstName = userUpdated.firstName;
     userDto.lastName = userUpdated.lastName;
     userDto.dateOfBirth = userUpdated.dateOfBirth;
-    userDto.aboutMe = userUpdated.aboutMe;
+    userDto.description = userUpdated.description;
 
     return userDto;
   }
@@ -176,8 +183,8 @@ export class AdminService {
       const educationDto = new EducationDto();
       educationDto.id = educationItem.id;
       educationDto.courseName = educationItem.courseName;
-      educationDto.typeOfDegree = educationItem.typeOfDegree;
       educationDto.institute = educationItem.institute;
+      educationDto.instituteLink = educationItem.instituteLink;
       educationDto.startDate = educationItem.startDate;
       educationDto.endDate = educationItem.endDate;
       educationDto.grade = educationItem.grade;
@@ -213,8 +220,8 @@ export class AdminService {
     const educationDto = new EducationDto();
     educationDto.id = educationCreated.id;
     educationDto.courseName = educationCreated.courseName;
-    educationDto.typeOfDegree = educationCreated.typeOfDegree;
     educationDto.institute = educationCreated.institute;
+    educationDto.instituteLink = educationCreated.instituteLink;
     educationDto.startDate = educationCreated.startDate;
     educationDto.endDate = educationCreated.endDate;
     educationDto.grade = educationCreated.grade;
@@ -259,8 +266,8 @@ export class AdminService {
     const educationDto = new EducationDto();
     educationDto.id = educationUpdated.id;
     educationDto.courseName = educationUpdated.courseName;
-    educationDto.typeOfDegree = educationUpdated.typeOfDegree;
     educationDto.institute = educationUpdated.institute;
+    educationDto.instituteLink = educationUpdated.instituteLink;
     educationDto.startDate = educationUpdated.startDate;
     educationDto.endDate = educationUpdated.endDate;
     educationDto.grade = educationUpdated.grade;
@@ -325,16 +332,44 @@ export class AdminService {
       workExperienceDto.id = workExperienceItem.id;
       workExperienceDto.role = workExperienceItem.role;
       workExperienceDto.company = workExperienceItem.company;
+      workExperienceDto.companyLink = workExperienceItem.companyLink;
       workExperienceDto.startDate = workExperienceItem.startDate;
       workExperienceDto.endDate = workExperienceItem.endDate;
 
       const bulletPoints = workExperienceItem.bulletPoints.map(
-        (bulletPoint) => bulletPoint.bulletPoint,
+        (bulletPoint) => {
+          const bulletPointDto = new BulletPointDto();
+          bulletPointDto.id = bulletPoint.id;
+          bulletPointDto.bulletPoint = bulletPoint.bulletPoint;
+
+          return bulletPointDto;
+        },
       );
       workExperienceDto.bulletPoints = bulletPoints;
-      workExperienceDto.user = id;
+
+      const links = workExperienceItem.links.map((link) => {
+        const linkDto = new LinkDto();
+        linkDto.id = link.id;
+        linkDto.tag = link.tag;
+        linkDto.link = link.link;
+        linkDto.name = link.name;
+        linkDto.target = link.target;
+
+        return linkDto;
+      });
+      workExperienceDto.links = links;
+
+      const tags = workExperienceItem.tags.map((tag) => {
+        const tagDto = new TagDto();
+        tagDto.id = tag.id;
+        tagDto.tag = tag.tag;
+
+        return tagDto;
+      });
+      workExperienceDto.tags = tags;
 
       workExperienceDtoList.push(workExperienceDto);
+      workExperienceDto.user = id;
     });
 
     return workExperienceDtoList;
@@ -448,141 +483,141 @@ export class AdminService {
     );
   }
 
-  async getProjects(id: string, user: User): Promise<ProjectDto[]> {
-    this.logger.verbose(
-      `Checking if the user that gets is the same to the one that is getting. user: ${user.id} userGetting: ${id}`,
-    );
-    if (user.id !== id)
-      throw new UnauthorizedException(
-        `User with ID "${user.id}" can not get user with ID "${id}"`,
-      );
+  // async getProjects(id: string, user: User): Promise<ProjectDto[]> {
+  //   this.logger.verbose(
+  //     `Checking if the user that gets is the same to the one that is getting. user: ${user.id} userGetting: ${id}`,
+  //   );
+  //   if (user.id !== id)
+  //     throw new UnauthorizedException(
+  //       `User with ID "${user.id}" can not get user with ID "${id}"`,
+  //     );
 
-    this.logger.verbose(`Retrieving the project by user ID. ID: ${id}`);
-    const project = await this.projectRepository.findProjectsByUserId(id);
-    if (!project.length)
-      throw new NotFoundException(
-        `There is no project for the user with ID "${id}"`,
-      );
+  //   this.logger.verbose(`Retrieving the project by user ID. ID: ${id}`);
+  //   const project = await this.projectRepository.findProjectsByUserId(id);
+  //   if (!project.length)
+  //     throw new NotFoundException(
+  //       `There is no project for the user with ID "${id}"`,
+  //     );
 
-    this.logger.verbose(`Creating the project DTO of the user. ID: ${id}`);
-    const projectDtoList: ProjectDto[] = [];
-    project.forEach((projectItem) => {
-      const projectDto = new ProjectDto();
-      projectDto.id = projectItem.id;
-      projectDto.projectName = projectItem.projectName;
+  //   this.logger.verbose(`Creating the project DTO of the user. ID: ${id}`);
+  //   const projectDtoList: ProjectDto[] = [];
+  //   project.forEach((projectItem) => {
+  //     const projectDto = new ProjectDto();
+  //     projectDto.id = projectItem.id;
+  //     projectDto.projectName = projectItem.projectName;
 
-      const technologies = projectItem.technologies.map(
-        (technology) => technology.technologyName,
-      );
-      projectDto.technologies = technologies;
+  //     const technologies = projectItem.technologies.map(
+  //       (technology) => technology.technologyName,
+  //     );
+  //     projectDto.technologies = technologies;
 
-      const bulletPoints = projectItem.bulletPoints.map(
-        (bulletPoint) => bulletPoint.bulletPoint,
-      );
-      projectDto.bulletPoints = bulletPoints;
-      projectDto.user = id;
+  //     const bulletPoints = projectItem.bulletPoints.map(
+  //       (bulletPoint) => bulletPoint.bulletPoint,
+  //     );
+  //     projectDto.bulletPoints = bulletPoints;
+  //     projectDto.user = id;
 
-      projectDtoList.push(projectDto);
-    });
+  //     projectDtoList.push(projectDto);
+  //   });
 
-    return projectDtoList;
-  }
+  //   return projectDtoList;
+  // }
 
-  async createProject(
-    id: string,
-    createProjectDto: CreateProjectDto,
-    user: User,
-  ): Promise<ProjectDto> {
-    this.logger.verbose(
-      `Checking if the user that creates is the same to the one that project will be created. user: ${user.id} userToProject: ${id}`,
-    );
+  // async createProject(
+  //   id: string,
+  //   createProjectDto: CreateProjectDto,
+  //   user: User,
+  // ): Promise<ProjectDto> {
+  //   this.logger.verbose(
+  //     `Checking if the user that creates is the same to the one that project will be created. user: ${user.id} userToProject: ${id}`,
+  //   );
 
-    if (user.id !== id)
-      throw new UnauthorizedException(
-        `User with ID "${user.id}" can not create project for user with ID "${id}"`,
-      );
+  //   if (user.id !== id)
+  //     throw new UnauthorizedException(
+  //       `User with ID "${user.id}" can not create project for user with ID "${id}"`,
+  //     );
 
-    this.logger.verbose(`Creating a project`);
-    const projectCreated = await this.projectRepository.createProject(
-      id,
-      createProjectDto,
-    );
+  //   this.logger.verbose(`Creating a project`);
+  //   const projectCreated = await this.projectRepository.createProject(
+  //     id,
+  //     createProjectDto,
+  //   );
 
-    this.logger.verbose(`Creating the project DTO of the user. ID: ${id}`);
-    const projectDto = new ProjectDto();
-    projectDto.id = projectCreated.id;
-    projectDto.projectName = projectCreated.projectName;
-    projectDto.user = projectCreated.user.id;
+  //   this.logger.verbose(`Creating the project DTO of the user. ID: ${id}`);
+  //   const projectDto = new ProjectDto();
+  //   projectDto.id = projectCreated.id;
+  //   projectDto.projectName = projectCreated.projectName;
+  //   projectDto.user = projectCreated.user.id;
 
-    return projectDto;
-  }
+  //   return projectDto;
+  // }
 
-  async updateProject(
-    id: string,
-    idProject: string,
-    updateProjectDto: UpdateProjectDto,
-    user: User,
-  ): Promise<ProjectDto> {
-    this.logger.verbose(
-      `Checking if the user that edits is the same to the one that project will be edited. user: ${user.id} userEdited: ${id}`,
-    );
-    if (user.id !== id)
-      throw new UnauthorizedException(
-        `User with ID "${user.id}" can not edit project of the user with ID "${id}"`,
-      );
+  // async updateProject(
+  //   id: string,
+  //   idProject: string,
+  //   updateProjectDto: UpdateProjectDto,
+  //   user: User,
+  // ): Promise<ProjectDto> {
+  //   this.logger.verbose(
+  //     `Checking if the user that edits is the same to the one that project will be edited. user: ${user.id} userEdited: ${id}`,
+  //   );
+  //   if (user.id !== id)
+  //     throw new UnauthorizedException(
+  //       `User with ID "${user.id}" can not edit project of the user with ID "${id}"`,
+  //     );
 
-    const project = await this.projectRepository.findOneBy({
-      id: idProject,
-      user: { id },
-    });
+  //   const project = await this.projectRepository.findOneBy({
+  //     id: idProject,
+  //     user: { id },
+  //   });
 
-    if (!project)
-      throw new NotFoundException(
-        `User with ID "${id}" has no project assigned with ID "${idProject}"`,
-      );
+  //   if (!project)
+  //     throw new NotFoundException(
+  //       `User with ID "${id}" has no project assigned with ID "${idProject}"`,
+  //     );
 
-    this.logger.verbose(`Updating the project with the new information`);
-    const projectUpdated = await this.projectRepository.updateProject(
-      project,
-      updateProjectDto,
-    );
+  //   this.logger.verbose(`Updating the project with the new information`);
+  //   const projectUpdated = await this.projectRepository.updateProject(
+  //     project,
+  //     updateProjectDto,
+  //   );
 
-    this.logger.verbose(
-      `Creating the project updated DTO of the user. ID: ${id}`,
-    );
-    const projectDto = new ProjectDto();
-    projectDto.id = projectUpdated.id;
-    projectDto.projectName = projectUpdated.projectName;
-    projectDto.user = projectUpdated.user.id;
+  //   this.logger.verbose(
+  //     `Creating the project updated DTO of the user. ID: ${id}`,
+  //   );
+  //   const projectDto = new ProjectDto();
+  //   projectDto.id = projectUpdated.id;
+  //   projectDto.projectName = projectUpdated.projectName;
+  //   projectDto.user = projectUpdated.user.id;
 
-    return projectDto;
-  }
+  //   return projectDto;
+  // }
 
-  async deleteProject(
-    id: string,
-    idProject: string,
-    user: User,
-  ): Promise<void> {
-    this.logger.verbose(
-      `Checking if the user that deletes is the same to the one that project will be deleted. user: ${user.id} userEdited: ${id}`,
-    );
-    if (user.id !== id)
-      throw new UnauthorizedException(
-        `User with ID "${user.id}" can not delete project of user with ID "${id}"`,
-      );
+  // async deleteProject(
+  //   id: string,
+  //   idProject: string,
+  //   user: User,
+  // ): Promise<void> {
+  //   this.logger.verbose(
+  //     `Checking if the user that deletes is the same to the one that project will be deleted. user: ${user.id} userEdited: ${id}`,
+  //   );
+  //   if (user.id !== id)
+  //     throw new UnauthorizedException(
+  //       `User with ID "${user.id}" can not delete project of user with ID "${id}"`,
+  //     );
 
-    const result = await this.projectRepository.delete({
-      id: idProject,
-      user: { id },
-    });
+  //   const result = await this.projectRepository.delete({
+  //     id: idProject,
+  //     user: { id },
+  //   });
 
-    if (result.affected === 0)
-      throw new NotFoundException(`Project with ID "${id}" not found`);
+  //   if (result.affected === 0)
+  //     throw new NotFoundException(`Project with ID "${id}" not found`);
 
-    return this.logger.verbose(
-      `Project deleted successfully for the user. ID: ${id}`,
-    );
-  }
+  //   return this.logger.verbose(
+  //     `Project deleted successfully for the user. ID: ${id}`,
+  //   );
+  // }
 
   async getSkills(id: string, user: User): Promise<SkillDto[]> {
     this.logger.verbose(
@@ -606,7 +641,6 @@ export class AdminService {
       const skillDto = new SkillDto();
       skillDto.id = skillItem.id;
       skillDto.skillName = skillItem.skillName;
-      skillDto.level = skillItem.level;
       skillDto.rating = skillItem.rating;
       skillDto.user = id;
 
@@ -640,7 +674,6 @@ export class AdminService {
     const skillDto = new SkillDto();
     skillDto.id = skillCreated.id;
     skillDto.skillName = skillCreated.skillName;
-    skillDto.level = skillCreated.level;
     skillDto.rating = skillCreated.rating;
     skillDto.user = skillCreated.user.id;
 
@@ -683,7 +716,6 @@ export class AdminService {
     const skillDto = new SkillDto();
     skillDto.id = skillUpdated.id;
     skillDto.skillName = skillUpdated.skillName;
-    skillDto.level = skillUpdated.level;
     skillDto.rating = skillUpdated.rating;
     skillDto.user = skillUpdated.user.id;
 
@@ -732,9 +764,19 @@ export class AdminService {
     const contactDto = new ContactDto();
     contactDto.id = contact.id;
     contactDto.email = contact.email;
-    contactDto.linkedinUrl = contact.linkedinUrl;
-    contactDto.githubUrl = contact.githubUrl;
+
+    const links = contact.links.map((link) => {
+      const linkDto = new LinkDto();
+      linkDto.id = link.id;
+      linkDto.link = link.link;
+      linkDto.name = link.name;
+      linkDto.tag = link.tag;
+      linkDto.target = link.target;
+
+      return linkDto;
+    });
     contactDto.user = id;
+    contactDto.links = links;
 
     return contactDto;
   }
@@ -762,8 +804,6 @@ export class AdminService {
     const contactDto = new ContactDto();
     contactDto.id = contactCreated.id;
     contactDto.email = contactCreated.email;
-    contactDto.linkedinUrl = contactCreated.linkedinUrl;
-    contactDto.githubUrl = contactCreated.githubUrl;
     contactDto.user = contactCreated.user.id;
 
     return contactDto;
@@ -805,8 +845,6 @@ export class AdminService {
     const contactDto = new ContactDto();
     contactDto.id = contactUpdated.id;
     contactDto.email = contactUpdated.email;
-    contactDto.githubUrl = contactUpdated.githubUrl;
-    contactDto.linkedinUrl = contactUpdated.linkedinUrl;
     contactDto.user = contactUpdated.user.id;
 
     return contactDto;
@@ -1005,7 +1043,7 @@ export class AdminService {
     );
   }
 
-  async getInterests(id: string, user: User): Promise<InterestDto[]> {
+  async getTags(id: string, user: User): Promise<TagDto[]> {
     this.logger.verbose(
       `Checking if the user that gets is the same to the one that is getting. user: ${user.id} userGetting: ${id}`,
     );
@@ -1014,251 +1052,249 @@ export class AdminService {
         `User with ID "${user.id}" can not get user with ID "${id}"`,
       );
 
-    this.logger.verbose(`Retrieving the interest by user ID. ID: ${id}`);
-    const interest = await this.interestRepository.findInterestByUserId(id);
-    if (!interest.length)
+    this.logger.verbose(
+      `Retrieving the work experiences by user ID. ID: ${id}`,
+    );
+    const workExperiences =
+      await this.workExperienceRepository.findWorkExperienceByUserId(id);
+
+    if (!workExperiences.length)
       throw new NotFoundException(
-        `There is no interest for the user with ID "${id}"`,
+        `There is no work experiences for the user with ID "${id}"`,
       );
 
-    this.logger.verbose(`Creating the interest DTO of the user. ID: ${id}`);
-    const interestDtoList: InterestDto[] = [];
-    interest.forEach((interestItem) => {
-      const interestDto = new InterestDto();
-      interestDto.id = interestItem.id;
-      interestDto.interestName = interestItem.interestName;
-      interestDto.user = id;
+    this.logger.verbose(`Retrieving the tag by user ID. ID: ${id}`);
+    const tag =
+      await this.tagRepository.findTagByWorkExperiences(workExperiences);
+    if (!tag.length)
+      throw new NotFoundException(
+        `There is no tags for the user with ID "${id}"`,
+      );
 
-      interestDtoList.push(interestDto);
+    this.logger.verbose(`Creating the tag DTO of the user. ID: ${id}`);
+    const tagDtoList: TagDto[] = [];
+    tag.forEach((tagItem) => {
+      const tagDto = new TagDto();
+      tagDto.id = tagItem.id;
+      tagDto.tag = tagItem.tag;
+      tagDto.workExperience = tagItem.workExperience.id;
+
+      tagDtoList.push(tagDto);
     });
 
-    return interestDtoList;
+    return tagDtoList;
   }
 
-  async createInterest(
+  async createTag(
     id: string,
-    createInterestDto: CreateInterestDto,
+    createTagDto: CreateTagDto,
     user: User,
-  ): Promise<InterestDto> {
+  ): Promise<TagDto> {
     this.logger.verbose(
-      `Checking if the user that creates is the same to the one that interest will be created. user: ${user.id} userToInterest: ${id}`,
+      `Checking if the user that creates is the same to the one that tag will be created. user: ${user.id} userToTag: ${id}`,
     );
     if (user.id !== id)
       throw new UnauthorizedException(
-        `User with ID "${user.id}" can not create interest for user with ID "${id}"`,
+        `User with ID "${user.id}" can not create tag for user with ID "${id}"`,
       );
 
-    this.logger.verbose(`Creating a interest`);
-    const interestCreated = await this.interestRepository.createInterest(
-      id,
-      createInterestDto,
-    );
+    this.logger.verbose(`Creating a tag`);
+    const tagCreated = await this.tagRepository.createTag(id, createTagDto);
 
-    this.logger.verbose(`Creating the interest DTO of the user. ID: ${id}`);
-    const interestDto = new InterestDto();
-    interestDto.id = interestCreated.id;
-    interestDto.interestName = interestCreated.interestName;
-    interestDto.user = interestCreated.user.id;
+    this.logger.verbose(`Creating the tag DTO of the user. ID: ${id}`);
+    const tagDto = new TagDto();
+    tagDto.id = tagCreated.id;
+    tagDto.tag = tagCreated.tag;
+    tagDto.workExperience = tagCreated.workExperience.id;
 
-    return interestDto;
+    return tagDto;
   }
 
-  async updateInterest(
+  async updateTag(
     id: string,
-    idInterest: string,
-    updateInterestDto: UpdateInterestDto,
+    idTag: string,
+    updateTagDto: UpdateTagDto,
     user: User,
-  ): Promise<InterestDto> {
+  ): Promise<TagDto> {
     this.logger.verbose(
-      `Checking if the user that edits is the same to the one that interest will be edited. user: ${user.id} userEdited: ${id}`,
+      `Checking if the user that edits is the same to the one that tag will be edited. user: ${user.id} userEdited: ${id}`,
     );
     if (user.id !== id)
       throw new UnauthorizedException(
-        `User with ID "${user.id}" can not edit interest of the user with ID "${id}"`,
+        `User with ID "${user.id}" can not edit tag of the user with ID "${id}"`,
       );
 
-    const interest = await this.interestRepository.findOneBy({
-      id: idInterest,
-      user: { id },
+    const tag = await this.tagRepository.findOneBy({
+      id: idTag,
     });
 
-    if (!interest)
+    if (!tag)
       throw new NotFoundException(
-        `User with ID "${id}" has no interest assigned with ID "${idInterest}"`,
+        `User with ID "${id}" has no tag assigned with ID "${idTag}"`,
       );
 
-    this.logger.verbose(`Updating the interest with the new information`);
-    const interestUpdated = await this.interestRepository.updateInterest(
-      interest,
-      updateInterestDto,
-    );
+    this.logger.verbose(`Updating the tag with the new information`);
+    const tagUpdated = await this.tagRepository.updateTag(tag, updateTagDto);
 
-    this.logger.verbose(
-      `Creating the interest updated DTO of the user. ID: ${id}`,
-    );
-    const interestDto = new InterestDto();
-    interestDto.id = interestUpdated.id;
-    interestDto.interestName = interestUpdated.interestName;
-    interestDto.user = interestUpdated.user.id;
+    this.logger.verbose(`Creating the tag updated DTO of the user. ID: ${id}`);
+    const tagDto = new TagDto();
+    tagDto.id = tagUpdated.id;
+    tagDto.tag = tagUpdated.tag;
+    tagDto.workExperience = tagUpdated.workExperience.id;
 
-    return interestDto;
+    return tagDto;
   }
 
-  async deleteInterest(
-    id: string,
-    idInterest: string,
-    user: User,
-  ): Promise<void> {
+  async deleteTag(id: string, idTag: string, user: User): Promise<void> {
     this.logger.verbose(
-      `Checking if the user that deletes is the same to the one that interest will be deleted. user: ${user.id} userEdited: ${id}`,
+      `Checking if the user that deletes is the same to the one that tag will be deleted. user: ${user.id} userEdited: ${id}`,
     );
     if (user.id !== id)
       throw new UnauthorizedException(
-        `User with ID "${user.id}" can not delete interest of user with ID "${id}"`,
+        `User with ID "${user.id}" can not delete tag of user with ID "${id}"`,
       );
 
-    const result = await this.interestRepository.delete({
-      id: idInterest,
-      user: { id },
+    const result = await this.tagRepository.delete({
+      id: idTag,
     });
 
     if (result.affected === 0)
-      throw new NotFoundException(`Interest with ID "${id}" not found`);
+      throw new NotFoundException(`Tag with ID "${id}" not found`);
 
     return this.logger.verbose(
-      `Interest deleted successfully for the user. ID: ${id}`,
+      `Tag deleted successfully for the user. ID: ${id}`,
     );
   }
 
-  async getTechnologies(id: string, user: User): Promise<TechnologyDto[]> {
-    this.logger.verbose(
-      `Checking if the user that gets is the same to the one that is getting. user: ${user.id} userGetting: ${id}`,
-    );
-    if (user.id !== id)
-      throw new UnauthorizedException(
-        `User with ID "${user.id}" can not get user with ID "${id}"`,
-      );
+  // async getTechnologies(id: string, user: User): Promise<TechnologyDto[]> {
+  //   this.logger.verbose(
+  //     `Checking if the user that gets is the same to the one that is getting. user: ${user.id} userGetting: ${id}`,
+  //   );
+  //   if (user.id !== id)
+  //     throw new UnauthorizedException(
+  //       `User with ID "${user.id}" can not get user with ID "${id}"`,
+  //     );
 
-    this.logger.verbose(`Retrieving the projects by user ID. ID: ${id}`);
-    const projects = await this.projectRepository.findProjectsByUserId(id);
+  //   this.logger.verbose(`Retrieving the projects by user ID. ID: ${id}`);
+  //   const projects = await this.projectRepository.findProjectsByUserId(id);
 
-    if (!projects.length)
-      throw new NotFoundException(
-        `There is no projects for the user with ID "${id}"`,
-      );
+  //   if (!projects.length)
+  //     throw new NotFoundException(
+  //       `There is no projects for the user with ID "${id}"`,
+  //     );
 
-    this.logger.verbose(`Retrieving the technology by user ID. ID: ${id}`);
-    const technology =
-      await this.technologyRepository.findTechnologyByProjects(projects);
-    if (!technology.length)
-      throw new NotFoundException(
-        `There is no technology for the user with ID "${id}"`,
-      );
+  //   this.logger.verbose(`Retrieving the technology by user ID. ID: ${id}`);
+  //   const technology =
+  //     await this.technologyRepository.findTechnologyByProjects(projects);
+  //   if (!technology.length)
+  //     throw new NotFoundException(
+  //       `There is no technology for the user with ID "${id}"`,
+  //     );
 
-    this.logger.verbose(`Creating the technology DTO of the user. ID: ${id}`);
-    const technologyDtoList: TechnologyDto[] = [];
-    technology.forEach((technologyItem) => {
-      const technologyDto = new TechnologyDto();
-      technologyDto.id = technologyItem.id;
-      technologyDto.technologyName = technologyItem.technologyName;
-      technologyDto.project = technologyItem.project.id;
+  //   this.logger.verbose(`Creating the technology DTO of the user. ID: ${id}`);
+  //   const technologyDtoList: TechnologyDto[] = [];
+  //   technology.forEach((technologyItem) => {
+  //     const technologyDto = new TechnologyDto();
+  //     technologyDto.id = technologyItem.id;
+  //     technologyDto.technologyName = technologyItem.technologyName;
+  //     technologyDto.project = technologyItem.project.id;
 
-      technologyDtoList.push(technologyDto);
-    });
+  //     technologyDtoList.push(technologyDto);
+  //   });
 
-    return technologyDtoList;
-  }
+  //   return technologyDtoList;
+  // }
 
-  async createTechnology(
-    id: string,
-    createTechnologyDto: CreateTechnologyDto,
-    user: User,
-  ): Promise<TechnologyDto> {
-    this.logger.verbose(
-      `Checking if the user that creates is the same to the one that technology will be created. user: ${user.id} userToTechnology: ${id}`,
-    );
-    if (user.id !== id)
-      throw new UnauthorizedException(
-        `User with ID "${user.id}" can not create technology for user with ID "${id}"`,
-      );
+  // async createTechnology(
+  //   id: string,
+  //   createTechnologyDto: CreateTechnologyDto,
+  //   user: User,
+  // ): Promise<TechnologyDto> {
+  //   this.logger.verbose(
+  //     `Checking if the user that creates is the same to the one that technology will be created. user: ${user.id} userToTechnology: ${id}`,
+  //   );
+  //   if (user.id !== id)
+  //     throw new UnauthorizedException(
+  //       `User with ID "${user.id}" can not create technology for user with ID "${id}"`,
+  //     );
 
-    this.logger.verbose(`Creating a technology`);
-    const technologyCreated = await this.technologyRepository.createTechnology(
-      id,
-      createTechnologyDto,
-    );
+  //   this.logger.verbose(`Creating a technology`);
+  //   const technologyCreated = await this.technologyRepository.createTechnology(
+  //     id,
+  //     createTechnologyDto,
+  //   );
 
-    this.logger.verbose(`Creating the technology DTO of the user. ID: ${id}`);
-    const technologyDto = new TechnologyDto();
-    technologyDto.id = technologyCreated.id;
-    technologyDto.technologyName = technologyCreated.technologyName;
-    technologyDto.project = technologyCreated.project.id;
+  //   this.logger.verbose(`Creating the technology DTO of the user. ID: ${id}`);
+  //   const technologyDto = new TechnologyDto();
+  //   technologyDto.id = technologyCreated.id;
+  //   technologyDto.technologyName = technologyCreated.technologyName;
+  //   technologyDto.project = technologyCreated.project.id;
 
-    return technologyDto;
-  }
+  //   return technologyDto;
+  // }
 
-  async updateTechnology(
-    id: string,
-    idTechnology: string,
-    updateTechnologyDto: UpdateTechnologyDto,
-    user: User,
-  ): Promise<TechnologyDto> {
-    this.logger.verbose(
-      `Checking if the user that edits is the same to the one that technology will be edited. user: ${user.id} userEdited: ${id}`,
-    );
-    if (user.id !== id)
-      throw new UnauthorizedException(
-        `User with ID "${user.id}" can not edit technology of the user with ID "${id}"`,
-      );
+  // async updateTechnology(
+  //   id: string,
+  //   idTechnology: string,
+  //   updateTechnologyDto: UpdateTechnologyDto,
+  //   user: User,
+  // ): Promise<TechnologyDto> {
+  //   this.logger.verbose(
+  //     `Checking if the user that edits is the same to the one that technology will be edited. user: ${user.id} userEdited: ${id}`,
+  //   );
+  //   if (user.id !== id)
+  //     throw new UnauthorizedException(
+  //       `User with ID "${user.id}" can not edit technology of the user with ID "${id}"`,
+  //     );
 
-    const technology = await this.technologyRepository.findOneBy({
-      id: idTechnology,
-    });
+  //   const technology = await this.technologyRepository.findOneBy({
+  //     id: idTechnology,
+  //   });
 
-    if (!technology)
-      throw new NotFoundException(
-        `User with ID "${id}" has no technology assigned with ID "${idTechnology}"`,
-      );
+  //   if (!technology)
+  //     throw new NotFoundException(
+  //       `User with ID "${id}" has no technology assigned with ID "${idTechnology}"`,
+  //     );
 
-    this.logger.verbose(`Updating the technology with the new information`);
-    const technologyUpdated = await this.technologyRepository.updateTechnology(
-      technology,
-      updateTechnologyDto,
-    );
+  //   this.logger.verbose(`Updating the technology with the new information`);
+  //   const technologyUpdated = await this.technologyRepository.updateTechnology(
+  //     technology,
+  //     updateTechnologyDto,
+  //   );
 
-    this.logger.verbose(
-      `Creating the technology updated DTO of the user. ID: ${id}`,
-    );
-    const interestDto = new TechnologyDto();
-    interestDto.id = technologyUpdated.id;
-    interestDto.technologyName = technologyUpdated.technologyName;
-    interestDto.project = technologyUpdated.project.id;
+  //   this.logger.verbose(
+  //     `Creating the technology updated DTO of the user. ID: ${id}`,
+  //   );
+  //   const interestDto = new TechnologyDto();
+  //   interestDto.id = technologyUpdated.id;
+  //   interestDto.technologyName = technologyUpdated.technologyName;
+  //   interestDto.project = technologyUpdated.project.id;
 
-    return interestDto;
-  }
+  //   return interestDto;
+  // }
 
-  async deleteTechnology(
-    id: string,
-    idTechnology: string,
-    user: User,
-  ): Promise<void> {
-    this.logger.verbose(
-      `Checking if the user that deletes is the same to the one that technology will be deleted. user: ${user.id} userEdited: ${id}`,
-    );
-    if (user.id !== id)
-      throw new UnauthorizedException(
-        `User with ID "${user.id}" can not delete technology of user with ID "${id}"`,
-      );
+  // async deleteTechnology(
+  //   id: string,
+  //   idTechnology: string,
+  //   user: User,
+  // ): Promise<void> {
+  //   this.logger.verbose(
+  //     `Checking if the user that deletes is the same to the one that technology will be deleted. user: ${user.id} userEdited: ${id}`,
+  //   );
+  //   if (user.id !== id)
+  //     throw new UnauthorizedException(
+  //       `User with ID "${user.id}" can not delete technology of user with ID "${id}"`,
+  //     );
 
-    const result = await this.technologyRepository.delete({
-      id: idTechnology,
-    });
+  //   const result = await this.technologyRepository.delete({
+  //     id: idTechnology,
+  //   });
 
-    if (result.affected === 0)
-      throw new NotFoundException(`Technology with ID "${id}" not found`);
+  //   if (result.affected === 0)
+  //     throw new NotFoundException(`Technology with ID "${id}" not found`);
 
-    return this.logger.verbose(
-      `Technology deleted successfully for the user. ID: ${id}`,
-    );
-  }
+  //   return this.logger.verbose(
+  //     `Technology deleted successfully for the user. ID: ${id}`,
+  //   );
+  // }
 }

@@ -4,18 +4,20 @@ import {
   IsAlpha,
   IsArray,
   IsDateString,
+  IsObject,
   IsOptional,
   IsString,
   IsUUID,
   MaxLength,
   MinLength,
 } from 'class-validator';
-import { InterestDto } from './interest.dto';
 import { EducationDto } from './education.dto';
 import { WorkExperienceDto } from './work-experience.dto';
 import { SkillDto } from './skill.dto';
 import { ProjectDto } from './project.dto';
 import { ContactDto } from './contact.dto';
+import { ParagraphDto } from './paragraph.dto';
+import { FooterDto } from './footer.dto';
 
 export class UserDto {
   @IsUUID()
@@ -46,11 +48,11 @@ export class UserDto {
   @MaxLength(1000)
   @IsOptional()
   @ApiProperty()
-  aboutMe?: string;
+  description?: string;
 
   @IsArray()
-  @Type(() => InterestDto)
-  interests: InterestDto[];
+  @Type(() => ParagraphDto)
+  about: ParagraphDto[];
 
   @IsArray()
   @Type(() => EducationDto)
@@ -68,7 +70,11 @@ export class UserDto {
   @Type(() => ProjectDto)
   projects: ProjectDto[];
 
-  @IsArray()
+  @IsObject()
   @Type(() => ContactDto)
   contact: ContactDto;
+
+  @IsObject()
+  @Type(() => FooterDto)
+  footer: FooterDto;
 }

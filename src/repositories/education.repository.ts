@@ -35,14 +35,14 @@ export class EducationRepository extends Repository<Education> {
     id: string,
     createEducationDto: CreateEducationDto,
   ): Promise<Education> {
-    const { courseName, typeOfDegree, institute, startDate, endDate, grade } =
+    const { courseName, institute, instituteLink, startDate, endDate, grade } =
       createEducationDto;
     this.logger.verbose(`Creating new education entity for user. ID: ${id}`);
 
     const education = this.educationRepository.create({
       courseName,
-      typeOfDegree,
       institute,
+      instituteLink,
       startDate,
       endDate,
       grade,

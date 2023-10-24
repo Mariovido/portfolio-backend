@@ -13,12 +13,6 @@ export class ContactDtoFactory {
     contactDto.email = mockContactUpdateDto
       ? mockContactUpdateDto.email
       : mockContact.email;
-    contactDto.linkedinUrl = mockContactUpdateDto
-      ? mockContactUpdateDto.linkedinUrl
-      : mockContact.linkedinUrl;
-    contactDto.githubUrl = mockContactUpdateDto
-      ? mockContactUpdateDto.githubUrl
-      : mockContact.githubUrl;
     contactDto.user = mockContact.user.id;
 
     return contactDto;

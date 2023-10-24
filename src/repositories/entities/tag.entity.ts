@@ -1,16 +1,18 @@
 import { Column, Entity, ManyToOne, PrimaryGeneratedColumn } from 'typeorm';
-import { User } from './user.entity';
 import { Exclude } from 'class-transformer';
+import { WorkExperience } from './work-experience.entity';
 
 @Entity()
-export class Interest {
+export class Tag {
   @PrimaryGeneratedColumn('uuid')
   id: string;
 
   @Column()
-  interestName: string;
+  tag: string;
 
-  @ManyToOne(() => User, (user) => user.interests, { eager: false })
+  @ManyToOne(() => WorkExperience, (workExperience) => workExperience.tags, {
+    eager: false,
+  })
   @Exclude({ toPlainOnly: true })
-  user: User;
+  workExperience: WorkExperience;
 }

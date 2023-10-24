@@ -32,12 +32,11 @@ export class SkillRepository extends Repository<Skill> {
     id: string,
     createSkillDto: CreateSkillDto,
   ): Promise<Skill> {
-    const { skillName, level, rating } = createSkillDto;
+    const { skillName, rating } = createSkillDto;
     this.logger.verbose(`Creating new skill entity for user. ID: ${id}`);
 
     const skill = this.skillRepository.create({
       skillName,
-      level,
       rating,
       user: { id },
     });

@@ -16,9 +16,9 @@ export class UserDtoFactory {
     userDto.dateOfBirth = mockUpdateUser
       ? mockUpdateUser.dateOfBirth
       : mockUser.dateOfBirth;
-    userDto.aboutMe = mockUpdateUser
-      ? mockUpdateUser.aboutMe
-      : mockUser.aboutMe;
+    userDto.description = mockUpdateUser
+      ? mockUpdateUser.description
+      : mockUser.description;
 
     return userDto;
   }

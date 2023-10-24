@@ -11,10 +11,10 @@ export class Education {
   courseName: string;
 
   @Column()
-  typeOfDegree: string;
+  institute: string;
 
   @Column()
-  institute: string;
+  instituteLink: string;
 
   @Column({ type: 'timestamptz' })
   startDate: Date;

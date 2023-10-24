@@ -6,13 +6,13 @@ import {
   ApiResponse,
   ApiTags,
 } from '@nestjs/swagger';
-import { PersonalInformationDto } from '../../models/dto/portfolio/personal-information.dto';
+import { HeaderDto } from '../../models/dto/portfolio/header.dto';
 import { EducationPortfolioDto } from '../../models/dto/portfolio/education-portfolio.dto';
 import { WorkExperiencePortfolioDto } from '../../models/dto/portfolio/work-experience.dto';
 import { SkillPortfolioDto } from '../../models/dto/portfolio/skill-portfolio.dto';
 import { ProjectPortfolioDto } from '../../models/dto/portfolio/project-portfolio.dto';
-import { ContactPortfolioDto } from '../../models/dto/portfolio/contact-portfolio.dto';
-import { BannerDto } from '../../models/dto/portfolio/banner.dto';
+import { FooterPortfolioDto } from '../../models/dto/portfolio/footer-portfolio.dto';
+import { AboutDto } from '../../models/dto/portfolio/about.dto';
 
 @Controller('portfolio')
 @ApiBearerAuth()
@@ -22,18 +22,24 @@ export class PortfolioController {
 
   constructor(private portfolioService: PortfolioService) {}
 
-  @Get('/:id/personal-information')
+  @Get('/:id/header')
   @ApiOperation({
-    summary: 'Returns the personal information of a user',
+    summary: 'Returns the header of a user',
   })
-  @ApiResponse({ status: 200, type: PersonalInformationDto })
-  getPersonalInformation(
-    @Param('id') id: string,
-  ): Promise<PersonalInformationDto> {
-    this.logger.verbose(
-      `Retrieving the personal information of a user. ID: ${id}`,
-    );
-    return this.portfolioService.getPersonalInformation(id);
+  @ApiResponse({ status: 200, type: HeaderDto })
+  getHeader(@Param('id') id: string): Promise<HeaderDto> {
+    this.logger.verbose(`Retrieving the header of a user. ID: ${id}`);
+    return this.portfolioService.getHeader(id);
+  }
+
+  @Get('/:id/about')
+  @ApiOperation({
+    summary: 'Returns the about of a user',
+  })
+  @ApiResponse({ status: 200, type: AboutDto })
+  getAbout(@Param('id') id: string): Promise<AboutDto> {
+    this.logger.verbose(`Retrieving the about of a user. ID: ${id}`);
+    return this.portfolioService.getAbout(id);
   }
 
   @Get('/:id/education')
@@ -68,6 +74,7 @@ export class PortfolioController {
     return this.portfolioService.getSkills(id);
   }
 
+  // TODO - RETOCAR
   @Get('/:id/projects')
   @ApiOperation({
     summary: 'Returns the projects of a user',
@@ -78,23 +85,13 @@ export class PortfolioController {
     return this.portfolioService.getProjects(id);
   }
 
-  @Get('/:id/contacts')
+  @Get('/:id/footer')
   @ApiOperation({
-    summary: 'Returns the contacts of a user',
+    summary: 'Returns the footer of a user',
   })
-  @ApiResponse({ status: 200, type: ContactPortfolioDto })
-  getContacts(@Param('id') id: string): Promise<ContactPortfolioDto> {
-    this.logger.verbose(`Retrieving the contacts of a user. ID: ${id}`);
-    return this.portfolioService.getContacts(id);
-  }
-
-  @Get('/:id/banner')
-  @ApiOperation({
-    summary: 'Returns the banners of a user',
-  })
-  @ApiResponse({ status: 200, type: BannerDto })
-  getBanner(@Param('id') id: string): Promise<BannerDto> {
-    this.logger.verbose(`Retrieving the banner of a user. ID: ${id}`);
-    return this.portfolioService.getBanner(id);
+  @ApiResponse({ status: 200, type: FooterPortfolioDto })
+  getFooter(@Param('id') id: string): Promise<FooterPortfolioDto> {
+    this.logger.verbose(`Retrieving the footer of a user. ID: ${id}`);
+    return this.portfolioService.getFooter(id);
   }
 }

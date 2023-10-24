@@ -30,8 +30,7 @@ import { ContactDto } from '../../models/dto/contact.dto';
 import { CreateContactDto } from '../../models/dto/admin/create-contact.dto';
 import { BulletPointDto } from '../../models/dto/bullet-point.dto';
 import { CreateBulletPointDto } from '../../models/dto/admin/create-bullet-point.dto';
-import { InterestDto } from '../../models/dto/interest.dto';
-import { CreateInterestDto } from '../../models/dto/admin/create-interest.dto';
+import { CreateTagDto } from '../../models/dto/admin/create-tag.dto';
 import { TechnologyDto } from '../../models/dto/technology.dto';
 import { CreateTechnologyDto } from '../../models/dto/admin/create-technology.dto';
 import { UpdateWorkExperienceDto } from '../../models/dto/admin/update-work-experience.dto';
@@ -39,9 +38,11 @@ import { UpdateProjectDto } from '../../models/dto/admin/update-project.dto';
 import { UpdateSkillDto } from '../../models/dto/admin/update-skill.dto';
 import { UpdateContactDto } from '../../models/dto/admin/update-contact.dto';
 import { UpdateBulletPointDto } from '../../models/dto/admin/update-bullet-point.dto';
-import { UpdateInterestDto } from '../../models/dto/admin/update-interest.dto';
+import { UpdateTagDto } from '../../models/dto/admin/update-tag.dto';
 import { UpdateTechnologyDto } from '../../models/dto/admin/update-technology.dto';
+import { TagDto } from '../../models/dto/tag.dto';
 
+// TODO - RETOCAR
 @Controller('admin')
 @UseGuards(AuthGuard())
 @ApiTags('admin')
@@ -238,82 +239,86 @@ export class AdminController {
     return this.adminService.deleteWorkExperience(id, idWorkExperience, user);
   }
 
-  @Get('/:id/project')
-  @ApiOperation({
-    summary: 'Get projects',
-  })
-  @ApiResponse({ status: 200, type: [ProjectDto] })
-  getProjects(
-    @Param('id') id: string,
-    @GetUser() user: User,
-  ): Promise<ProjectDto[]> {
-    this.logger.verbose(
-      `User "${user.username}" getting projects. UserID: ${id}`,
-    );
-    return this.adminService.getProjects(id, user);
-  }
+  // TODO - RETOCAR
+  // @Get('/:id/project')
+  // @ApiOperation({
+  //   summary: 'Get projects',
+  // })
+  // @ApiResponse({ status: 200, type: [ProjectDto] })
+  // getProjects(
+  //   @Param('id') id: string,
+  //   @GetUser() user: User,
+  // ): Promise<ProjectDto[]> {
+  //   this.logger.verbose(
+  //     `User "${user.username}" getting projects. UserID: ${id}`,
+  //   );
+  //   return this.adminService.getProjects(id, user);
+  // }
 
-  @Post('/:id/project')
-  @ApiOperation({
-    summary: 'Creates a project',
-  })
-  @ApiResponse({ status: 201, type: ProjectDto })
-  createProject(
-    @Param('id') id: string,
-    @Body() createProjectDto: CreateProjectDto,
-    @GetUser() user: User,
-  ): Promise<ProjectDto> {
-    this.logger.verbose(
-      `User "${
-        user.username
-      }" creating a new project. UserID: ${id} Data: ${JSON.stringify(
-        createProjectDto,
-      )}`,
-    );
-    return this.adminService.createProject(id, createProjectDto, user);
-  }
+  // TODO - RETOCAR
+  // @Post('/:id/project')
+  // @ApiOperation({
+  //   summary: 'Creates a project',
+  // })
+  // @ApiResponse({ status: 201, type: ProjectDto })
+  // createProject(
+  //   @Param('id') id: string,
+  //   @Body() createProjectDto: CreateProjectDto,
+  //   @GetUser() user: User,
+  // ): Promise<ProjectDto> {
+  //   this.logger.verbose(
+  //     `User "${
+  //       user.username
+  //     }" creating a new project. UserID: ${id} Data: ${JSON.stringify(
+  //       createProjectDto,
+  //     )}`,
+  //   );
+  //   return this.adminService.createProject(id, createProjectDto, user);
+  // }
 
-  @Put('/:id/project/:idProject')
-  @ApiOperation({
-    summary: 'Updates a project',
-  })
-  @ApiResponse({ status: 200, type: ProjectDto })
-  updateProject(
-    @Param('id') id: string,
-    @Param('idProject') idProject: string,
-    @Body() updateProjectDto: UpdateProjectDto,
-    @GetUser() user: User,
-  ): Promise<ProjectDto> {
-    this.logger.verbose(
-      `User "${
-        user.username
-      }" updating a project. UserID: ${id} Data: ${JSON.stringify(
-        updateProjectDto,
-      )} ProjectID: ${idProject}`,
-    );
-    return this.adminService.updateProject(
-      id,
-      idProject,
-      updateProjectDto,
-      user,
-    );
-  }
+  // TODO - RETOCAR
+  // @Put('/:id/project/:idProject')
+  // @ApiOperation({
+  //   summary: 'Updates a project',
+  // })
+  // @ApiResponse({ status: 200, type: ProjectDto })
+  // updateProject(
+  //   @Param('id') id: string,
+  //   @Param('idProject') idProject: string,
+  //   @Body() updateProjectDto: UpdateProjectDto,
+  //   @GetUser() user: User,
+  // ): Promise<ProjectDto> {
+  //   this.logger.verbose(
+  //     `User "${
+  //       user.username
+  //     }" updating a project. UserID: ${id} Data: ${JSON.stringify(
+  //       updateProjectDto,
+  //     )} ProjectID: ${idProject}`,
+  //   );
+  //   return this.adminService.updateProject(
+  //     id,
+  //     idProject,
+  //     updateProjectDto,
+  //     user,
+  //   );
+  // }
 
-  @Delete('/:id/project/:idProject')
-  @ApiOperation({
-    summary: 'Deletes a project',
-  })
-  @ApiResponse({ status: 200 })
-  deleteProject(
-    @Param('id') id: string,
-    @Param('idProject') idProject: string,
-    @GetUser() user: User,
-  ): Promise<void> {
-    this.logger.verbose(
-      `User "${user.username}" deleting a project. UserID: ${id} ProjectID: ${idProject}`,
-    );
-    return this.adminService.deleteProject(id, idProject, user);
-  }
+  // TODO - RETOCAR
+  // @Delete('/:id/project/:idProject')
+  // @ApiOperation({
+  //   summary: 'Deletes a project',
+  // })
+  // @ApiResponse({ status: 200 })
+  // deleteProject(
+  //   @Param('id') id: string,
+  //   @Param('idProject') idProject: string,
+  //   @GetUser() user: User,
+  // ): Promise<void> {
+  //   this.logger.verbose(
+  //     `User "${user.username}" deleting a project. UserID: ${id} ProjectID: ${idProject}`,
+  //   );
+  //   return this.adminService.deleteProject(id, idProject, user);
+  // }
 
   @Get('/:id/skill')
   @ApiOperation({
@@ -541,157 +546,153 @@ export class AdminController {
     return this.adminService.deleteBulletPoint(id, idBulletPoint, user);
   }
 
-  @Get('/:id/interest')
+  @Get('/:id/tag')
   @ApiOperation({
-    summary: 'Get interests',
+    summary: 'Get tags',
   })
-  @ApiResponse({ status: 200, type: [InterestDto] })
-  getInterests(
-    @Param('id') id: string,
-    @GetUser() user: User,
-  ): Promise<InterestDto[]> {
-    this.logger.verbose(
-      `User "${user.username}" getting interests. UserID: ${id}`,
-    );
-    return this.adminService.getInterests(id, user);
+  @ApiResponse({ status: 200, type: [TagDto] })
+  getTags(@Param('id') id: string, @GetUser() user: User): Promise<TagDto[]> {
+    this.logger.verbose(`User "${user.username}" getting tags. UserID: ${id}`);
+    return this.adminService.getTags(id, user);
   }
 
-  @Post('/:id/interest')
+  @Post('/:id/tag')
   @ApiOperation({
-    summary: 'Creates an interest',
+    summary: 'Creates a tag',
   })
-  @ApiResponse({ status: 201, type: InterestDto })
-  createInterest(
+  @ApiResponse({ status: 201, type: TagDto })
+  createTag(
     @Param('id') id: string,
-    @Body() createInterestDto: CreateInterestDto,
+    @Body() createTagDto: CreateTagDto,
     @GetUser() user: User,
-  ): Promise<InterestDto> {
+  ): Promise<TagDto> {
     this.logger.verbose(
       `User "${
         user.username
-      }" creating an interest. UserID: ${id} Data: ${JSON.stringify(
-        createInterestDto,
-      )}`,
+      }" creating a tag. UserID: ${id} Data: ${JSON.stringify(createTagDto)}`,
     );
-    return this.adminService.createInterest(id, createInterestDto, user);
+    return this.adminService.createTag(id, createTagDto, user);
   }
 
-  @Put('/:id/interest/:idInterest')
+  @Put('/:id/tag/:idTag')
   @ApiOperation({
-    summary: 'Updates an interest',
+    summary: 'Updates a tag',
   })
-  @ApiResponse({ status: 200, type: InterestDto })
-  updateInterest(
+  @ApiResponse({ status: 200, type: TagDto })
+  updateTag(
     @Param('id') id: string,
-    @Param('idInterest') idInterest: string,
-    @Body() updateInterestDto: UpdateInterestDto,
+    @Param('idTag') idTag: string,
+    @Body() updateTagDto: UpdateTagDto,
     @GetUser() user: User,
-  ): Promise<InterestDto> {
+  ): Promise<TagDto> {
     this.logger.verbose(
       `User "${
         user.username
-      }" updating an interest. UserID: ${id} Data: ${JSON.stringify(
-        updateInterestDto,
-      )} InterestID: ${idInterest}`,
+      }" updating a tag. UserID: ${id} Data: ${JSON.stringify(
+        updateTagDto,
+      )} TagID: ${idTag}`,
     );
-    return this.adminService.updateInterest(
-      id,
-      idInterest,
-      updateInterestDto,
-      user,
-    );
+    return this.adminService.updateTag(id, idTag, updateTagDto, user);
   }
 
-  @Delete('/:id/interest/:idInterest')
+  @Delete('/:id/tag/:idTag')
   @ApiOperation({
-    summary: 'Deletes an interest',
+    summary: 'Deletes a tag',
   })
   @ApiResponse({ status: 200 })
-  deleteInterest(
+  deleteTag(
     @Param('id') id: string,
-    @Param('idInterest') idInterest: string,
+    @Param('idTag') idTag: string,
     @GetUser() user: User,
   ): Promise<void> {
     this.logger.verbose(
-      `User "${user.username}" deleting an interest. UserID: ${id} InterestID: ${idInterest}`,
+      `User "${user.username}" deleting a tag. UserID: ${id} TagID: ${idTag}`,
     );
-    return this.adminService.deleteInterest(id, idInterest, user);
+    return this.adminService.deleteTag(id, idTag, user);
   }
 
-  @Get('/:id/technology')
-  @ApiOperation({
-    summary: 'Get technologies',
-  })
-  @ApiResponse({ status: 200, type: [TechnologyDto] })
-  getTechnologies(
-    @Param('id') id: string,
-    @GetUser() user: User,
-  ): Promise<TechnologyDto[]> {
-    this.logger.verbose(
-      `User "${user.username}" getting technologies. UserID: ${id}`,
-    );
-    return this.adminService.getTechnologies(id, user);
-  }
+  // TODO - RETOCAR
+  // @Get('/:id/technology')
+  // @ApiOperation({
+  //   summary: 'Get technologies',
+  // })
+  // @ApiResponse({ status: 200, type: [TechnologyDto] })
+  // getTechnologies(
+  //   @Param('id') id: string,
+  //   @GetUser() user: User,
+  // ): Promise<TechnologyDto[]> {
+  //   this.logger.verbose(
+  //     `User "${user.username}" getting technologies. UserID: ${id}`,
+  //   );
+  //   return this.adminService.getTechnologies(id, user);
+  // }
 
-  @Post('/:id/technology')
-  @ApiOperation({
-    summary: 'Creates a technology',
-  })
-  @ApiResponse({ status: 201, type: TechnologyDto })
-  createTechnology(
-    @Param('id') id: string,
-    @Body() createTechnologyDto: CreateTechnologyDto,
-    @GetUser() user: User,
-  ): Promise<TechnologyDto> {
-    this.logger.verbose(
-      `User "${
-        user.username
-      }" creating a technology. UserID: ${id} Data: ${JSON.stringify(
-        createTechnologyDto,
-      )}`,
-    );
-    return this.adminService.createTechnology(id, createTechnologyDto, user);
-  }
+  // TODO - RETOCAR
+  // @Post('/:id/technology')
+  // @ApiOperation({
+  //   summary: 'Creates a technology',
+  // })
+  // @ApiResponse({ status: 201, type: TechnologyDto })
+  // createTechnology(
+  //   @Param('id') id: string,
+  //   @Body() createTechnologyDto: CreateTechnologyDto,
+  //   @GetUser() user: User,
+  // ): Promise<TechnologyDto> {
+  //   this.logger.verbose(
+  //     `User "${
+  //       user.username
+  //     }" creating a technology. UserID: ${id} Data: ${JSON.stringify(
+  //       createTechnologyDto,
+  //     )}`,
+  //   );
+  //   return this.adminService.createTechnology(id, createTechnologyDto, user);
+  // }
 
-  @Put('/:id/technology/:idTechnology')
-  @ApiOperation({
-    summary: 'Updates a technology',
-  })
-  @ApiResponse({ status: 200, type: TechnologyDto })
-  updateTechnology(
-    @Param('id') id: string,
-    @Param('idTechnology') idTechnology: string,
-    @Body() updateTechnologyDto: UpdateTechnologyDto,
-    @GetUser() user: User,
-  ): Promise<TechnologyDto> {
-    this.logger.verbose(
-      `User "${
-        user.username
-      }" updating a work experience. UserID: ${id} Data: ${JSON.stringify(
-        updateTechnologyDto,
-      )} TechnologyID: ${idTechnology}`,
-    );
-    return this.adminService.updateTechnology(
-      id,
-      idTechnology,
-      updateTechnologyDto,
-      user,
-    );
-  }
+  // TODO - RETOCAR
+  // @Put('/:id/technology/:idTechnology')
+  // @ApiOperation({
+  //   summary: 'Updates a technology',
+  // })
+  // @ApiResponse({ status: 200, type: TechnologyDto })
+  // updateTechnology(
+  //   @Param('id') id: string,
+  //   @Param('idTechnology') idTechnology: string,
+  //   @Body() updateTechnologyDto: UpdateTechnologyDto,
+  //   @GetUser() user: User,
+  // ): Promise<TechnologyDto> {
+  //   this.logger.verbose(
+  //     `User "${
+  //       user.username
+  //     }" updating a work experience. UserID: ${id} Data: ${JSON.stringify(
+  //       updateTechnologyDto,
+  //     )} TechnologyID: ${idTechnology}`,
+  //   );
+  //   return this.adminService.updateTechnology(
+  //     id,
+  //     idTechnology,
+  //     updateTechnologyDto,
+  //     user,
+  //   );
+  // }
 
-  @Delete('/:id/technology/:idTechnology')
-  @ApiOperation({
-    summary: 'Deletes a technology',
-  })
-  @ApiResponse({ status: 200 })
-  deleteTechnology(
-    @Param('id') id: string,
-    @Param('idTechnology') idTechnology: string,
-    @GetUser() user: User,
-  ): Promise<void> {
-    this.logger.verbose(
-      `User "${user.username}" deleting a technology. UserID: ${id} TechnologyID: ${idTechnology}`,
-    );
-    return this.adminService.deleteTechnology(id, idTechnology, user);
-  }
+  // TODO - RETOCAR
+  // @Delete('/:id/technology/:idTechnology')
+  // @ApiOperation({
+  //   summary: 'Deletes a technology',
+  // })
+  // @ApiResponse({ status: 200 })
+  // deleteTechnology(
+  //   @Param('id') id: string,
+  //   @Param('idTechnology') idTechnology: string,
+  //   @GetUser() user: User,
+  // ): Promise<void> {
+  //   this.logger.verbose(
+  //     `User "${user.username}" deleting a technology. UserID: ${id} TechnologyID: ${idTechnology}`,
+  //   );
+  //   return this.adminService.deleteTechnology(id, idTechnology, user);
+  // }
+
+  // TODO - DO FOOTER GET/POST/PUT/DELETE
+  // TODO - DO LINK GET/POST/PUT/DELETE
+  // TODO - DO PARAGRAPH GET/POST/PUT/DELETE
 }

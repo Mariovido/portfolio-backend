@@ -2,8 +2,7 @@ import { Test } from '@nestjs/testing';
 import { PortfolioService } from '../../../src/modules/portfolio/portfolio.service';
 import { UserFactory } from '../../factories/repositories/entities/user.entity.factory';
 import { User } from '../../../src/repositories/entities/user.entity';
-import { PersonalInformationDto } from '../../../src/models/dto/portfolio/personal-information.dto';
-import { PersonalInformationDtoFactory } from '../../factories/models/dto/portfolio/personal-information.dto.factory';
+import { AboutDtoFactory } from '../../factories/models/dto/portfolio/about.dto.factory';
 import { Education } from '../../../src/repositories/entities/education.entity';
 import { EducationFactory } from '../../factories/repositories/entities/education.entity.factory';
 import { EducationPortfolioDto } from '../../../src/models/dto/portfolio/education-portfolio.dto';
@@ -20,14 +19,13 @@ import { ProjectPortfolioDto } from '../../../src/models/dto/portfolio/project-p
 import { ProjectFactory } from '../../factories/repositories/entities/project.entity.factory';
 import { ProjectPortfolioDtoFactory } from '../../factories/models/dto/portfolio/project.dto.factory';
 import { Project } from '../../../src/repositories/entities/project.entity';
-import { Contact } from '../../../src/repositories/entities/contact.entity';
-import { ContactPortfolioDto } from '../../../src/models/dto/portfolio/contact-portfolio.dto';
-import { ContactFactory } from '../../factories/repositories/entities/contact.entity.factory';
-import { ContactPortfolioDtoFactory } from '../../factories/models/dto/portfolio/contact.dto.factory';
-import { BannerDto } from '../../../src/models/dto/portfolio/banner.dto';
-import { BannerDtoFactory } from '../../factories/models/dto/portfolio/banner.dto.factory';
+import { HeaderDtoFactory } from '../../factories/models/dto/portfolio/header.dto.factory';
+import { FooterPortfolioDtoFactory } from '../../factories/models/dto/portfolio/footer-portfolio.dto.factory';
 import { PortfolioController } from '../../../src/modules/portfolio/portfolio.controller';
 import { mockPortfolioService } from '../../factories/modules/portfolio/portfolio.service.factory';
+import { AboutDto } from '../../../src/models/dto/portfolio/about.dto';
+import { HeaderDto } from '../../../src/models/dto/portfolio/header.dto';
+import { FooterPortfolioDto } from '../../../src/models/dto/portfolio/footer-portfolio.dto';
 
 describe('PortfolioController', () => {
   let portfolioController: PortfolioController;
@@ -39,15 +37,14 @@ describe('PortfolioController', () => {
   let mockWorkExperienceList: WorkExperience[];
   let mockSkillList: Skill[];
   let mockProjectList: Project[];
-  let mockContact: Contact;
 
-  let mockPersonalInformationDto: PersonalInformationDto;
+  let mockAbout: AboutDto;
   let mockEducationPortfolioDtoList: EducationPortfolioDto[];
   let mockWorkExperiencePortfolioDtoList: WorkExperiencePortfolioDto[];
   let mockSkillPortfolioDtoList: SkillPortfolioDto[];
   let mockProjectPortfolioDtoList: ProjectPortfolioDto[];
-  let mockContactPortfolioDto: ContactPortfolioDto;
-  let mockBannerDto: BannerDto;
+  let mockHeaderDto: HeaderDto;
+  let mockFooterPortfolioDto: FooterPortfolioDto;
 
   beforeEach(async () => {
     const module = await Test.createTestingModule({
@@ -66,9 +63,8 @@ describe('PortfolioController', () => {
     mockWorkExperienceList = WorkExperienceFactory.buildList(2);
     mockSkillList = SkillFactory.buildList(2);
     mockProjectList = ProjectFactory.buildList(2);
-    mockContact = ContactFactory.build();
 
-    mockPersonalInformationDto = PersonalInformationDtoFactory.build(mockUser);
+    mockAbout = AboutDtoFactory.build(mockUser);
     mockEducationPortfolioDtoList =
       EducationPortfolioDtoFactory.buildListByEducationList(mockEducationList);
     mockWorkExperiencePortfolioDtoList =
@@ -79,19 +75,15 @@ describe('PortfolioController', () => {
       SkillPortfolioDtoFactory.buildListBySkillList(mockSkillList);
     mockProjectPortfolioDtoList =
       ProjectPortfolioDtoFactory.buildListByProjectList(mockProjectList);
-    mockContactPortfolioDto = ContactPortfolioDtoFactory.build(mockContact);
-    mockBannerDto = BannerDtoFactory.build(mockUser);
+    mockHeaderDto = HeaderDtoFactory.build(mockUser);
+    mockFooterPortfolioDto = FooterPortfolioDtoFactory.build(mockUser);
   });
 
-  describe('getPersonalInformation', () => {
-    it('calls the controller to return all the personal information. -> OK', async () => {
-      portfolioService.getPersonalInformation.mockResolvedValue(
-        mockPersonalInformationDto,
-      );
-      const result = await portfolioController.getPersonalInformation(
-        mockUser.id,
-      );
-      expect(result).toEqual(mockPersonalInformationDto);
+  describe('getAbout', () => {
+    it('calls the controller to return the about from a user. -> OK', async () => {
+      portfolioService.getAbout.mockResolvedValue(mockAbout);
+      const result = await portfolioController.getAbout(mockUser.id);
+      expect(result).toEqual(mockAbout);
     });
   });
 
@@ -133,19 +125,19 @@ describe('PortfolioController', () => {
     });
   });
 
-  describe('getContacts', () => {
-    it('calls the controller to return the contacts from a user. -> OK', async () => {
-      portfolioService.getContacts.mockResolvedValue(mockContactPortfolioDto);
-      const result = await portfolioController.getContacts(mockUser.id);
-      expect(result).toEqual(mockContactPortfolioDto);
+  describe('getHeader', () => {
+    it('calls the controller to return the header from a user. -> OK', async () => {
+      portfolioService.getHeader.mockResolvedValue(mockHeaderDto);
+      const result = await portfolioController.getHeader(mockUser.id);
+      expect(result).toEqual(mockHeaderDto);
     });
   });
 
-  describe('getBanner', () => {
-    it('calls the controller to return the banner from a user. -> OK', async () => {
-      portfolioService.getBanner.mockResolvedValue(mockBannerDto);
-      const result = await portfolioController.getBanner(mockUser.id);
-      expect(result).toEqual(mockBannerDto);
+  describe('getFooter', () => {
+    it('calls the controller to return the footer from a user. -> OK', async () => {
+      portfolioService.getFooter.mockResolvedValue(mockFooterPortfolioDto);
+      const result = await portfolioController.getFooter(mockUser.id);
+      expect(result).toEqual(mockFooterPortfolioDto);
     });
   });
 });

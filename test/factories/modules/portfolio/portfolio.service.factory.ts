@@ -1,9 +1,10 @@
 export const mockPortfolioService = () => ({
-  getPersonalInformation: jest.fn(),
+  getHeader: jest.fn(),
   getEducation: jest.fn(),
   getWorkExperience: jest.fn(),
   getSkills: jest.fn(),
+  // TODO - RETOCAR
   getProjects: jest.fn(),
-  getContacts: jest.fn(),
-  getBanner: jest.fn(),
+  getAbout: jest.fn(),
+  getFooter: jest.fn(),
 });

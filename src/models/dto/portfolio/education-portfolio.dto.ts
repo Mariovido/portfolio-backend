@@ -1,26 +1,24 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { IsAlpha, IsDate, IsDecimal, IsOptional } from 'class-validator';
+import { IsAlpha, IsString, IsUUID } from 'class-validator';
 
 export class EducationPortfolioDto {
-  @IsAlpha()
+  @IsUUID()
   @ApiProperty()
-  courseName: string;
+  id: string;
 
   @IsAlpha()
   @ApiProperty()
-  institute: string;
+  name: string;
 
-  @IsDate()
+  @IsAlpha()
   @ApiProperty()
-  startDate: Date;
+  university: string;
 
-  @IsDate()
-  @IsOptional()
+  @IsString()
   @ApiProperty()
-  endDate?: Date;
+  date: string;
 
-  @IsDecimal()
-  @IsOptional()
+  @IsString()
   @ApiProperty()
-  grade?: number;
+  universityLink: string;
 }

@@ -4,18 +4,15 @@ import { UserFactory } from '../../factories/repositories/entities/user.entity.f
 import { User } from '../../../src/repositories/entities/user.entity';
 import { UserRepository } from '../../../src/repositories/user.repository';
 import { mockUserRepository } from '../../factories/repositories/user.repository.factory';
-import { PersonalInformationDto } from '../../../src/models/dto/portfolio/personal-information.dto';
-import { PersonalInformationDtoFactory } from '../../factories/models/dto/portfolio/personal-information.dto.factory';
+import { AboutDtoFactory } from '../../factories/models/dto/portfolio/about.dto.factory';
 import { EducationRepository } from '../../../src/repositories/education.repository';
 import { WorkExperienceRepository } from '../../../src/repositories/work-experience.repository';
 import { SkillRepository } from '../../../src/repositories/skill.repository';
 import { ProjectRepository } from '../../../src/repositories/project.repository';
-import { ContactRepository } from '../../../src/repositories/contact.repository';
 import { mockEducationRepository } from '../../factories/repositories/education.repository.factory';
 import { mockWorkExperienceRepository } from '../../factories/repositories/work-experience.repository.factory';
 import { mockSkillRepository } from '../../factories/repositories/skill.repository.factory';
 import { mockProjectRepository } from '../../factories/repositories/project.repository.factory';
-import { mockContactRepository } from '../../factories/repositories/contact.repository.factory';
 import { NotFoundException } from '@nestjs/common';
 import { Education } from '../../../src/repositories/entities/education.entity';
 import { EducationFactory } from '../../factories/repositories/entities/education.entity.factory';
@@ -33,12 +30,11 @@ import { ProjectPortfolioDto } from '../../../src/models/dto/portfolio/project-p
 import { ProjectFactory } from '../../factories/repositories/entities/project.entity.factory';
 import { ProjectPortfolioDtoFactory } from '../../factories/models/dto/portfolio/project.dto.factory';
 import { Project } from '../../../src/repositories/entities/project.entity';
-import { Contact } from '../../../src/repositories/entities/contact.entity';
-import { ContactPortfolioDto } from '../../../src/models/dto/portfolio/contact-portfolio.dto';
-import { ContactFactory } from '../../factories/repositories/entities/contact.entity.factory';
-import { ContactPortfolioDtoFactory } from '../../factories/models/dto/portfolio/contact.dto.factory';
-import { BannerDto } from '../../../src/models/dto/portfolio/banner.dto';
-import { BannerDtoFactory } from '../../factories/models/dto/portfolio/banner.dto.factory';
+import { HeaderDtoFactory } from '../../factories/models/dto/portfolio/header.dto.factory';
+import { FooterPortfolioDtoFactory } from '../../factories/models/dto/portfolio/footer-portfolio.dto.factory';
+import { AboutDto } from '../../../src/models/dto/portfolio/about.dto';
+import { HeaderDto } from '../../../src/models/dto/portfolio/header.dto';
+import { FooterPortfolioDto } from '../../../src/models/dto/portfolio/footer-portfolio.dto';
 
 describe('PortfolioService', () => {
   let portfolioService: PortfolioService;
@@ -48,22 +44,20 @@ describe('PortfolioService', () => {
   let workExperienceRepository: jest.Mocked<WorkExperienceRepository>;
   let skillRepository: jest.Mocked<SkillRepository>;
   let projectRepository: jest.Mocked<ProjectRepository>;
-  let contactRepository: jest.Mocked<ContactRepository>;
 
   let mockUser: User;
   let mockEducationList: Education[];
   let mockWorkExperienceList: WorkExperience[];
   let mockSkillList: Skill[];
   let mockProjectList: Project[];
-  let mockContact: Contact;
 
-  let mockPersonalInformationDto: PersonalInformationDto;
+  let mockAboutDto: AboutDto;
   let mockEducationPortfolioDtoList: EducationPortfolioDto[];
   let mockWorkExperiencePortfolioDtoList: WorkExperiencePortfolioDto[];
   let mockSkillPortfolioDtoList: SkillPortfolioDto[];
   let mockProjectPortfolioDtoList: ProjectPortfolioDto[];
-  let mockContactPortfolioDto: ContactPortfolioDto;
-  let mockBannerDto: BannerDto;
+  let mockHeaderDto: HeaderDto;
+  let mockFooterPortfolioDto: FooterPortfolioDto;
 
   beforeEach(async () => {
     const module = await Test.createTestingModule({
@@ -77,7 +71,6 @@ describe('PortfolioService', () => {
         },
         { provide: SkillRepository, useFactory: mockSkillRepository },
         { provide: ProjectRepository, useFactory: mockProjectRepository },
-        { provide: ContactRepository, useFactory: mockContactRepository },
       ],
     }).compile();
 
@@ -88,16 +81,14 @@ describe('PortfolioService', () => {
     workExperienceRepository = module.get(WorkExperienceRepository);
     skillRepository = module.get(SkillRepository);
     projectRepository = module.get(ProjectRepository);
-    contactRepository = module.get(ContactRepository);
 
     mockUser = UserFactory.build();
     mockEducationList = EducationFactory.buildList(2);
     mockWorkExperienceList = WorkExperienceFactory.buildList(2);
     mockSkillList = SkillFactory.buildList(2);
     mockProjectList = ProjectFactory.buildList(2);
-    mockContact = ContactFactory.build();
 
-    mockPersonalInformationDto = PersonalInformationDtoFactory.build(mockUser);
+    mockAboutDto = AboutDtoFactory.build(mockUser);
     mockEducationPortfolioDtoList =
       EducationPortfolioDtoFactory.buildListByEducationList(mockEducationList);
     mockWorkExperiencePortfolioDtoList =
@@ -108,21 +99,21 @@ describe('PortfolioService', () => {
       SkillPortfolioDtoFactory.buildListBySkillList(mockSkillList);
     mockProjectPortfolioDtoList =
       ProjectPortfolioDtoFactory.buildListByProjectList(mockProjectList);
-    mockContactPortfolioDto = ContactPortfolioDtoFactory.build(mockContact);
-    mockBannerDto = BannerDtoFactory.build(mockUser);
+    mockHeaderDto = HeaderDtoFactory.build(mockUser);
+    mockFooterPortfolioDto = FooterPortfolioDtoFactory.build(mockUser);
   });
 
-  describe('getPersonalInformation', () => {
-    it('calls the service to return all the personal information. -> OK', async () => {
+  describe('getAbout', () => {
+    it('calls the service to return the about from an user. -> OK', async () => {
       userRepository.findOneBy.mockResolvedValue(mockUser);
-      const result = await portfolioService.getPersonalInformation(mockUser.id);
-      expect(result).toEqual(mockPersonalInformationDto);
+      const result = await portfolioService.getAbout(mockUser.id);
+      expect(result).toEqual(mockAboutDto);
     });
 
     it('calls the service with an invalid id to return an exception. -> KO', async () => {
       userRepository.findOneBy.mockResolvedValue(null);
       const result = async () => {
-        await portfolioService.getPersonalInformation(mockUser.id);
+        await portfolioService.getHeader(mockUser.id);
       };
       await expect(result).rejects.toThrow(NotFoundException);
     });
@@ -192,31 +183,31 @@ describe('PortfolioService', () => {
     });
   });
 
-  describe('getContacts', () => {
-    it('calls the service to return the contacts from a user. -> OK', async () => {
-      contactRepository.findContactsByUserId.mockResolvedValue(mockContact);
-      const result = await portfolioService.getContacts(mockUser.id);
-      expect(result).toEqual(mockContactPortfolioDto);
+  describe('getHeader', () => {
+    it('calls the service to return the header from a user. -> OK', async () => {
+      userRepository.findOneBy.mockResolvedValue(mockUser);
+      const result = await portfolioService.getHeader(mockUser.id);
+      expect(result).toEqual(mockHeaderDto);
     });
     it('calls the service with an invalid ID to return an exception. -> KO', async () => {
-      contactRepository.findContactsByUserId.mockResolvedValue(null);
+      userRepository.findOneBy.mockResolvedValue(null);
       const result = async () => {
-        await portfolioService.getContacts(mockUser.id);
+        await portfolioService.getHeader(mockUser.id);
       };
       await expect(result).rejects.toThrow(NotFoundException);
     });
   });
 
-  describe('getBanner', () => {
-    it('calls the service to return the banner from a user. -> OK', async () => {
+  describe('getFooter', () => {
+    it('calls the service to return the footer from a user. -> OK', async () => {
       userRepository.findOneBy.mockResolvedValue(mockUser);
-      const result = await portfolioService.getBanner(mockUser.id);
-      expect(result).toEqual(mockBannerDto);
+      const result = await portfolioService.getFooter(mockUser.id);
+      expect(result).toEqual(mockFooterPortfolioDto);
     });
     it('calls the service with an invalid ID to return an exception. -> KO', async () => {
       userRepository.findOneBy.mockResolvedValue(null);
       const result = async () => {
-        await portfolioService.getBanner(mockUser.id);
+        await portfolioService.getFooter(mockUser.id);
       };
       await expect(result).rejects.toThrow(NotFoundException);
     });

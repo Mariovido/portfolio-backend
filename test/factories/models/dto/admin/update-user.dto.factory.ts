@@ -6,7 +6,7 @@ export class UpdateUserDtoFactory {
     updateUserDto.firstName = 'testName';
     updateUserDto.lastName = 'name last';
     updateUserDto.dateOfBirth = new Date();
-    updateUserDto.aboutMe = 'This is about me';
+    updateUserDto.description = 'This is about me';
 
     return updateUserDto;
   }

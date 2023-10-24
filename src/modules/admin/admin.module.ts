@@ -8,7 +8,6 @@ import { WorkExperience } from '../../repositories/entities/work-experience.enti
 import { Project } from '../../repositories/entities/project.entity';
 import { Skill } from '../../repositories/entities/skill.entity';
 import { Contact } from '../../repositories/entities/contact.entity';
-import { Interest } from '../../repositories/entities/interest.entity';
 import { BulletPoint } from '../../repositories/entities/bullet-point.entity';
 import { Technology } from '../../repositories/entities/technology.entity';
 import { UserRepository } from '../../repositories/user.repository';
@@ -19,8 +18,9 @@ import { SkillRepository } from '../../repositories/skill.repository';
 import { ContactRepository } from '../../repositories/contact.repository';
 import { AuthModule } from '../auth/auth.module';
 import { BulletPointRepository } from '../../repositories/bullet-point.repository';
-import { InterestRepository } from '../../repositories/interest.repository';
+import { TagRepository } from '../../repositories/tag.repository';
 import { TechnologyRepository } from '../../repositories/technology.repository';
+import { Tag } from '../../repositories/entities/tag.entity';
 
 @Module({
   imports: [
@@ -32,7 +32,7 @@ import { TechnologyRepository } from '../../repositories/technology.repository';
       Skill,
       Contact,
       BulletPoint,
-      Interest,
+      Tag,
       Technology,
     ]),
     AuthModule,
@@ -47,7 +47,7 @@ import { TechnologyRepository } from '../../repositories/technology.repository';
     SkillRepository,
     ContactRepository,
     BulletPointRepository,
-    InterestRepository,
+    TagRepository,
     TechnologyRepository,
   ],
 })

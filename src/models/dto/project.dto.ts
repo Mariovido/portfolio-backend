@@ -1,6 +1,7 @@
 import { ApiProperty } from '@nestjs/swagger';
 import { IsString, IsArray, IsUUID } from 'class-validator';
 
+// TODO - RETOCAR
 export class ProjectDto {
   @IsUUID()
   @ApiProperty()

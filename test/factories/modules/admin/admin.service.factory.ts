@@ -9,6 +9,7 @@ export const mockAdminService = () => ({
   createWorkExperience: jest.fn(),
   updateWorkExperience: jest.fn(),
   deleteWorkExperience: jest.fn(),
+  // TODO - RETOCAR
   getProjects: jest.fn(),
   createProject: jest.fn(),
   updateProject: jest.fn(),
@@ -25,10 +26,11 @@ export const mockAdminService = () => ({
   createBulletPoint: jest.fn(),
   updateBulletPoint: jest.fn(),
   deleteBulletPoint: jest.fn(),
-  getInterests: jest.fn(),
-  createInterest: jest.fn(),
-  updateInterest: jest.fn(),
-  deleteInterest: jest.fn(),
+  getTags: jest.fn(),
+  createTag: jest.fn(),
+  updateTag: jest.fn(),
+  deleteTag: jest.fn(),
+  // TODO - RETOCAR
   getTechnologies: jest.fn(),
   createTechnology: jest.fn(),
   updateTechnology: jest.fn(),

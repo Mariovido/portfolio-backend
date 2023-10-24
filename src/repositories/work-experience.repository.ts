@@ -35,7 +35,8 @@ export class WorkExperienceRepository extends Repository<WorkExperience> {
     id: string,
     createWorkExperienceDto: CreateWorkExperienceDto,
   ): Promise<WorkExperience> {
-    const { role, company, startDate, endDate } = createWorkExperienceDto;
+    const { role, company, companyLink, startDate, endDate } =
+      createWorkExperienceDto;
     this.logger.verbose(
       `Creating new work experience entity for user. ID: ${id}`,
     );
@@ -43,6 +44,7 @@ export class WorkExperienceRepository extends Repository<WorkExperience> {
     const workExperience = this.workExperienceRepository.create({
       role,
       company,
+      companyLink,
       startDate,
       endDate,
       user: { id },

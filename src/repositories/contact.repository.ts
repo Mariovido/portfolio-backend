@@ -36,13 +36,11 @@ export class ContactRepository extends Repository<Contact> {
     id: string,
     createContactDto: CreateContactDto,
   ): Promise<Contact> {
-    const { email, linkedinUrl, githubUrl } = createContactDto;
+    const { email } = createContactDto;
     this.logger.verbose(`Creating new contact entity for user. ID: ${id}`);
 
     const contact = this.contactRepository.create({
       email,
-      linkedinUrl,
-      githubUrl,
       user: { id },
     });
 

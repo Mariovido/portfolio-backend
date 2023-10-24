@@ -8,6 +8,8 @@ import {
 import { User } from './user.entity';
 import { Exclude } from 'class-transformer';
 import { BulletPoint } from './bullet-point.entity';
+import { Link } from './link.entity';
+import { Tag } from './tag.entity';
 
 @Entity()
 export class WorkExperience {
@@ -20,6 +22,9 @@ export class WorkExperience {
   @Column()
   company: string;
 
+  @Column({ nullable: true })
+  companyLink?: string;
+
   @Column({ type: 'timestamptz' })
   startDate: Date;
 
@@ -30,6 +35,18 @@ export class WorkExperience {
     eager: true,
   })
   bulletPoints: BulletPoint[];
+
+  @OneToMany(() => Link, (link) => link.workExperience, {
+    eager: true,
+    nullable: true,
+  })
+  links?: Link[];
+
+  @OneToMany(() => Tag, (tag) => tag.workExperience, {
+    eager: true,
+    nullable: true,
+  })
+  tags?: Tag[];
 
   @ManyToOne(() => User, (user) => user.workExperiences, { eager: false })
   @Exclude({ toPlainOnly: true })

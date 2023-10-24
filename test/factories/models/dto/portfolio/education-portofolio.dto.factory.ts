@@ -1,14 +1,21 @@
 import { EducationPortfolioDto } from '../../../../../src/models/dto/portfolio/education-portfolio.dto';
 import { Education } from '../../../../../src/repositories/entities/education.entity';
+import { getBetweenDates } from '../../../../../src/utils/portfolio.utils';
 
 export class EducationPortfolioDtoFactory {
   static build(mockEducation: Education): EducationPortfolioDto {
     const educationPortfolioDto = new EducationPortfolioDto();
-    educationPortfolioDto.courseName = mockEducation.courseName;
-    educationPortfolioDto.institute = mockEducation.institute;
-    educationPortfolioDto.startDate = mockEducation.startDate;
-    educationPortfolioDto.endDate = mockEducation.endDate;
-    educationPortfolioDto.grade = mockEducation.grade;
+    educationPortfolioDto.id = mockEducation.id;
+    educationPortfolioDto.name = mockEducation.courseName;
+    educationPortfolioDto.university = mockEducation.institute;
+
+    const date = getBetweenDates(
+      mockEducation.startDate,
+      mockEducation.endDate,
+    );
+    educationPortfolioDto.date = date;
+
+    educationPortfolioDto.universityLink = mockEducation.instituteLink;
 
     return educationPortfolioDto;
   }

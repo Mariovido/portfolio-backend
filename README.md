@@ -17,7 +17,6 @@
       </ul>
     </li>
     <li><a href="#usage">Usage</a></li>
-    <li><a href="#usage">Deploy</a></li>
     <li><a href="#license">License</a></li>
     <li><a href="#contact">Contact</a></li>
   </ol>
@@ -100,33 +99,44 @@ _To start using the app you need to run the following steps:_
 2. If you want to use it in dev purpose run the following commands
     ```bash
     # development
-    $ yarn run start
+    $ yarn start
 
     # watch mode
-    $ yarn run start:dev
+    $ yarn start:dev
     ```
 3. If you want to use it to run the tests run the following commands
     ```bash
     # unit tests
-    $ yarn run test
+    $ yarn test
 
     # e2e tests
-    $ yarn run test:e2e
+    $ yarn test:e2e
 
     # test coverage
-    $ yarn run test:cov
+    $ yarn test:cov
+    ```
+4. If you want to open the open in prod mode run the following command
+    ```bash
+    docker-compose --env-file .env.stage.prod up
+    ```
+5. If you want to create/generate/run/show migrations run the following commands
+    ```bash
+    # generate migration
+    $ yarn migration:generate db/migrations/<your_migration_name>
+
+    # create migration
+    $ yarn migration:create db/migrations/<your_migration_name>
+
+    # run migrations
+    $ yarn migration:run
+
+    # show migrations
+    $ yarn migration:show
     ```
 
 Visit `"YOUR HOST URL"\docs` after using `yarn run start` to get more info about the REST API Services
 
 <p align="right">(<a href="#portfolio-api">Back to top</a>)</p>
-
-# Deploy
-1. Open a terminal on the root folder
-2. Run the following command
-    ```bash
-    docker-compose --env-file .env.stage.prod up <!-- TODO - CAMBIAR -->
-    ```
 
 ## License
 
@@ -137,6 +147,6 @@ Distributed under the MIT License. See `LICENSE` for more information.
 ## Contact
 Your Name - [@mariovido](https://github.com/Mariovido) - mario.vidaldom@gmail.com
 
-Project Link: [https://github.com/Mariovido/portfolio-backend.git](https://github.com/Mariovido/portfolio-backend.git)
+Project Link: [https://github.com/Mariovido/portfolio-backend](https://github.com/Mariovido/portfolio-backend)
 
 <p align="right">(<a href="#portfolio-api">Back to top</a>)</p>

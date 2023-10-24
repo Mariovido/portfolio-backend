@@ -27,17 +27,15 @@ import { ProjectDto } from '../../../src/models/dto/project.dto';
 import { SkillDto } from '../../../src/models/dto/skill.dto';
 import { ContactDto } from '../../../src/models/dto/contact.dto';
 import { BulletPointDto } from '../../../src/models/dto/bullet-point.dto';
-import { InterestDto } from '../../../src/models/dto/interest.dto';
 import { TechnologyDto } from '../../../src/models/dto/technology.dto';
 import { WorkExperience } from '../../../src/repositories/entities/work-experience.entity';
 import { Project } from '../../../src/repositories/entities/project.entity';
 import { Skill } from '../../../src/repositories/entities/skill.entity';
 import { Contact } from '../../../src/repositories/entities/contact.entity';
 import { BulletPoint } from '../../../src/repositories/entities/bullet-point.entity';
-import { Interest } from '../../../src/repositories/entities/interest.entity';
 import { Technology } from '../../../src/repositories/entities/technology.entity';
 import { TechnologyFactory } from '../../factories/repositories/entities/technology.entity.factory';
-import { InterestFactory } from '../../factories/repositories/entities/interest.entity.factory';
+import { TagFactory } from '../../factories/repositories/entities/tag.entity.factory';
 import { BulletPointFactory } from '../../factories/repositories/entities/bullet-point.entity.factory';
 import { ContactFactory } from '../../factories/repositories/entities/contact.entity.factory';
 import { SkillFactory } from '../../factories/repositories/entities/skill.entity.factory';
@@ -47,27 +45,27 @@ import { CreateWorkExperienceDto } from '../../../src/models/dto/admin/create-wo
 import { CreateProjectDto } from '../../../src/models/dto/admin/create-project.dto';
 import { CreateSkillDto } from '../../../src/models/dto/admin/create-skill.dto';
 import { CreateBulletPointDto } from '../../../src/models/dto/admin/create-bullet-point.dto';
-import { CreateInterestDto } from '../../../src/models/dto/admin/create-interest.dto';
+import { CreateTagDto } from '../../../src/models/dto/admin/create-tag.dto';
 import { CreateTechnologyDto } from '../../../src/models/dto/admin/create-technology.dto';
 import { UpdateWorkExperienceDto } from '../../../src/models/dto/admin/update-work-experience.dto';
 import { UpdateProjectDto } from '../../../src/models/dto/admin/update-project.dto';
 import { UpdateSkillDto } from '../../../src/models/dto/admin/update-skill.dto';
 import { UpdateContactDto } from '../../../src/models/dto/admin/update-contact.dto';
 import { UpdateBulletPointDto } from '../../../src/models/dto/admin/update-bullet-point.dto';
-import { UpdateInterestDto } from '../../../src/models/dto/admin/update-interest.dto';
+import { UpdateTagDto } from '../../../src/models/dto/admin/update-tag.dto';
 import { UpdateTechnologyDto } from '../../../src/models/dto/admin/update-technology.dto';
 import { CreateWorkExperienceDtoFactory } from '../../factories/models/dto/admin/create-work-experience.dto.factory';
 import { CreateProjectDtoFactory } from '../../factories/models/dto/admin/create-project.dto.factory';
 import { CreateSkillDtoFactory } from '../../factories/models/dto/admin/create-skill.dto.factory';
 import { CreateBulletPointDtoFactory } from '../../factories/models/dto/admin/create-bullet-point.dto.factory';
-import { CreateInterestDtoFactory } from '../../factories/models/dto/admin/create-interest.dto';
+import { CreateTagDtoFactory } from '../../factories/models/dto/admin/create-tag.dto.factory';
 import { CreateTechnologyDtoFactory } from '../../factories/models/dto/admin/create-technology.dto.factory';
 import { UpdateProjectDtoFactory } from '../../factories/models/dto/admin/update-project.dto.factory';
 import { UpdateWorkExperienceDtoFactory } from '../../factories/models/dto/admin/update-work-experience.dto.factory';
 import { UpdateSkillDtoFactory } from '../../factories/models/dto/admin/update-skill.dto.factory';
 import { UpdateContactDtoFactory } from '../../factories/models/dto/admin/update-contact.dto.factory';
 import { UpdateBulletPointDtoFactory } from '../../factories/models/dto/admin/update-bullet-point.dto.factory';
-import { UpdateInterestDtoFactory } from '../../factories/models/dto/admin/update-interest.dto.factory';
+import { UpdateTagDtoFactory } from '../../factories/models/dto/admin/update-tag.dto.factory';
 import { UpdateTechnologyDtoFactory } from '../../factories/models/dto/admin/update-technology.dto.factory';
 import { WorkExperienceDtoFactory } from '../../factories/models/dto/work-experience.dto.factory';
 import { ProjectDtoFactory } from '../../factories/models/dto/project.dto.factory';
@@ -76,8 +74,10 @@ import { ContactDtoFactory } from '../../factories/models/dto/contact.dto.factor
 import { CreateContactDto } from '../../../src/models/dto/admin/create-contact.dto';
 import { CreateContactDtoFactory } from '../../factories/models/dto/admin/create-contact.dto.factory';
 import { BulletPointDtoFactory } from '../../factories/models/dto/bullet-point.dto.factory';
-import { InterestDtoFactory } from '../../factories/models/dto/interest.dto.factory';
+import { TagDtoFactory } from '../../factories/models/dto/tag.dto.factory';
 import { TechnologyDtoFactory } from '../../factories/models/dto/technology.dto.factory';
+import { Tag } from '../../../src/repositories/entities/tag.entity';
+import { TagDto } from '../../../src/models/dto/tag.dto';
 
 describe('AdminController', () => {
   let adminController: AdminController;
@@ -91,7 +91,7 @@ describe('AdminController', () => {
   let mockSkill: Skill;
   let mockContact: Contact;
   let mockBulletPoint: BulletPoint;
-  let mockInterest: Interest;
+  let mockTag: Tag;
   let mockTechnology: Technology;
 
   let mockCreateEducationDto: CreateEducationDto;
@@ -100,7 +100,7 @@ describe('AdminController', () => {
   let mockCreateSkillDto: CreateSkillDto;
   let mockCreateContactDto: CreateContactDto;
   let mockCreateBulletPointDto: CreateBulletPointDto;
-  let mockCreateInterestDto: CreateInterestDto;
+  let mockCreateTagDto: CreateTagDto;
   let mockCreateTechnologyDto: CreateTechnologyDto;
 
   let mockUpdateUserDto: UpdateUserDto;
@@ -110,7 +110,7 @@ describe('AdminController', () => {
   let mockUpdateSkillDto: UpdateSkillDto;
   let mockUpdateContactDto: UpdateContactDto;
   let mockUpdateBulletPointDto: UpdateBulletPointDto;
-  let mockUpdateInterestDto: UpdateInterestDto;
+  let mockUpdateTagDto: UpdateTagDto;
   let mockUpdateTechnologyDto: UpdateTechnologyDto;
 
   let mockUserDto: UserDto;
@@ -125,8 +125,8 @@ describe('AdminController', () => {
   let mockContactDto: ContactDto;
   let mockBulletPointDto: BulletPointDto;
   let mockBulletPointDtoList: BulletPointDto[];
-  let mockInterestDto: InterestDto;
-  let mockInterestDtoList: InterestDto[];
+  let mockTagDto: TagDto;
+  let mockTagDtoList: TagDto[];
   let mockTechnologyDto: TechnologyDto;
   let mockTechnologyDtoList: TechnologyDto[];
 
@@ -155,7 +155,7 @@ describe('AdminController', () => {
     mockSkill = SkillFactory.build();
     mockContact = ContactFactory.build();
     mockBulletPoint = BulletPointFactory.build(true);
-    mockInterest = InterestFactory.build();
+    mockTag = TagFactory.build();
     mockTechnology = TechnologyFactory.build();
 
     mockCreateEducationDto = CreateEducationDtoFactory.build();
@@ -164,7 +164,7 @@ describe('AdminController', () => {
     mockCreateSkillDto = CreateSkillDtoFactory.build();
     mockCreateContactDto = CreateContactDtoFactory.build();
     mockCreateBulletPointDto = CreateBulletPointDtoFactory.build(true);
-    mockCreateInterestDto = CreateInterestDtoFactory.build();
+    mockCreateTagDto = CreateTagDtoFactory.build();
     mockCreateTechnologyDto = CreateTechnologyDtoFactory.build();
 
     mockUpdateUserDto = UpdateUserDtoFactory.build();
@@ -174,7 +174,7 @@ describe('AdminController', () => {
     mockUpdateSkillDto = UpdateSkillDtoFactory.build();
     mockUpdateContactDto = UpdateContactDtoFactory.build();
     mockUpdateBulletPointDto = UpdateBulletPointDtoFactory.build();
-    mockUpdateInterestDto = UpdateInterestDtoFactory.build();
+    mockUpdateTagDto = UpdateTagDtoFactory.build();
     mockUpdateTechnologyDto = UpdateTechnologyDtoFactory.build();
 
     mockUserDto = UserDtoFactory.build(mockUser, mockUpdateUserDto);
@@ -204,11 +204,8 @@ describe('AdminController', () => {
       2,
       mockBulletPoint,
     );
-    mockInterestDto = InterestDtoFactory.build(
-      mockInterest,
-      mockCreateInterestDto,
-    );
-    mockInterestDtoList = InterestDtoFactory.buildList(2, mockInterest);
+    mockTagDto = TagDtoFactory.build(mockTag, mockCreateTagDto);
+    mockTagDtoList = TagDtoFactory.buildList(2, mockTag);
     mockTechnologyDto = TechnologyDtoFactory.build(
       mockTechnology,
       mockCreateTechnologyDto,
@@ -512,44 +509,44 @@ describe('AdminController', () => {
     });
   });
 
-  describe('getInterests', () => {
-    it('calls the controller to get the interests. -> OK', async () => {
-      adminService.getInterests.mockResolvedValue(mockInterestDtoList);
-      const result = await adminController.getInterests(mockUser.id, mockUser);
-      expect(result).toEqual(mockInterestDtoList);
+  describe('getTags', () => {
+    it('calls the controller to get the tags. -> OK', async () => {
+      adminService.getTags.mockResolvedValue(mockTagDtoList);
+      const result = await adminController.getTags(mockUser.id, mockUser);
+      expect(result).toEqual(mockTagDtoList);
     });
   });
 
-  describe('createInterest', () => {
-    it('calls the controller to create a new interest. -> OK', async () => {
-      adminService.createInterest.mockResolvedValue(mockInterestDto);
-      const result = await adminController.createInterest(
+  describe('createTag', () => {
+    it('calls the controller to create a new tag. -> OK', async () => {
+      adminService.createTag.mockResolvedValue(mockTagDto);
+      const result = await adminController.createTag(
         mockUser.id,
-        mockCreateInterestDto,
+        mockCreateTagDto,
         mockUser,
       );
-      expect(result).toEqual(mockInterestDto);
+      expect(result).toEqual(mockTagDto);
     });
   });
 
-  describe('updateInterest', () => {
-    it('calls the controller to update a interest. -> OK', async () => {
-      adminService.updateInterest.mockResolvedValue(mockInterestDto);
-      const result = await adminController.updateInterest(
+  describe('updateTag', () => {
+    it('calls the controller to update a tag. -> OK', async () => {
+      adminService.updateTag.mockResolvedValue(mockTagDto);
+      const result = await adminController.updateTag(
         mockUser.id,
-        mockInterest.id,
-        mockUpdateInterestDto,
+        mockTag.id,
+        mockUpdateTagDto,
         mockUser,
       );
-      expect(result).toEqual(mockInterestDto);
+      expect(result).toEqual(mockTagDto);
     });
   });
 
-  describe('deleteInterest', () => {
-    it('calls the controller to delete an interest. -> OK', async () => {
-      const result = await adminController.deleteInterest(
+  describe('deleteTag', () => {
+    it('calls the controller to delete a tag. -> OK', async () => {
+      const result = await adminController.deleteTag(
         mockUser.id,
-        mockInterest.id,
+        mockTag.id,
         mockUser,
       );
       expect(result).toBeUndefined();

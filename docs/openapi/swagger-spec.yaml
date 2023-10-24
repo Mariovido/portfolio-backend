@@ -1,9 +1,9 @@
 openapi: 3.0.0
 paths:
-  /portfolio/{id}/personal-information:
+  /portfolio/{id}/header:
     get:
-      operationId: PortfolioController_getPersonalInformation
-      summary: Returns the personal information of a user
+      operationId: PortfolioController_getHeader
+      summary: Returns the header of a user
       parameters:
         - name: id
           required: true
@@ -16,7 +16,28 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/PersonalInformationDto'
+                $ref: '#/components/schemas/HeaderDto'
+      tags:
+        - portfolio
+      security:
+        - bearer: []
+  /portfolio/{id}/about:
+    get:
+      operationId: PortfolioController_getAbout
+      summary: Returns the about of a user
+      parameters:
+        - name: id
+          required: true
+          in: path
+          schema:
+            type: string
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AboutDto'
       tags:
         - portfolio
       security:
@@ -113,10 +134,10 @@ paths:
         - portfolio
       security:
         - bearer: []
-  /portfolio/{id}/contacts:
+  /portfolio/{id}/footer:
     get:
-      operationId: PortfolioController_getContacts
-      summary: Returns the contacts of a user
+      operationId: PortfolioController_getFooter
+      summary: Returns the footer of a user
       parameters:
         - name: id
           required: true
@@ -129,28 +150,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ContactPortfolioDto'
-      tags:
-        - portfolio
-      security:
-        - bearer: []
-  /portfolio/{id}/banner:
-    get:
-      operationId: PortfolioController_getBanner
-      summary: Returns the banners of a user
-      parameters:
-        - name: id
-          required: true
-          in: path
-          schema:
-            type: string
-      responses:
-        '200':
-          description: ''
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/BannerDto'
+                $ref: '#/components/schemas/FooterPortfolioDto'
       tags:
         - portfolio
       security:
@@ -413,100 +413,6 @@ paths:
           schema:
             type: string
         - name: idWorkExperience
-          required: true
-          in: path
-          schema:
-            type: string
-      responses:
-        '200':
-          description: ''
-      tags:
-        - admin
-  /admin/{id}/project:
-    get:
-      operationId: AdminController_getProjects
-      summary: Get projects
-      parameters:
-        - name: id
-          required: true
-          in: path
-          schema:
-            type: string
-      responses:
-        '200':
-          description: ''
-          content:
-            application/json:
-              schema:
-                type: array
-                items:
-                  $ref: '#/components/schemas/ProjectDto'
-      tags:
-        - admin
-    post:
-      operationId: AdminController_createProject
-      summary: Creates a project
-      parameters:
-        - name: id
-          required: true
-          in: path
-          schema:
-            type: string
-      requestBody:
-        required: true
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/CreateProjectDto'
-      responses:
-        '201':
-          description: ''
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ProjectDto'
-      tags:
-        - admin
-  /admin/{id}/project/{idProject}:
-    put:
-      operationId: AdminController_updateProject
-      summary: Updates a project
-      parameters:
-        - name: id
-          required: true
-          in: path
-          schema:
-            type: string
-        - name: idProject
-          required: true
-          in: path
-          schema:
-            type: string
-      requestBody:
-        required: true
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/UpdateProjectDto'
-      responses:
-        '200':
-          description: ''
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ProjectDto'
-      tags:
-        - admin
-    delete:
-      operationId: AdminController_deleteProject
-      summary: Deletes a project
-      parameters:
-        - name: id
-          required: true
-          in: path
-          schema:
-            type: string
-        - name: idProject
           required: true
           in: path
           schema:
@@ -796,10 +702,10 @@ paths:
           description: ''
       tags:
         - admin
-  /admin/{id}/interest:
+  /admin/{id}/tag:
     get:
-      operationId: AdminController_getInterests
-      summary: Get interests
+      operationId: AdminController_getTags
+      summary: Get tags
       parameters:
         - name: id
           required: true
@@ -814,12 +720,12 @@ paths:
               schema:
                 type: array
                 items:
-                  $ref: '#/components/schemas/InterestDto'
+                  $ref: '#/components/schemas/TagDto'
       tags:
         - admin
     post:
-      operationId: AdminController_createInterest
-      summary: Creates an interest
+      operationId: AdminController_createTag
+      summary: Creates a tag
       parameters:
         - name: id
           required: true
@@ -831,27 +737,27 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/CreateInterestDto'
+              $ref: '#/components/schemas/CreateTagDto'
       responses:
         '201':
           description: ''
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/InterestDto'
+                $ref: '#/components/schemas/TagDto'
       tags:
         - admin
-  /admin/{id}/interest/{idInterest}:
+  /admin/{id}/tag/{idTag}:
     put:
-      operationId: AdminController_updateInterest
-      summary: Updates an interest
+      operationId: AdminController_updateTag
+      summary: Updates a tag
       parameters:
         - name: id
           required: true
           in: path
           schema:
             type: string
-        - name: idInterest
+        - name: idTag
           required: true
           in: path
           schema:
@@ -861,120 +767,26 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/UpdateInterestDto'
+              $ref: '#/components/schemas/UpdateTagDto'
       responses:
         '200':
           description: ''
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/InterestDto'
+                $ref: '#/components/schemas/TagDto'
       tags:
         - admin
     delete:
-      operationId: AdminController_deleteInterest
-      summary: Deletes an interest
+      operationId: AdminController_deleteTag
+      summary: Deletes a tag
       parameters:
         - name: id
           required: true
           in: path
           schema:
             type: string
-        - name: idInterest
-          required: true
-          in: path
-          schema:
-            type: string
-      responses:
-        '200':
-          description: ''
-      tags:
-        - admin
-  /admin/{id}/technology:
-    get:
-      operationId: AdminController_getTechnologies
-      summary: Get technologies
-      parameters:
-        - name: id
-          required: true
-          in: path
-          schema:
-            type: string
-      responses:
-        '200':
-          description: ''
-          content:
-            application/json:
-              schema:
-                type: array
-                items:
-                  $ref: '#/components/schemas/TechnologyDto'
-      tags:
-        - admin
-    post:
-      operationId: AdminController_createTechnology
-      summary: Creates a technology
-      parameters:
-        - name: id
-          required: true
-          in: path
-          schema:
-            type: string
-      requestBody:
-        required: true
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/CreateTechnologyDto'
-      responses:
-        '201':
-          description: ''
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/TechnologyDto'
-      tags:
-        - admin
-  /admin/{id}/technology/{idTechnology}:
-    put:
-      operationId: AdminController_updateTechnology
-      summary: Updates a technology
-      parameters:
-        - name: id
-          required: true
-          in: path
-          schema:
-            type: string
-        - name: idTechnology
-          required: true
-          in: path
-          schema:
-            type: string
-      requestBody:
-        required: true
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/UpdateTechnologyDto'
-      responses:
-        '200':
-          description: ''
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/TechnologyDto'
-      tags:
-        - admin
-    delete:
-      operationId: AdminController_deleteTechnology
-      summary: Deletes a technology
-      parameters:
-        - name: id
-          required: true
-          in: path
-          schema:
-            type: string
-        - name: idTechnology
+        - name: idTag
           required: true
           in: path
           schema:
@@ -1000,88 +812,104 @@ components:
       bearerFormat: JWT
       type: http
   schemas:
-    PersonalInformationDto:
+    HeaderDto:
       type: object
       properties:
-        fullName:
+        name:
           type: string
-        dateOfBirth:
-          format: date-time
+        role:
           type: string
-        workExperience:
+        description:
           type: string
-        education:
-          type: string
-        interests:
+        navBar:
           type: array
           items:
             type: string
-        aboutMe:
-          type: string
+        iconList:
+          type: array
+          items:
+            type: string
       required:
-        - fullName
-        - dateOfBirth
-        - workExperience
-        - education
-        - interests
-        - aboutMe
+        - name
+        - role
+        - description
+        - navBar
+        - iconList
+    AboutDto:
+      type: object
+      properties:
+        paragraphs:
+          type: array
+          items:
+            type: string
+      required:
+        - paragraphs
     EducationPortfolioDto:
       type: object
       properties:
-        courseName:
+        id:
           type: string
-        institute:
+        name:
           type: string
-        startDate:
-          format: date-time
+        university:
           type: string
-        endDate:
-          format: date-time
+        date:
           type: string
-        grade:
-          type: number
+        universityLink:
+          type: string
       required:
-        - courseName
-        - institute
-        - startDate
-        - endDate
-        - grade
+        - id
+        - name
+        - university
+        - date
+        - universityLink
     WorkExperiencePortfolioDto:
       type: object
       properties:
+        id:
+          type: string
         role:
           type: string
         company:
           type: string
-        startDate:
-          format: date-time
+        companyLink:
           type: string
-        endDate:
-          format: date-time
+        date:
           type: string
-        bulletPoints:
+        description:
+          type: array
+          items:
+            type: string
+        links:
+          type: array
+          items:
+            type: string
+        tags:
           type: array
           items:
             type: string
       required:
+        - id
         - role
         - company
-        - startDate
-        - endDate
-        - bulletPoints
+        - companyLink
+        - date
+        - description
+        - links
+        - tags
     SkillPortfolioDto:
       type: object
       properties:
-        skillName:
+        id:
           type: string
-        level:
+        name:
           type: string
-        rating:
+        progress:
           type: number
       required:
-        - skillName
-        - level
-        - rating
+        - id
+        - name
+        - progress
     ProjectPortfolioDto:
       type: object
       properties:
@@ -1099,29 +927,15 @@ components:
         - projectName
         - technologies
         - bulletPoints
-    ContactPortfolioDto:
+    FooterPortfolioDto:
       type: object
       properties:
-        email:
-          type: string
-        linkedinUrl:
-          type: string
-        githubUrl:
-          type: string
+        paragraphs:
+          type: array
+          items:
+            type: string
       required:
-        - email
-        - linkedinUrl
-        - githubUrl
-    BannerDto:
-      type: object
-      properties:
-        fullName:
-          type: string
-        role:
-          type: string
-      required:
-        - fullName
-        - role
+        - paragraphs
     AuthSignUpDto:
       type: object
       properties:
@@ -1176,7 +990,7 @@ components:
         dateOfBirth:
           format: date-time
           type: string
-        aboutMe:
+        description:
           type: string
       required:
         - id
@@ -1184,7 +998,7 @@ components:
         - firstName
         - lastName
         - dateOfBirth
-        - aboutMe
+        - description
     UpdateUserDto:
       type: object
       properties:
@@ -1195,13 +1009,13 @@ components:
         dateOfBirth:
           format: date-time
           type: string
-        aboutMe:
+        description:
           type: string
       required:
         - firstName
         - lastName
         - dateOfBirth
-        - aboutMe
+        - description
     EducationDto:
       type: object
       properties:
@@ -1209,9 +1023,9 @@ components:
           type: string
         courseName:
           type: string
-        typeOfDegree:
-          type: string
         institute:
+          type: string
+        instituteLink:
           type: string
         startDate:
           format: date-time
@@ -1226,8 +1040,8 @@ components:
       required:
         - id
         - courseName
-        - typeOfDegree
         - institute
+        - instituteLink
         - startDate
         - endDate
         - grade
@@ -1237,9 +1051,9 @@ components:
       properties:
         courseName:
           type: string
-        typeOfDegree:
-          type: string
         institute:
+          type: string
+        instituteLink:
           type: string
         startDate:
           format: date-time
@@ -1251,8 +1065,8 @@ components:
           type: number
       required:
         - courseName
-        - typeOfDegree
         - institute
+        - instituteLink
         - startDate
         - endDate
         - grade
@@ -1261,9 +1075,9 @@ components:
       properties:
         courseName:
           type: string
-        typeOfDegree:
-          type: string
         institute:
+          type: string
+        instituteLink:
           type: string
         startDate:
           format: date-time
@@ -1275,8 +1089,8 @@ components:
           type: number
       required:
         - courseName
-        - typeOfDegree
         - institute
+        - instituteLink
         - startDate
         - endDate
         - grade
@@ -1289,6 +1103,8 @@ components:
           type: string
         company:
           type: string
+        companyLink:
+          type: string
         startDate:
           format: date-time
           type: string
@@ -1299,15 +1115,26 @@ components:
           type: array
           items:
             type: string
+        links:
+          type: array
+          items:
+            type: string
+        tags:
+          type: array
+          items:
+            type: string
         user:
           type: string
       required:
         - id
         - role
         - company
+        - companyLink
         - startDate
         - endDate
         - bulletPoints
+        - links
+        - tags
         - user
     CreateWorkExperienceDto:
       type: object
@@ -1315,6 +1142,8 @@ components:
         role:
           type: string
         company:
+          type: string
+        companyLink:
           type: string
         startDate:
           format: date-time
@@ -1325,6 +1154,7 @@ components:
       required:
         - role
         - company
+        - companyLink
         - startDate
         - endDate
     UpdateWorkExperienceDto:
@@ -1334,6 +1164,8 @@ components:
           type: string
         company:
           type: string
+        companyLink:
+          type: string
         startDate:
           format: date-time
           type: string
@@ -1343,45 +1175,9 @@ components:
       required:
         - role
         - company
+        - companyLink
         - startDate
         - endDate
-    ProjectDto:
-      type: object
-      properties:
-        id:
-          type: string
-        projectName:
-          type: string
-        technologies:
-          type: array
-          items:
-            type: string
-        bulletPoints:
-          type: array
-          items:
-            type: string
-        user:
-          type: string
-      required:
-        - id
-        - projectName
-        - technologies
-        - bulletPoints
-        - user
-    CreateProjectDto:
-      type: object
-      properties:
-        projectName:
-          type: string
-      required:
-        - projectName
-    UpdateProjectDto:
-      type: object
-      properties:
-        projectName:
-          type: string
-      required:
-        - projectName
     SkillDto:
       type: object
       properties:
@@ -1389,8 +1185,6 @@ components:
           type: string
         skillName:
           type: string
-        level:
-          type: string
         rating:
           type: number
         user:
@@ -1398,7 +1192,6 @@ components:
       required:
         - id
         - skillName
-        - level
         - rating
         - user
     CreateSkillDto:
@@ -1406,26 +1199,20 @@ components:
       properties:
         skillName:
           type: string
-        level:
-          type: string
         rating:
           type: number
       required:
         - skillName
-        - level
         - rating
     UpdateSkillDto:
       type: object
       properties:
         skillName:
           type: string
-        level:
-          type: string
         rating:
           type: number
       required:
         - skillName
-        - level
         - rating
     ContactDto:
       type: object
@@ -1434,44 +1221,26 @@ components:
           type: string
         email:
           type: string
-        linkedinUrl:
-          type: string
-        githubUrl:
-          type: string
         user:
           type: string
       required:
         - id
         - email
-        - linkedinUrl
-        - githubUrl
         - user
     CreateContactDto:
       type: object
       properties:
         email:
           type: string
-        linkedinUrl:
-          type: string
-        githubUrl:
-          type: string
       required:
         - email
-        - linkedinUrl
-        - githubUrl
     UpdateContactDto:
       type: object
       properties:
         email:
           type: string
-        linkedinUrl:
-          type: string
-        githubUrl:
-          type: string
       required:
         - email
-        - linkedinUrl
-        - githubUrl
     BulletPointDto:
       type: object
       properties:
@@ -1508,60 +1277,33 @@ components:
           type: string
       required:
         - bulletPoint
-    InterestDto:
+    TagDto:
       type: object
       properties:
         id:
           type: string
-        interestName:
+        tag:
           type: string
-        user:
-          type: string
-      required:
-        - id
-        - interestName
-        - user
-    CreateInterestDto:
-      type: object
-      properties:
-        interestName:
-          type: string
-      required:
-        - interestName
-    UpdateInterestDto:
-      type: object
-      properties:
-        interestName:
-          type: string
-      required:
-        - interestName
-    TechnologyDto:
-      type: object
-      properties:
-        id:
-          type: string
-        technologyName:
-          type: string
-        project:
+        workExperience:
           type: string
       required:
         - id
-        - technologyName
-        - project
-    CreateTechnologyDto:
+        - tag
+        - workExperience
+    CreateTagDto:
       type: object
       properties:
-        technologyName:
+        tag:
           type: string
-        project:
+        workExperience:
           type: string
       required:
-        - technologyName
-        - project
-    UpdateTechnologyDto:
+        - tag
+        - workExperience
+    UpdateTagDto:
       type: object
       properties:
-        technologyName:
+        tag:
           type: string
       required:
-        - technologyName
+        - tag

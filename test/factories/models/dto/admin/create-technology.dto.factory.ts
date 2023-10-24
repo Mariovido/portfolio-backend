@@ -1,5 +1,6 @@
 import { CreateTechnologyDto } from '../../../../../src/models/dto/admin/create-technology.dto';
 
+// TODO - RETOCAR
 export class CreateTechnologyDtoFactory {
   static build(): CreateTechnologyDto {
     const createTechnologyDto = new CreateTechnologyDto();

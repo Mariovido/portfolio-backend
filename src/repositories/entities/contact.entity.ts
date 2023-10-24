@@ -2,11 +2,13 @@ import {
   Column,
   Entity,
   JoinColumn,
+  OneToMany,
   OneToOne,
   PrimaryGeneratedColumn,
 } from 'typeorm';
 import { User } from './user.entity';
 import { Exclude } from 'class-transformer';
+import { Link } from './link.entity';
 
 @Entity()
 export class Contact {
@@ -16,11 +18,11 @@ export class Contact {
   @Column({ unique: true })
   email: string;
 
-  @Column({ nullable: true })
-  linkedinUrl?: string;
-
-  @Column({ nullable: true })
-  githubUrl?: string;
+  @OneToMany(() => Link, (link) => link.contact, {
+    eager: true,
+    nullable: true,
+  })
+  links?: Link[];
 
   @OneToOne(() => User, (user) => user.contact, { eager: false })
   @Exclude({ toPlainOnly: true })

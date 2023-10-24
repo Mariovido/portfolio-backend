@@ -19,9 +19,9 @@
     "test:debug": "cross-env STAGE=dev node --inspect-brk -r tsconfig-paths/register -r ts-node/register node_modules/.bin/jest --runInBand",
     "test:e2e": "cross-env STAGE=dev jest --config ./test/jest-e2e.json",
     "typeorm": "ts-node --require tsconfig-paths/register ./node_modules/typeorm/cli",
-    "migration:run": "yarn typeorm migration:run -- -d ./db/typeorm.config.ts",
+    "migration:run": "yarn typeorm migration:run -d ./db/typeorm.config.ts",
     "migration:generate": "yarn typeorm migration:generate -d ./db/typeorm.config.ts",
-    "migration:create": "yarn typeorm migration:create ./db/migrations/$npm_config_name",
+    "migration:create": "yarn typeorm migration:create",
     "migration:revert": "yarn typeorm migration:revert -- -d ./db/typeorm.config.ts",
     "migration:show": "yarn typeorm migration:show -d ./db/typeorm.config.ts"
   },

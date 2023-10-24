@@ -5,6 +5,7 @@ export class UpdateWorkExperienceDtoFactory {
     const updateWorkExperienceDto = new UpdateWorkExperienceDto();
     updateWorkExperienceDto.role = 'developer III';
     updateWorkExperienceDto.company = 'The company 3';
+    updateWorkExperienceDto.companyLink = 'http://wan.pr/jol';
     updateWorkExperienceDto.startDate = new Date();
     updateWorkExperienceDto.endDate = new Date();
 

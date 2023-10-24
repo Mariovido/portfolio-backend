@@ -1,6 +1,8 @@
 import { User } from '../../../../src/repositories/entities/user.entity';
 import { WorkExperience } from '../../../../src/repositories/entities/work-experience.entity';
 import { BulletPointFactory } from './bullet-point.entity.factory';
+import { LinkFactory } from './link.entity.factory';
+import { TagFactory } from './tag.entity.factory';
 
 export class WorkExperienceFactory {
   static build(): WorkExperience {
@@ -8,6 +10,7 @@ export class WorkExperienceFactory {
     workExperience.id = '9b067528-cd53-4913-87a8-1bd5c9f904c8';
     workExperience.role = 'proud';
     workExperience.company = 'follow';
+    workExperience.companyLink = 'http://ohfo.tw/galti';
 
     const startDate = new Date();
     startDate.setFullYear(startDate.getFullYear() - 1);
@@ -15,6 +18,8 @@ export class WorkExperienceFactory {
 
     workExperience.endDate = new Date();
     workExperience.bulletPoints = BulletPointFactory.buildList(2, true);
+    workExperience.links = LinkFactory.buildList(2, { isWorkExperience: true });
+    workExperience.tags = TagFactory.buildList(2);
     workExperience.user = new User();
 
     return workExperience;

@@ -4,8 +4,7 @@ import {
   IsDateString,
   IsDecimal,
   IsOptional,
-  IsString,
-  MaxLength,
+  IsUrl,
 } from 'class-validator';
 
 export class CreateEducationDto {
@@ -13,14 +12,13 @@ export class CreateEducationDto {
   @ApiProperty()
   courseName: string;
 
-  @IsString()
-  @MaxLength(12)
-  @ApiProperty()
-  typeOfDegree: string;
-
   @IsAlpha()
   @ApiProperty()
   institute: string;
+
+  @IsUrl()
+  @ApiProperty()
+  instituteLink: string;
 
   @IsDateString()
   @ApiProperty()

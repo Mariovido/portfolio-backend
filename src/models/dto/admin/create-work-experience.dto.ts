@@ -1,5 +1,5 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { IsDateString, IsOptional, IsString } from 'class-validator';
+import { IsDateString, IsOptional, IsString, IsUrl } from 'class-validator';
 
 export class CreateWorkExperienceDto {
   @IsString()
@@ -9,6 +9,10 @@ export class CreateWorkExperienceDto {
   @IsString()
   @ApiProperty()
   company: string;
+
+  @IsUrl()
+  @ApiProperty()
+  companyLink: string;
 
   @IsDateString()
   @ApiProperty()

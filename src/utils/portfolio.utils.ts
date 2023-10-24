@@ -35,3 +35,15 @@ const getYearAndMonths = (
 
   return { years, months };
 };
+
+export const getBetweenDates = (startDate: Date, endDate?: Date): string => {
+  const startDateString = startDate.toLocaleString('en-us', {
+    month: 'short',
+    year: 'numeric',
+  });
+  const endDateString = endDate
+    ? endDate.toLocaleString('en-us', { month: 'short', year: 'numeric' })
+    : 'Ongoing';
+
+  return `${startDateString} - ${endDateString}`;
+};

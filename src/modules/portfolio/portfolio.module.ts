@@ -8,7 +8,6 @@ import { WorkExperience } from '../../repositories/entities/work-experience.enti
 import { Skill } from '../../repositories/entities/skill.entity';
 import { Project } from '../../repositories/entities/project.entity';
 import { Contact } from '../../repositories/entities/contact.entity';
-import { Interest } from '../../repositories/entities/interest.entity';
 import { Technology } from '../../repositories/entities/technology.entity';
 import { BulletPoint } from '../../repositories/entities/bullet-point.entity';
 import { UserRepository } from '../../repositories/user.repository';
@@ -16,7 +15,9 @@ import { EducationRepository } from '../../repositories/education.repository';
 import { WorkExperienceRepository } from '../../repositories/work-experience.repository';
 import { SkillRepository } from '../../repositories/skill.repository';
 import { ProjectRepository } from '../../repositories/project.repository';
-import { ContactRepository } from '../../repositories/contact.repository';
+import { Link } from '../../repositories/entities/link.entity';
+import { Paragraph } from '../../repositories/entities/paragraph.entity';
+import { Tag } from '../../repositories/entities/tag.entity';
 
 @Module({
   imports: [
@@ -27,9 +28,11 @@ import { ContactRepository } from '../../repositories/contact.repository';
       Skill,
       Project,
       Contact,
-      Interest,
       Technology,
       BulletPoint,
+      Link,
+      Paragraph,
+      Tag,
     ]),
   ],
   controllers: [PortfolioController],
@@ -40,7 +43,6 @@ import { ContactRepository } from '../../repositories/contact.repository';
     WorkExperienceRepository,
     SkillRepository,
     ProjectRepository,
-    ContactRepository,
   ],
 })
 export class PortfolioModule {}

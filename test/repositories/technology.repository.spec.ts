@@ -15,6 +15,7 @@ import { InternalServerErrorException } from '@nestjs/common';
 import { ProjectFactory } from '../factories/repositories/entities/project.entity.factory';
 import { Project } from '../../src/repositories/entities/project.entity';
 
+// TODO - RETOCAR
 describe('TechnologyRepository', () => {
   let technologyRepository: TechnologyRepository;
 

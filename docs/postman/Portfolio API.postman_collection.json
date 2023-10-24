@@ -10,12 +10,12 @@
 			"name": "Portfolio",
 			"item": [
 				{
-					"name": "Get personal information by user ID",
+					"name": "Get header by user ID",
 					"request": {
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "http://{{portfolio-api-host}}/portfolio/{{idUser}}/personal-information",
+							"raw": "http://{{portfolio-api-host}}/portfolio/{{idUser}}/header",
 							"protocol": "http",
 							"host": [
 								"{{portfolio-api-host}}"
@@ -23,7 +23,27 @@
 							"path": [
 								"portfolio",
 								"{{idUser}}",
-								"personal-information"
+								"header"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get about by user ID",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://{{portfolio-api-host}}/portfolio/{{idUser}}/about",
+							"protocol": "http",
+							"host": [
+								"{{portfolio-api-host}}"
+							],
+							"path": [
+								"portfolio",
+								"{{idUser}}",
+								"about"
 							]
 						}
 					},
@@ -90,7 +110,27 @@
 					"response": []
 				},
 				{
-					"name": "Get projects by user ID",
+					"name": "Get footer by user ID",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://{{portfolio-api-host}}/portfolio/{{idUser}}/footer",
+							"protocol": "http",
+							"host": [
+								"{{portfolio-api-host}}"
+							],
+							"path": [
+								"portfolio",
+								"{{idUser}}",
+								"footer"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get projects by user ID -> REDO",
 					"request": {
 						"method": "GET",
 						"header": [],
@@ -108,46 +148,6 @@
 						}
 					},
 					"response": []
-				},
-				{
-					"name": "Get contacts by user ID",
-					"request": {
-						"method": "GET",
-						"header": [],
-						"url": {
-							"raw": "http://{{portfolio-api-host}}/portfolio/{{idUser}}/contacts",
-							"protocol": "http",
-							"host": [
-								"{{portfolio-api-host}}"
-							],
-							"path": [
-								"portfolio",
-								"{{idUser}}",
-								"contacts"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "Get banner by user ID",
-					"request": {
-						"method": "GET",
-						"header": [],
-						"url": {
-							"raw": "http://{{portfolio-api-host}}/portfolio/{{idUser}}/banner",
-							"protocol": "http",
-							"host": [
-								"{{portfolio-api-host}}"
-							],
-							"path": [
-								"portfolio",
-								"{{idUser}}",
-								"banner"
-							]
-						}
-					},
-					"response": []
 				}
 			]
 		},
@@ -155,7 +155,7 @@
 			"name": "Auth",
 			"item": [
 				{
-					"name": "Sign up",
+					"name": "Sign up -> REDO",
 					"request": {
 						"method": "POST",
 						"header": [],
@@ -267,7 +267,7 @@
 								"header": [],
 								"body": {
 									"mode": "raw",
-									"raw": "{\r\n    \"firstName\": \"test\",\r\n    \"lastName\": \"name last\",\r\n    \"dateOfBirth\": \"1999-04-13 22:00:00+00\",\r\n    \"aboutMe\": \"This is about me\"\r\n}",
+									"raw": "{\r\n    \"firstName\": \"test\",\r\n    \"lastName\": \"name last\",\r\n    \"dateOfBirth\": \"1999-04-13 22:00:00+00\",\r\n    \"description\": \"This is about me\"\r\n}",
 									"options": {
 										"raw": {
 											"language": "json"
@@ -321,7 +321,7 @@
 								"header": [],
 								"body": {
 									"mode": "raw",
-									"raw": "{\r\n    \"courseName\": \"engeneering\",\r\n    \"typeOfDegree\": \"MS\",\r\n    \"institute\": \"university\",\r\n    \"startDate\": \"2021-05-13 22:00:00+00\",\r\n    \"endDate\": \"2023-05-13 22:00:00+00\",\r\n    \"grade\": \"8.0\"\r\n}",
+									"raw": "{\r\n    \"courseName\": \"engeneering\",\r\n    \"institute\": \"university\",\r\n    \"instituteLink\": \"http://www.upm.es\",\r\n    \"startDate\": \"2021-05-13 22:00:00+00\",\r\n    \"endDate\": \"2023-05-13 22:00:00+00\",\r\n    \"grade\": \"8.0\"\r\n}",
 									"options": {
 										"raw": {
 											"language": "json"
@@ -350,7 +350,7 @@
 								"header": [],
 								"body": {
 									"mode": "raw",
-									"raw": "{\r\n    \"courseName\": \"letters\",\r\n    \"typeOfDegree\": \"BS\",\r\n    \"institute\": \"institute\",\r\n    \"startDate\": \"2019-05-13 22:00:00+00\",\r\n    \"endDate\": \"2022-05-13 22:00:00+00\",\r\n    \"grade\": \"9.16\"\r\n}",
+									"raw": "{\r\n    \"courseName\": \"letters\",\r\n    \"institute\": \"institute\",\r\n    \"instituteLink\": \"http://www.upv.es\",\r\n    \"startDate\": \"2019-05-13 22:00:00+00\",\r\n    \"endDate\": \"2022-05-13 22:00:00+00\",\r\n    \"grade\": \"9.16\"\r\n}",
 									"options": {
 										"raw": {
 											"language": "json"
@@ -372,7 +372,7 @@
 									"variable": [
 										{
 											"key": "idEducation",
-											"value": "05144842-e16d-4e36-b932-4cf30e221d6d"
+											"value": "ac2a34ac-63db-4355-b270-28b12d995f02"
 										}
 									]
 								}
@@ -399,7 +399,7 @@
 									"variable": [
 										{
 											"key": "idEducation",
-											"value": "cb98f344-39b4-4773-9d67-0b122a454d85"
+											"value": "ac2a34ac-63db-4355-b270-28b12d995f02"
 										}
 									]
 								}
@@ -438,7 +438,7 @@
 								"header": [],
 								"body": {
 									"mode": "raw",
-									"raw": "{\r\n    \"role\": \"developer\",\r\n    \"company\": \"The company\",\r\n    \"startDate\": \"2020-05-13 22:00:00+00\",\r\n    \"endDate\": \"2023-05-13 22:00:00+00\"\r\n}",
+									"raw": "{\r\n    \"role\": \"developer\",\r\n    \"company\": \"The company\",\r\n    \"companyLink\": \"https://www.google.com\",\r\n    \"startDate\": \"2020-05-13 22:00:00+00\",\r\n    \"endDate\": \"2023-05-13 22:00:00+00\"\r\n}",
 									"options": {
 										"raw": {
 											"language": "json"
@@ -455,6 +455,42 @@
 										"admin",
 										"{{idUser}}",
 										"work-experience"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Update work experience by ID",
+							"request": {
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"role\": \"developer III\",\r\n    \"company\": \"The company 3\",\r\n    \"companyLink\": \"https://www.google.com\",\r\n    \"startDate\": \"2018-05-13 22:00:00+00\",\r\n    \"endDate\": \"2021-05-13 22:00:00+00\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://{{portfolio-api-host}}/admin/{{idUser}}/work-experience/:idWorkExperience",
+									"protocol": "http",
+									"host": [
+										"{{portfolio-api-host}}"
+									],
+									"path": [
+										"admin",
+										"{{idUser}}",
+										"work-experience",
+										":idWorkExperience"
+									],
+									"variable": [
+										{
+											"key": "idWorkExperience",
+											"value": "51847ffd-4405-40d7-9d4d-4806894e0f85"
+										}
 									]
 								}
 							},
@@ -480,160 +516,7 @@
 									"variable": [
 										{
 											"key": "idWorkExperience",
-											"value": "fbdcb33a-654f-403c-a509-94d51c0363e9"
-										}
-									]
-								}
-							},
-							"response": []
-						},
-						{
-							"name": "Update work experience by ID",
-							"request": {
-								"method": "PUT",
-								"header": [],
-								"body": {
-									"mode": "raw",
-									"raw": "{\r\n    \"role\": \"developer III\",\r\n    \"company\": \"The company 3\",\r\n    \"startDate\": \"2018-05-13 22:00:00+00\",\r\n    \"endDate\": \"2021-05-13 22:00:00+00\"\r\n}",
-									"options": {
-										"raw": {
-											"language": "json"
-										}
-									}
-								},
-								"url": {
-									"raw": "http://{{portfolio-api-host}}/admin/{{idUser}}/work-experience/:idWorkExperience",
-									"protocol": "http",
-									"host": [
-										"{{portfolio-api-host}}"
-									],
-									"path": [
-										"admin",
-										"{{idUser}}",
-										"work-experience",
-										":idWorkExperience"
-									],
-									"variable": [
-										{
-											"key": "idWorkExperience",
-											"value": "b700afa3-8e02-46dc-a635-8d503dfb5ed8"
-										}
-									]
-								}
-							},
-							"response": []
-						}
-					]
-				},
-				{
-					"name": "Project",
-					"item": [
-						{
-							"name": "Get projects by ID",
-							"request": {
-								"method": "GET",
-								"header": [],
-								"url": {
-									"raw": "http://{{portfolio-api-host}}/admin/{{idUser}}/project",
-									"protocol": "http",
-									"host": [
-										"{{portfolio-api-host}}"
-									],
-									"path": [
-										"admin",
-										"{{idUser}}",
-										"project"
-									]
-								}
-							},
-							"response": []
-						},
-						{
-							"name": "Create project by ID",
-							"request": {
-								"method": "POST",
-								"header": [],
-								"body": {
-									"mode": "raw",
-									"raw": "{\r\n    \"projectName\": \"Fantastic Project\"\r\n}",
-									"options": {
-										"raw": {
-											"language": "json"
-										}
-									}
-								},
-								"url": {
-									"raw": "http://{{portfolio-api-host}}/admin/{{idUser}}/project",
-									"protocol": "http",
-									"host": [
-										"{{portfolio-api-host}}"
-									],
-									"path": [
-										"admin",
-										"{{idUser}}",
-										"project"
-									]
-								}
-							},
-							"response": []
-						},
-						{
-							"name": "Delete project by ID",
-							"request": {
-								"method": "DELETE",
-								"header": [],
-								"url": {
-									"raw": "http://{{portfolio-api-host}}/admin/{{idUser}}/project/:idProject",
-									"protocol": "http",
-									"host": [
-										"{{portfolio-api-host}}"
-									],
-									"path": [
-										"admin",
-										"{{idUser}}",
-										"project",
-										":idProject"
-									],
-									"variable": [
-										{
-											"key": "idProject",
-											"value": "e4c0e036-6ec2-4289-a97c-281a8d3e9b99"
-										}
-									]
-								}
-							},
-							"response": []
-						},
-						{
-							"name": "Update project by ID",
-							"request": {
-								"method": "PUT",
-								"header": [],
-								"body": {
-									"mode": "raw",
-									"raw": "{\r\n    \"projectName\": \"Project Awesome\"\r\n}",
-									"options": {
-										"raw": {
-											"language": "json"
-										}
-									}
-								},
-								"url": {
-									"raw": "http://{{portfolio-api-host}}/admin/{{idUser}}/project/:idProject",
-									"protocol": "http",
-									"host": [
-										"{{portfolio-api-host}}"
-									],
-									"path": [
-										"admin",
-										"{{idUser}}",
-										"project",
-										":idProject"
-									],
-									"variable": [
-										{
-											"key": "idProject",
-											"value": "36c80e1c-6b61-4d91-a0dc-a5027527d686"
+											"value": "51847ffd-4405-40d7-9d4d-4806894e0f85"
 										}
 									]
 								}
@@ -672,7 +555,7 @@
 								"header": [],
 								"body": {
 									"mode": "raw",
-									"raw": "{\r\n    \"skillName\": \"A new skill\",\r\n    \"level\": \"Expert\",\r\n    \"rating\": 88\r\n}",
+									"raw": "{\r\n    \"skillName\": \"A new skill\",\r\n    \"rating\": 88\r\n}",
 									"options": {
 										"raw": {
 											"language": "json"
@@ -689,6 +572,42 @@
 										"admin",
 										"{{idUser}}",
 										"skill"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Update skill by ID",
+							"request": {
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"skillName\": \"An old skill\",\r\n    \"rating\": 33\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://{{portfolio-api-host}}/admin/{{idUser}}/skill/:idSkill",
+									"protocol": "http",
+									"host": [
+										"{{portfolio-api-host}}"
+									],
+									"path": [
+										"admin",
+										"{{idUser}}",
+										"skill",
+										":idSkill"
+									],
+									"variable": [
+										{
+											"key": "idSkill",
+											"value": "4ad31cdf-e255-4092-8d95-2dda1a4587b0"
+										}
 									]
 								}
 							},
@@ -714,43 +633,7 @@
 									"variable": [
 										{
 											"key": "idSkill",
-											"value": "78e183c0-f9a7-4bb6-b1d3-18a39d21ad97"
-										}
-									]
-								}
-							},
-							"response": []
-						},
-						{
-							"name": "Update skill by ID",
-							"request": {
-								"method": "PUT",
-								"header": [],
-								"body": {
-									"mode": "raw",
-									"raw": "{\r\n    \"skillName\": \"An old skill\",\r\n    \"level\": \"Beginner\",\r\n    \"rating\": 33\r\n}",
-									"options": {
-										"raw": {
-											"language": "json"
-										}
-									}
-								},
-								"url": {
-									"raw": "http://{{portfolio-api-host}}/admin/{{idUser}}/skill/:idSkill",
-									"protocol": "http",
-									"host": [
-										"{{portfolio-api-host}}"
-									],
-									"path": [
-										"admin",
-										"{{idUser}}",
-										"skill",
-										":idSkill"
-									],
-									"variable": [
-										{
-											"key": "idSkill",
-											"value": "1cf3dc87-b0f3-43de-8f58-1fcc79b6813d"
+											"value": "4ad31cdf-e255-4092-8d95-2dda1a4587b0"
 										}
 									]
 								}
@@ -789,7 +672,7 @@
 								"header": [],
 								"body": {
 									"mode": "raw",
-									"raw": "{\r\n    \"email\": \"test1@test.com\",\r\n    \"linkedinUrl\": \"http://test.com\",\r\n    \"githubUrl\": \"http://test.com\"\r\n}",
+									"raw": "{\r\n    \"email\": \"test1@test.com\"\r\n}",
 									"options": {
 										"raw": {
 											"language": "json"
@@ -806,6 +689,42 @@
 										"admin",
 										"{{idUser}}",
 										"contact"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Update contact by ID",
+							"request": {
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"email\": \"test3@test.com\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://{{portfolio-api-host}}/admin/{{idUser}}/contact/:idContact",
+									"protocol": "http",
+									"host": [
+										"{{portfolio-api-host}}"
+									],
+									"path": [
+										"admin",
+										"{{idUser}}",
+										"contact",
+										":idContact"
+									],
+									"variable": [
+										{
+											"key": "idContact",
+											"value": "1b738e48-a54c-4f89-88c5-9664c66c5530"
+										}
 									]
 								}
 							},
@@ -832,42 +751,6 @@
 										{
 											"key": "idContact",
 											"value": "36434fcf-f1c9-4e92-ae31-977e74eb60da"
-										}
-									]
-								}
-							},
-							"response": []
-						},
-						{
-							"name": "Update contact by ID",
-							"request": {
-								"method": "PUT",
-								"header": [],
-								"body": {
-									"mode": "raw",
-									"raw": "{\r\n    \"email\": \"test3@test.com\",\r\n    \"linkedinUrl\": \"http://test2.com\",\r\n    \"githubUrl\": \"http://test3.com\"\r\n}",
-									"options": {
-										"raw": {
-											"language": "json"
-										}
-									}
-								},
-								"url": {
-									"raw": "http://{{portfolio-api-host}}/admin/{{idUser}}/contact/:idContact",
-									"protocol": "http",
-									"host": [
-										"{{portfolio-api-host}}"
-									],
-									"path": [
-										"admin",
-										"{{idUser}}",
-										"contact",
-										":idContact"
-									],
-									"variable": [
-										{
-											"key": "idContact",
-											"value": "1b738e48-a54c-4f89-88c5-9664c66c5530"
 										}
 									]
 								}
@@ -929,33 +812,6 @@
 							"response": []
 						},
 						{
-							"name": "Delete bullet point by ID",
-							"request": {
-								"method": "DELETE",
-								"header": [],
-								"url": {
-									"raw": "http://{{portfolio-api-host}}/admin/{{idUser}}/bullet-point/:idBulletPoint",
-									"protocol": "http",
-									"host": [
-										"{{portfolio-api-host}}"
-									],
-									"path": [
-										"admin",
-										"{{idUser}}",
-										"bullet-point",
-										":idBulletPoint"
-									],
-									"variable": [
-										{
-											"key": "idBulletPoint",
-											"value": "224d4af8-0502-4735-b3ce-f7ee08eb6334"
-										}
-									]
-								}
-							},
-							"response": []
-						},
-						{
 							"name": "Update bullet point by ID",
 							"request": {
 								"method": "PUT",
@@ -990,19 +846,14 @@
 								}
 							},
 							"response": []
-						}
-					]
-				},
-				{
-					"name": "Interest",
-					"item": [
+						},
 						{
-							"name": "Get interests by ID",
+							"name": "Delete bullet point by ID",
 							"request": {
-								"method": "GET",
+								"method": "DELETE",
 								"header": [],
 								"url": {
-									"raw": "http://{{portfolio-api-host}}/admin/{{idUser}}/interest",
+									"raw": "http://{{portfolio-api-host}}/admin/{{idUser}}/bullet-point/:idBulletPoint",
 									"protocol": "http",
 									"host": [
 										"{{portfolio-api-host}}"
@@ -1010,20 +861,52 @@
 									"path": [
 										"admin",
 										"{{idUser}}",
-										"interest"
+										"bullet-point",
+										":idBulletPoint"
+									],
+									"variable": [
+										{
+											"key": "idBulletPoint",
+											"value": "224d4af8-0502-4735-b3ce-f7ee08eb6334"
+										}
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Tag",
+					"item": [
+						{
+							"name": "Get tags by ID",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://{{portfolio-api-host}}/admin/{{idUser}}/tag",
+									"protocol": "http",
+									"host": [
+										"{{portfolio-api-host}}"
+									],
+									"path": [
+										"admin",
+										"{{idUser}}",
+										"tag"
 									]
 								}
 							},
 							"response": []
 						},
 						{
-							"name": "Create interest by ID",
+							"name": "Create tag by ID",
 							"request": {
 								"method": "POST",
 								"header": [],
 								"body": {
 									"mode": "raw",
-									"raw": "{\r\n    \"interestName\": \"Interesting\"\r\n}",
+									"raw": "{\r\n    \"tag\": \"Tag\",\r\n    \"workExperience\": \"6efccabe-1354-485b-b04d-515824afa889\"\r\n}",
 									"options": {
 										"raw": {
 											"language": "json"
@@ -1031,7 +914,7 @@
 									}
 								},
 								"url": {
-									"raw": "http://{{portfolio-api-host}}/admin/{{idUser}}/interest",
+									"raw": "http://{{portfolio-api-host}}/admin/{{idUser}}/tag",
 									"protocol": "http",
 									"host": [
 										"{{portfolio-api-host}}"
@@ -1039,47 +922,20 @@
 									"path": [
 										"admin",
 										"{{idUser}}",
-										"interest"
+										"tag"
 									]
 								}
 							},
 							"response": []
 						},
 						{
-							"name": "Delete interest by ID",
-							"request": {
-								"method": "DELETE",
-								"header": [],
-								"url": {
-									"raw": "http://{{portfolio-api-host}}/admin/{{idUser}}/interest/:idInterest",
-									"protocol": "http",
-									"host": [
-										"{{portfolio-api-host}}"
-									],
-									"path": [
-										"admin",
-										"{{idUser}}",
-										"interest",
-										":idInterest"
-									],
-									"variable": [
-										{
-											"key": "idInterest",
-											"value": "acae52f1-b02a-4e3c-a970-022225df0cde"
-										}
-									]
-								}
-							},
-							"response": []
-						},
-						{
-							"name": "Update interest by ID",
+							"name": "Update tag by ID",
 							"request": {
 								"method": "PUT",
 								"header": [],
 								"body": {
 									"mode": "raw",
-									"raw": "{\r\n    \"interestName\": \"Basketball\"\r\n}",
+									"raw": "{\r\n    \"tag\": \"TagChanged\"\r\n}",
 									"options": {
 										"raw": {
 											"language": "json"
@@ -1087,7 +943,7 @@
 									}
 								},
 								"url": {
-									"raw": "http://{{portfolio-api-host}}/admin/{{idUser}}/interest/:idInterest",
+									"raw": "http://{{portfolio-api-host}}/admin/{{idUser}}/tag/:idTag",
 									"protocol": "http",
 									"host": [
 										"{{portfolio-api-host}}"
@@ -1095,13 +951,40 @@
 									"path": [
 										"admin",
 										"{{idUser}}",
-										"interest",
-										":idInterest"
+										"tag",
+										":idTag"
 									],
 									"variable": [
 										{
-											"key": "idInterest",
-											"value": "726f83b5-e26f-4469-aa30-67fceb15544d"
+											"key": "idTag",
+											"value": "6ac62112-e0ef-4390-a5c1-e33e60d272ff"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Delete tag by ID",
+							"request": {
+								"method": "DELETE",
+								"header": [],
+								"url": {
+									"raw": "http://{{portfolio-api-host}}/admin/{{idUser}}/tag/:idTag",
+									"protocol": "http",
+									"host": [
+										"{{portfolio-api-host}}"
+									],
+									"path": [
+										"admin",
+										"{{idUser}}",
+										"tag",
+										":idTag"
+									],
+									"variable": [
+										{
+											"key": "idTag",
+											"value": "6ac62112-e0ef-4390-a5c1-e33e60d272ff"
 										}
 									]
 								}
@@ -1111,7 +994,124 @@
 					]
 				},
 				{
-					"name": "Technology",
+					"name": "Project -> REDO",
+					"item": [
+						{
+							"name": "Get projects by ID",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://{{portfolio-api-host}}/admin/{{idUser}}/project",
+									"protocol": "http",
+									"host": [
+										"{{portfolio-api-host}}"
+									],
+									"path": [
+										"admin",
+										"{{idUser}}",
+										"project"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Create project by ID",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"projectName\": \"Fantastic Project\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://{{portfolio-api-host}}/admin/{{idUser}}/project",
+									"protocol": "http",
+									"host": [
+										"{{portfolio-api-host}}"
+									],
+									"path": [
+										"admin",
+										"{{idUser}}",
+										"project"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Update project by ID",
+							"request": {
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"projectName\": \"Project Awesome\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://{{portfolio-api-host}}/admin/{{idUser}}/project/:idProject",
+									"protocol": "http",
+									"host": [
+										"{{portfolio-api-host}}"
+									],
+									"path": [
+										"admin",
+										"{{idUser}}",
+										"project",
+										":idProject"
+									],
+									"variable": [
+										{
+											"key": "idProject",
+											"value": "36c80e1c-6b61-4d91-a0dc-a5027527d686"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Delete project by ID",
+							"request": {
+								"method": "DELETE",
+								"header": [],
+								"url": {
+									"raw": "http://{{portfolio-api-host}}/admin/{{idUser}}/project/:idProject",
+									"protocol": "http",
+									"host": [
+										"{{portfolio-api-host}}"
+									],
+									"path": [
+										"admin",
+										"{{idUser}}",
+										"project",
+										":idProject"
+									],
+									"variable": [
+										{
+											"key": "idProject",
+											"value": "e4c0e036-6ec2-4289-a97c-281a8d3e9b99"
+										}
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Technology -> REDO",
 					"item": [
 						{
 							"name": "Get technologies by ID",

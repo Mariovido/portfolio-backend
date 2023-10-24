@@ -1,15 +1,10 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { IsEnum, IsNumber, IsString, Max, Min } from 'class-validator';
-import { LevelSkillEnum } from '../../enums/LevelSkill.enum';
+import { IsNumber, IsString, Max, Min } from 'class-validator';
 
 export class UpdateSkillDto {
   @IsString()
   @ApiProperty()
   skillName: string;
-
-  @IsEnum(LevelSkillEnum)
-  @ApiProperty()
-  level: LevelSkillEnum;
 
   @IsNumber()
   @Min(1)

@@ -1,5 +1,16 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { IsString, IsArray, IsDate, IsOptional, IsUUID } from 'class-validator';
+import { Type } from 'class-transformer';
+import {
+  IsString,
+  IsArray,
+  IsDate,
+  IsOptional,
+  IsUUID,
+  IsUrl,
+} from 'class-validator';
+import { LinkDto } from './link.dto';
+import { TagDto } from './tag.dto';
+import { BulletPointDto } from './bullet-point.dto';
 
 export class WorkExperienceDto {
   @IsUUID()
@@ -14,6 +25,10 @@ export class WorkExperienceDto {
   @ApiProperty()
   company: string;
 
+  @IsUrl()
+  @ApiProperty()
+  companyLink: string;
+
   @IsDate()
   @ApiProperty()
   startDate: Date;
@@ -24,8 +39,19 @@ export class WorkExperienceDto {
   endDate?: Date;
 
   @IsArray()
+  @Type(() => BulletPointDto)
   @ApiProperty()
-  bulletPoints: string[];
+  bulletPoints: BulletPointDto[];
+
+  @IsArray()
+  @Type(() => LinkDto)
+  @ApiProperty()
+  links?: LinkDto[];
+
+  @IsArray()
+  @Type(() => TagDto)
+  @ApiProperty()
+  tags?: TagDto[];
 
   @IsUUID()
   @ApiProperty()

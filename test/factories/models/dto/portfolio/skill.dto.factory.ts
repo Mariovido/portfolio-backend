@@ -4,9 +4,9 @@ import { Skill } from '../../../../../src/repositories/entities/skill.entity';
 export class SkillPortfolioDtoFactory {
   static build(mockSkill: Skill): SkillPortfolioDto {
     const skillPortfolioDto = new SkillPortfolioDto();
-    skillPortfolioDto.skillName = mockSkill.skillName;
-    skillPortfolioDto.level = mockSkill.level;
-    skillPortfolioDto.rating = mockSkill.rating;
+    skillPortfolioDto.id = mockSkill.id;
+    skillPortfolioDto.name = mockSkill.skillName;
+    skillPortfolioDto.progress = mockSkill.rating;
 
     return skillPortfolioDto;
   }

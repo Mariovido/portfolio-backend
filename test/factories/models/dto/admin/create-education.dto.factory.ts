@@ -4,8 +4,8 @@ export class CreateEducationDtoFactory {
   static build(): CreateEducationDto {
     const createEducationDto = new CreateEducationDto();
     createEducationDto.courseName = 'engeneering';
-    createEducationDto.typeOfDegree = 'MS';
     createEducationDto.institute = 'university';
+    createEducationDto.instituteLink = 'http://ejvovjev.sz/ajuzi';
     createEducationDto.startDate = new Date();
     createEducationDto.endDate = new Date();
     createEducationDto.grade = 7;

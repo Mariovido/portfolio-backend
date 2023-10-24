@@ -10,7 +10,9 @@ import { WorkExperience } from './work-experience.entity';
 import { Skill } from './skill.entity';
 import { Project } from './project.entity';
 import { Contact } from './contact.entity';
-import { Interest } from './interest.entity';
+import { Paragraph } from './paragraph.entity';
+import { IsOptional } from 'class-validator';
+import { Footer } from './footer.entity';
 
 @Entity()
 export class User {
@@ -33,10 +35,11 @@ export class User {
   dateOfBirth: Date;
 
   @Column({ nullable: true })
-  aboutMe: string;
+  @IsOptional()
+  description?: string;
 
-  @OneToMany(() => Interest, (interest) => interest.user, { eager: true })
-  interests: Interest[];
+  @OneToMany(() => Paragraph, (paragraph) => paragraph.user, { eager: true })
+  about: Paragraph[];
 
   @OneToMany(() => Education, (education) => education.user, { eager: true })
   educations: Education[];
@@ -54,4 +57,7 @@ export class User {
 
   @OneToOne(() => Contact, (contact) => contact.user, { eager: true })
   contact: Contact;
+
+  @OneToOne(() => Footer, (footer) => footer.user, { eager: true })
+  footer: Footer;
 }

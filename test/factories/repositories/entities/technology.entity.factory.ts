@@ -1,6 +1,7 @@
 import { Project } from '../../../../src/repositories/entities/project.entity';
 import { Technology } from '../../../../src/repositories/entities/technology.entity';
 
+// TODO - RETOCAR
 export class TechnologyFactory {
   static build(): Technology {
     const technology = new Technology();
