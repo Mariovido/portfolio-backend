@@ -31,18 +31,18 @@ import { CreateContactDto } from '../../models/dto/admin/create-contact.dto';
 import { BulletPointDto } from '../../models/dto/bullet-point.dto';
 import { CreateBulletPointDto } from '../../models/dto/admin/create-bullet-point.dto';
 import { CreateTagDto } from '../../models/dto/admin/create-tag.dto';
-import { TechnologyDto } from '../../models/dto/technology.dto';
-import { CreateTechnologyDto } from '../../models/dto/admin/create-technology.dto';
+import { CreateLinkDto } from '../../models/dto/admin/create-link.dto';
 import { UpdateWorkExperienceDto } from '../../models/dto/admin/update-work-experience.dto';
 import { UpdateProjectDto } from '../../models/dto/admin/update-project.dto';
 import { UpdateSkillDto } from '../../models/dto/admin/update-skill.dto';
 import { UpdateContactDto } from '../../models/dto/admin/update-contact.dto';
 import { UpdateBulletPointDto } from '../../models/dto/admin/update-bullet-point.dto';
 import { UpdateTagDto } from '../../models/dto/admin/update-tag.dto';
-import { UpdateTechnologyDto } from '../../models/dto/admin/update-technology.dto';
+import { UpdateLinkDto } from '../../models/dto/admin/update-link.dto';
 import { TagDto } from '../../models/dto/tag.dto';
 import { FooterDto } from '../../models/dto/footer.dto';
 import { CreateFooterDto } from '../../models/dto/admin/create-footer.dto';
+import { LinkDto } from '../../models/dto/link.dto';
 
 @Controller('admin')
 @UseGuards(AuthGuard('jwt'))
@@ -612,86 +612,70 @@ export class AdminController {
     return this.adminService.deleteTag(id, idTag, user);
   }
 
-  // TODO - RETOCAR
-  // @Get('/:id/technology')
-  // @ApiOperation({
-  //   summary: 'Get technologies',
-  // })
-  // @ApiResponse({ status: 200, type: [TechnologyDto] })
-  // getTechnologies(
-  //   @Param('id') id: string,
-  //   @GetUser() user: User,
-  // ): Promise<TechnologyDto[]> {
-  //   this.logger.verbose(
-  //     `User "${user.username}" getting technologies. UserID: ${id}`,
-  //   );
-  //   return this.adminService.getTechnologies(id, user);
-  // }
+  @Get('/:id/link')
+  @ApiOperation({
+    summary: 'Get links',
+  })
+  @ApiResponse({ status: 200, type: [LinkDto] })
+  getLinks(@Param('id') id: string, @GetUser() user: User): Promise<LinkDto[]> {
+    this.logger.verbose(`User "${user.username}" getting links. UserID: ${id}`);
+    return this.adminService.getLinks(id, user);
+  }
 
-  // TODO - RETOCAR
-  // @Post('/:id/technology')
-  // @ApiOperation({
-  //   summary: 'Creates a technology',
-  // })
-  // @ApiResponse({ status: 201, type: TechnologyDto })
-  // createTechnology(
-  //   @Param('id') id: string,
-  //   @Body() createTechnologyDto: CreateTechnologyDto,
-  //   @GetUser() user: User,
-  // ): Promise<TechnologyDto> {
-  //   this.logger.verbose(
-  //     `User "${
-  //       user.username
-  //     }" creating a technology. UserID: ${id} Data: ${JSON.stringify(
-  //       createTechnologyDto,
-  //     )}`,
-  //   );
-  //   return this.adminService.createTechnology(id, createTechnologyDto, user);
-  // }
+  @Post('/:id/link')
+  @ApiOperation({
+    summary: 'Creates a link',
+  })
+  @ApiResponse({ status: 201, type: LinkDto })
+  createLink(
+    @Param('id') id: string,
+    @Body() createLinkDto: CreateLinkDto,
+    @GetUser() user: User,
+  ): Promise<LinkDto> {
+    this.logger.verbose(
+      `User "${
+        user.username
+      }" creating a link. UserID: ${id} Data: ${JSON.stringify(createLinkDto)}`,
+    );
+    return this.adminService.createLink(id, createLinkDto, user);
+  }
 
-  // TODO - RETOCAR
-  // @Put('/:id/technology/:idTechnology')
-  // @ApiOperation({
-  //   summary: 'Updates a technology',
-  // })
-  // @ApiResponse({ status: 200, type: TechnologyDto })
-  // updateTechnology(
-  //   @Param('id') id: string,
-  //   @Param('idTechnology') idTechnology: string,
-  //   @Body() updateTechnologyDto: UpdateTechnologyDto,
-  //   @GetUser() user: User,
-  // ): Promise<TechnologyDto> {
-  //   this.logger.verbose(
-  //     `User "${
-  //       user.username
-  //     }" updating a work experience. UserID: ${id} Data: ${JSON.stringify(
-  //       updateTechnologyDto,
-  //     )} TechnologyID: ${idTechnology}`,
-  //   );
-  //   return this.adminService.updateTechnology(
-  //     id,
-  //     idTechnology,
-  //     updateTechnologyDto,
-  //     user,
-  //   );
-  // }
+  @Put('/:id/link/:idLink')
+  @ApiOperation({
+    summary: 'Updates a link',
+  })
+  @ApiResponse({ status: 200, type: LinkDto })
+  updateLink(
+    @Param('id') id: string,
+    @Param('idLink') idLink: string,
+    @Body() updateLinkDto: UpdateLinkDto,
+    @GetUser() user: User,
+  ): Promise<LinkDto> {
+    this.logger.verbose(
+      `User "${
+        user.username
+      }" updating a link. UserID: ${id} Data: ${JSON.stringify(
+        updateLinkDto,
+      )} LinkID: ${idLink}`,
+    );
+    return this.adminService.updateLink(id, idLink, updateLinkDto, user);
+  }
 
-  // TODO - RETOCAR
-  // @Delete('/:id/technology/:idTechnology')
-  // @ApiOperation({
-  //   summary: 'Deletes a technology',
-  // })
-  // @ApiResponse({ status: 200 })
-  // deleteTechnology(
-  //   @Param('id') id: string,
-  //   @Param('idTechnology') idTechnology: string,
-  //   @GetUser() user: User,
-  // ): Promise<void> {
-  //   this.logger.verbose(
-  //     `User "${user.username}" deleting a technology. UserID: ${id} TechnologyID: ${idTechnology}`,
-  //   );
-  //   return this.adminService.deleteTechnology(id, idTechnology, user);
-  // }
+  @Delete('/:id/link/:idLink')
+  @ApiOperation({
+    summary: 'Deletes a link',
+  })
+  @ApiResponse({ status: 200 })
+  deleteLink(
+    @Param('id') id: string,
+    @Param('idLink') idLink: string,
+    @GetUser() user: User,
+  ): Promise<void> {
+    this.logger.verbose(
+      `User "${user.username}" deleting a link. UserID: ${id} LinkID: ${idLink}`,
+    );
+    return this.adminService.deleteLink(id, idLink, user);
+  }
 
   @Get('/:id/footer')
   @ApiOperation({
@@ -744,6 +728,5 @@ export class AdminController {
     return this.adminService.deleteFooter(id, idFooter, user);
   }
 
-  // TODO - DO LINK GET/POST/PUT/DELETE
   // TODO - DO PARAGRAPH GET/POST/PUT/DELETE
 }

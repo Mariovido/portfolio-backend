@@ -1,7 +1,7 @@
 import { Project } from '../../../../src/repositories/entities/project.entity';
 import { User } from '../../../../src/repositories/entities/user.entity';
 import { BulletPointFactory } from './bullet-point.entity.factory';
-import { TechnologyFactory } from './technology.entity.factory';
+// import { TechnologyFactory } from './technology.entity.factory';
 
 // TODO - RETOCAR
 export class ProjectFactory {
@@ -9,7 +9,7 @@ export class ProjectFactory {
     const project = new Project();
     project.id = '08b55870-0283-4b3e-bb4c-86311136f67b';
     project.projectName = 'three';
-    project.technologies = TechnologyFactory.buildList(2);
+    // project.technologies = TechnologyFactory.buildList(2);
     project.bulletPoints = BulletPointFactory.buildList(2, false);
     project.user = new User();
 

@@ -7,7 +7,6 @@ import {
 } from 'typeorm';
 import { User } from './user.entity';
 import { Exclude } from 'class-transformer';
-import { Technology } from './technology.entity';
 import { BulletPoint } from './bullet-point.entity';
 
 @Entity()
@@ -18,10 +17,10 @@ export class Project {
   @Column()
   projectName: string;
 
-  @OneToMany(() => Technology, (technology) => technology.project, {
-    eager: true,
-  })
-  technologies: Technology[];
+  // @OneToMany(() => Technology, (technology) => technology.project, {
+  //   eager: true,
+  // })
+  // technologies: Technology[];
 
   @OneToMany(() => BulletPoint, (bulletPoint) => bulletPoint.project, {
     eager: true,

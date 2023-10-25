@@ -796,6 +796,100 @@ paths:
           description: ''
       tags:
         - admin
+  /admin/{id}/link:
+    get:
+      operationId: AdminController_getLinks
+      summary: Get links
+      parameters:
+        - name: id
+          required: true
+          in: path
+          schema:
+            type: string
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/LinkDto'
+      tags:
+        - admin
+    post:
+      operationId: AdminController_createLink
+      summary: Creates a link
+      parameters:
+        - name: id
+          required: true
+          in: path
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateLinkDto'
+      responses:
+        '201':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/LinkDto'
+      tags:
+        - admin
+  /admin/{id}/link/{idLink}:
+    put:
+      operationId: AdminController_updateLink
+      summary: Updates a link
+      parameters:
+        - name: id
+          required: true
+          in: path
+          schema:
+            type: string
+        - name: idLink
+          required: true
+          in: path
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdateLinkDto'
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/LinkDto'
+      tags:
+        - admin
+    delete:
+      operationId: AdminController_deleteLink
+      summary: Deletes a link
+      parameters:
+        - name: id
+          required: true
+          in: path
+          schema:
+            type: string
+        - name: idLink
+          required: true
+          in: path
+          schema:
+            type: string
+      responses:
+        '200':
+          description: ''
+      tags:
+        - admin
   /admin/{id}/footer:
     get:
       operationId: AdminController_getFooters
@@ -1370,6 +1464,75 @@ components:
           type: string
       required:
         - tag
+    LinkDto:
+      type: object
+      properties:
+        id:
+          type: string
+        tag:
+          type: string
+        name:
+          type: string
+        link:
+          type: string
+        target:
+          type: string
+        workExperience:
+          type: string
+        paragraph:
+          type: string
+        contact:
+          type: string
+      required:
+        - id
+        - tag
+        - name
+        - link
+        - target
+        - workExperience
+        - paragraph
+        - contact
+    CreateLinkDto:
+      type: object
+      properties:
+        tag:
+          type: string
+        name:
+          type: string
+        link:
+          type: string
+        target:
+          type: string
+        workExperience:
+          type: string
+        paragraph:
+          type: string
+        contact:
+          type: string
+      required:
+        - tag
+        - name
+        - link
+        - target
+        - workExperience
+        - paragraph
+        - contact
+    UpdateLinkDto:
+      type: object
+      properties:
+        tag:
+          type: string
+        name:
+          type: string
+        link:
+          type: string
+        target:
+          type: string
+      required:
+        - tag
+        - name
+        - link
+        - target
     FooterDto:
       type: object
       properties:

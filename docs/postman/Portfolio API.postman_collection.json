@@ -1075,6 +1075,123 @@
 					]
 				},
 				{
+					"name": "Link",
+					"item": [
+						{
+							"name": "Get links by ID",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://{{portfolio-api-host}}/admin/{{idUser}}/link",
+									"protocol": "http",
+									"host": [
+										"{{portfolio-api-host}}"
+									],
+									"path": [
+										"admin",
+										"{{idUser}}",
+										"link"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Create link point by ID",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"tag\": \"thetag\",\r\n    \"name\": \"linkedin\",\r\n    \"link\": \"https://www.linkedin.com/in/mariovidaldominguez/\",\r\n    \"target\": \"_blank\",\r\n    \"paragraph\": \"69272a58-07fd-4c07-9d9a-440ac28b70bc\"\r\n    // \"workExperience\": \"6efccabe-1354-485b-b04d-515824afa889\"\r\n    // \"contact\": \"5c3b428a-8236-4187-8175-3f71fc952af9\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://{{portfolio-api-host}}/admin/{{idUser}}/link",
+									"protocol": "http",
+									"host": [
+										"{{portfolio-api-host}}"
+									],
+									"path": [
+										"admin",
+										"{{idUser}}",
+										"link"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Update link by ID",
+							"request": {
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"tag\": \"thetag2\",\r\n    \"name\": \"linkedin\",\r\n    \"link\": \"https://www.linkedin.com/in/mariovidaldominguez/\",\r\n    \"target\": \"_blank\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://{{portfolio-api-host}}/admin/{{idUser}}/link/:idLink",
+									"protocol": "http",
+									"host": [
+										"{{portfolio-api-host}}"
+									],
+									"path": [
+										"admin",
+										"{{idUser}}",
+										"link",
+										":idLink"
+									],
+									"variable": [
+										{
+											"key": "idLink",
+											"value": "6c1aee74-b513-4fd3-baeb-bd9940976a14"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Delete link by ID",
+							"request": {
+								"method": "DELETE",
+								"header": [],
+								"url": {
+									"raw": "http://{{portfolio-api-host}}/admin/{{idUser}}/link/:idLink",
+									"protocol": "http",
+									"host": [
+										"{{portfolio-api-host}}"
+									],
+									"path": [
+										"admin",
+										"{{idUser}}",
+										"link",
+										":idLink"
+									],
+									"variable": [
+										{
+											"key": "idLink",
+											"value": "6c1aee74-b513-4fd3-baeb-bd9940976a14"
+										}
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
 					"name": "Project -> REDO",
 					"item": [
 						{
@@ -1183,123 +1300,6 @@
 										{
 											"key": "idProject",
 											"value": "e4c0e036-6ec2-4289-a97c-281a8d3e9b99"
-										}
-									]
-								}
-							},
-							"response": []
-						}
-					]
-				},
-				{
-					"name": "Technology -> REDO",
-					"item": [
-						{
-							"name": "Get technologies by ID",
-							"request": {
-								"method": "GET",
-								"header": [],
-								"url": {
-									"raw": "http://{{portfolio-api-host}}/admin/{{idUser}}/technology",
-									"protocol": "http",
-									"host": [
-										"{{portfolio-api-host}}"
-									],
-									"path": [
-										"admin",
-										"{{idUser}}",
-										"technology"
-									]
-								}
-							},
-							"response": []
-						},
-						{
-							"name": "Create technology point by ID",
-							"request": {
-								"method": "POST",
-								"header": [],
-								"body": {
-									"mode": "raw",
-									"raw": "{\r\n    \"technologyName\": \"Typescript\",\r\n    \"project\": \"4f8d94aa-a7c8-485d-9c7f-e71cc5423ab3\"\r\n}",
-									"options": {
-										"raw": {
-											"language": "json"
-										}
-									}
-								},
-								"url": {
-									"raw": "http://{{portfolio-api-host}}/admin/{{idUser}}/technology",
-									"protocol": "http",
-									"host": [
-										"{{portfolio-api-host}}"
-									],
-									"path": [
-										"admin",
-										"{{idUser}}",
-										"technology"
-									]
-								}
-							},
-							"response": []
-						},
-						{
-							"name": "Delete technology by ID",
-							"request": {
-								"method": "DELETE",
-								"header": [],
-								"url": {
-									"raw": "http://{{portfolio-api-host}}/admin/{{idUser}}/technology/:idTechnology",
-									"protocol": "http",
-									"host": [
-										"{{portfolio-api-host}}"
-									],
-									"path": [
-										"admin",
-										"{{idUser}}",
-										"technology",
-										":idTechnology"
-									],
-									"variable": [
-										{
-											"key": "idTechnology",
-											"value": "ba3a03ef-5dc0-42cf-bf17-cd62e86b4ebd"
-										}
-									]
-								}
-							},
-							"response": []
-						},
-						{
-							"name": "Update technology by ID",
-							"request": {
-								"method": "PUT",
-								"header": [],
-								"body": {
-									"mode": "raw",
-									"raw": "{\r\n    \"technologyName\": \"React\"\r\n}",
-									"options": {
-										"raw": {
-											"language": "json"
-										}
-									}
-								},
-								"url": {
-									"raw": "http://{{portfolio-api-host}}/admin/{{idUser}}/technology/:idTechnology",
-									"protocol": "http",
-									"host": [
-										"{{portfolio-api-host}}"
-									],
-									"path": [
-										"admin",
-										"{{idUser}}",
-										"technology",
-										":idTechnology"
-									],
-									"variable": [
-										{
-											"key": "idTechnology",
-											"value": "65398c6e-cf0f-436f-ac87-ba429726883c"
 										}
 									]
 								}

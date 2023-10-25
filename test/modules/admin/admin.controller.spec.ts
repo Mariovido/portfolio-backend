@@ -27,14 +27,11 @@ import { ProjectDto } from '../../../src/models/dto/project.dto';
 import { SkillDto } from '../../../src/models/dto/skill.dto';
 import { ContactDto } from '../../../src/models/dto/contact.dto';
 import { BulletPointDto } from '../../../src/models/dto/bullet-point.dto';
-import { TechnologyDto } from '../../../src/models/dto/technology.dto';
 import { WorkExperience } from '../../../src/repositories/entities/work-experience.entity';
 import { Project } from '../../../src/repositories/entities/project.entity';
 import { Skill } from '../../../src/repositories/entities/skill.entity';
 import { Contact } from '../../../src/repositories/entities/contact.entity';
 import { BulletPoint } from '../../../src/repositories/entities/bullet-point.entity';
-import { Technology } from '../../../src/repositories/entities/technology.entity';
-import { TechnologyFactory } from '../../factories/repositories/entities/technology.entity.factory';
 import { TagFactory } from '../../factories/repositories/entities/tag.entity.factory';
 import { BulletPointFactory } from '../../factories/repositories/entities/bullet-point.entity.factory';
 import { ContactFactory } from '../../factories/repositories/entities/contact.entity.factory';
@@ -46,27 +43,27 @@ import { CreateProjectDto } from '../../../src/models/dto/admin/create-project.d
 import { CreateSkillDto } from '../../../src/models/dto/admin/create-skill.dto';
 import { CreateBulletPointDto } from '../../../src/models/dto/admin/create-bullet-point.dto';
 import { CreateTagDto } from '../../../src/models/dto/admin/create-tag.dto';
-import { CreateTechnologyDto } from '../../../src/models/dto/admin/create-technology.dto';
+import { CreateLinkDto } from '../../../src/models/dto/admin/create-link.dto';
 import { UpdateWorkExperienceDto } from '../../../src/models/dto/admin/update-work-experience.dto';
 import { UpdateProjectDto } from '../../../src/models/dto/admin/update-project.dto';
 import { UpdateSkillDto } from '../../../src/models/dto/admin/update-skill.dto';
 import { UpdateContactDto } from '../../../src/models/dto/admin/update-contact.dto';
 import { UpdateBulletPointDto } from '../../../src/models/dto/admin/update-bullet-point.dto';
 import { UpdateTagDto } from '../../../src/models/dto/admin/update-tag.dto';
-import { UpdateTechnologyDto } from '../../../src/models/dto/admin/update-technology.dto';
+import { UpdateLinkDto } from '../../../src/models/dto/admin/update-link.dto';
 import { CreateWorkExperienceDtoFactory } from '../../factories/models/dto/admin/create-work-experience.dto.factory';
 import { CreateProjectDtoFactory } from '../../factories/models/dto/admin/create-project.dto.factory';
 import { CreateSkillDtoFactory } from '../../factories/models/dto/admin/create-skill.dto.factory';
 import { CreateBulletPointDtoFactory } from '../../factories/models/dto/admin/create-bullet-point.dto.factory';
 import { CreateTagDtoFactory } from '../../factories/models/dto/admin/create-tag.dto.factory';
-import { CreateTechnologyDtoFactory } from '../../factories/models/dto/admin/create-technology.dto.factory';
+import { CreateLinkDtoFactory } from '../../factories/models/dto/admin/create-link.dto.factory';
 import { UpdateProjectDtoFactory } from '../../factories/models/dto/admin/update-project.dto.factory';
 import { UpdateWorkExperienceDtoFactory } from '../../factories/models/dto/admin/update-work-experience.dto.factory';
 import { UpdateSkillDtoFactory } from '../../factories/models/dto/admin/update-skill.dto.factory';
 import { UpdateContactDtoFactory } from '../../factories/models/dto/admin/update-contact.dto.factory';
 import { UpdateBulletPointDtoFactory } from '../../factories/models/dto/admin/update-bullet-point.dto.factory';
 import { UpdateTagDtoFactory } from '../../factories/models/dto/admin/update-tag.dto.factory';
-import { UpdateTechnologyDtoFactory } from '../../factories/models/dto/admin/update-technology.dto.factory';
+import { UpdateLinkDtoFactory } from '../../factories/models/dto/admin/update-link.dto.factory';
 import { WorkExperienceDtoFactory } from '../../factories/models/dto/work-experience.dto.factory';
 import { ProjectDtoFactory } from '../../factories/models/dto/project.dto.factory';
 import { SkillDtoFactory } from '../../factories/models/dto/skill.dto.factory';
@@ -75,7 +72,7 @@ import { CreateContactDto } from '../../../src/models/dto/admin/create-contact.d
 import { CreateContactDtoFactory } from '../../factories/models/dto/admin/create-contact.dto.factory';
 import { BulletPointDtoFactory } from '../../factories/models/dto/bullet-point.dto.factory';
 import { TagDtoFactory } from '../../factories/models/dto/tag.dto.factory';
-import { TechnologyDtoFactory } from '../../factories/models/dto/technology.dto.factory';
+import { LinkDtoFactory } from '../../factories/models/dto/link.dto.factory';
 import { Tag } from '../../../src/repositories/entities/tag.entity';
 import { TagDto } from '../../../src/models/dto/tag.dto';
 import { Footer } from '../../../src/repositories/entities/footer.entity';
@@ -84,6 +81,9 @@ import { FooterDto } from '../../../src/models/dto/footer.dto';
 import { FooterFactory } from '../../factories/repositories/entities/footer.entity.factory';
 import { CreateFooterDtoFactory } from '../../factories/models/dto/admin/create-footer.dto.factory';
 import { FooterDtoFactory } from '../../factories/models/dto/footer.dto.factory';
+import { Link } from '../../../src/repositories/entities/link.entity';
+import { LinkDto } from '../../../src/models/dto/link.dto';
+import { LinkFactory } from '../../factories/repositories/entities/link.entity.factory';
 
 describe('AdminController', () => {
   let adminController: AdminController;
@@ -98,7 +98,7 @@ describe('AdminController', () => {
   let mockContact: Contact;
   let mockBulletPoint: BulletPoint;
   let mockTag: Tag;
-  let mockTechnology: Technology;
+  let mockLink: Link;
   let mockFooter: Footer;
 
   let mockCreateEducationDto: CreateEducationDto;
@@ -108,7 +108,7 @@ describe('AdminController', () => {
   let mockCreateContactDto: CreateContactDto;
   let mockCreateBulletPointDto: CreateBulletPointDto;
   let mockCreateTagDto: CreateTagDto;
-  let mockCreateTechnologyDto: CreateTechnologyDto;
+  let mockCreateLinkDto: CreateLinkDto;
   let mockCreateFooterDto: CreateFooterDto;
 
   let mockUpdateUserDto: UpdateUserDto;
@@ -119,7 +119,7 @@ describe('AdminController', () => {
   let mockUpdateContactDto: UpdateContactDto;
   let mockUpdateBulletPointDto: UpdateBulletPointDto;
   let mockUpdateTagDto: UpdateTagDto;
-  let mockUpdateTechnologyDto: UpdateTechnologyDto;
+  let mockUpdateLinkDto: UpdateLinkDto;
 
   let mockUserDto: UserDto;
   let mockEducationDto: EducationDto;
@@ -135,8 +135,8 @@ describe('AdminController', () => {
   let mockBulletPointDtoList: BulletPointDto[];
   let mockTagDto: TagDto;
   let mockTagDtoList: TagDto[];
-  let mockTechnologyDto: TechnologyDto;
-  let mockTechnologyDtoList: TechnologyDto[];
+  let mockLinkDto: LinkDto;
+  let mockLinkDtoList: LinkDto[];
   let mockFooterDto: FooterDto;
 
   beforeEach(async () => {
@@ -165,7 +165,7 @@ describe('AdminController', () => {
     mockContact = ContactFactory.build();
     mockBulletPoint = BulletPointFactory.build(true);
     mockTag = TagFactory.build();
-    mockTechnology = TechnologyFactory.build();
+    mockLink = LinkFactory.build({ isParagraph: true });
     mockFooter = FooterFactory.build();
 
     mockCreateEducationDto = CreateEducationDtoFactory.build();
@@ -175,7 +175,7 @@ describe('AdminController', () => {
     mockCreateContactDto = CreateContactDtoFactory.build();
     mockCreateBulletPointDto = CreateBulletPointDtoFactory.build(true);
     mockCreateTagDto = CreateTagDtoFactory.build();
-    mockCreateTechnologyDto = CreateTechnologyDtoFactory.build();
+    mockCreateLinkDto = CreateLinkDtoFactory.build({ isParagraph: true });
     mockCreateFooterDto = CreateFooterDtoFactory.build();
 
     mockUpdateUserDto = UpdateUserDtoFactory.build();
@@ -186,7 +186,7 @@ describe('AdminController', () => {
     mockUpdateContactDto = UpdateContactDtoFactory.build();
     mockUpdateBulletPointDto = UpdateBulletPointDtoFactory.build();
     mockUpdateTagDto = UpdateTagDtoFactory.build();
-    mockUpdateTechnologyDto = UpdateTechnologyDtoFactory.build();
+    mockUpdateLinkDto = UpdateLinkDtoFactory.build();
 
     mockUserDto = UserDtoFactory.build(mockUser, mockUpdateUserDto);
     mockEducationDto = EducationDtoFactory.build(
@@ -217,11 +217,8 @@ describe('AdminController', () => {
     );
     mockTagDto = TagDtoFactory.build(mockTag, mockCreateTagDto);
     mockTagDtoList = TagDtoFactory.buildList(2, mockTag);
-    mockTechnologyDto = TechnologyDtoFactory.build(
-      mockTechnology,
-      mockCreateTechnologyDto,
-    );
-    mockTechnologyDtoList = TechnologyDtoFactory.buildList(2, mockTechnology);
+    mockLinkDto = LinkDtoFactory.build(mockLink, mockCreateLinkDto);
+    mockLinkDtoList = LinkDtoFactory.buildList(2, mockLink);
     mockFooterDto = FooterDtoFactory.build(mockFooter, mockCreateFooterDto);
   });
 
@@ -566,53 +563,49 @@ describe('AdminController', () => {
     });
   });
 
-  // TODO - RETOCAR
-  // describe('getTechnologies', () => {
-  //   it('calls the controller to get the technologies. -> OK', async () => {
-  //     adminService.getTechnologies.mockResolvedValue(mockTechnologyDtoList);
-  //     const result = await adminController.getTechnologies(
-  //       mockUser.id,
-  //       mockUser,
-  //     );
-  //     expect(result).toEqual(mockTechnologyDtoList);
-  //   });
-  // });
+  describe('getLinks', () => {
+    it('calls the controller to get the links. -> OK', async () => {
+      adminService.getLinks.mockResolvedValue(mockLinkDtoList);
+      const result = await adminController.getLinks(mockUser.id, mockUser);
+      expect(result).toEqual(mockLinkDtoList);
+    });
+  });
 
-  // describe('createTechnology', () => {
-  //   it('calls the controller to create a new technology. -> OK', async () => {
-  //     adminService.createTechnology.mockResolvedValue(mockTechnologyDto);
-  //     const result = await adminController.createTechnology(
-  //       mockUser.id,
-  //       mockCreateTechnologyDto,
-  //       mockUser,
-  //     );
-  //     expect(result).toEqual(mockTechnologyDto);
-  //   });
-  // });
+  describe('createLink', () => {
+    it('calls the controller to create a new link. -> OK', async () => {
+      adminService.createLink.mockResolvedValue(mockLinkDto);
+      const result = await adminController.createLink(
+        mockUser.id,
+        mockCreateLinkDto,
+        mockUser,
+      );
+      expect(result).toEqual(mockLinkDto);
+    });
+  });
 
-  // describe('updateTechnology', () => {
-  //   it('calls the controller to update a new technology. -> OK', async () => {
-  //     adminService.updateTechnology.mockResolvedValue(mockTechnologyDto);
-  //     const result = await adminController.updateTechnology(
-  //       mockUser.id,
-  //       mockTechnology.id,
-  //       mockUpdateTechnologyDto,
-  //       mockUser,
-  //     );
-  //     expect(result).toEqual(mockTechnologyDto);
-  //   });
-  // });
+  describe('updateLink', () => {
+    it('calls the controller to update a link. -> OK', async () => {
+      adminService.updateLink.mockResolvedValue(mockLinkDto);
+      const result = await adminController.updateLink(
+        mockUser.id,
+        mockLink.id,
+        mockUpdateLinkDto,
+        mockUser,
+      );
+      expect(result).toEqual(mockLinkDto);
+    });
+  });
 
-  // describe('deleteTechnology', () => {
-  //   it('calls the controller to delete a technology. -> OK', async () => {
-  //     const result = await adminController.deleteTechnology(
-  //       mockUser.id,
-  //       mockTechnology.id,
-  //       mockUser,
-  //     );
-  //     expect(result).toBeUndefined();
-  //   });
-  // });
+  describe('deleteLink', () => {
+    it('calls the controller to delete a link. -> OK', async () => {
+      const result = await adminController.deleteLink(
+        mockUser.id,
+        mockLink.id,
+        mockUser,
+      );
+      expect(result).toBeUndefined();
+    });
+  });
 
   describe('getFooter', () => {
     it('calls the controller to get the footer. -> OK', async () => {

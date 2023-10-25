@@ -1,11 +1,7 @@
 import { ApiProperty } from '@nestjs/swagger';
 import { IsOptional, IsString, IsUUID } from 'class-validator';
 
-export class LinkDto {
-  @IsUUID()
-  @ApiProperty()
-  id: string;
-
+export class CreateLinkDto {
   @IsString()
   @IsOptional()
   @ApiProperty()

@@ -113,7 +113,7 @@ describe('PortfolioService', () => {
     it('calls the service with an invalid id to return an exception. -> KO', async () => {
       userRepository.findOneBy.mockResolvedValue(null);
       const result = async () => {
-        await portfolioService.getHeader(mockUser.id);
+        await portfolioService.getAbout(mockUser.id);
       };
       await expect(result).rejects.toThrow(NotFoundException);
     });

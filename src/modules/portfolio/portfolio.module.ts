@@ -8,7 +8,6 @@ import { WorkExperience } from '../../repositories/entities/work-experience.enti
 import { Skill } from '../../repositories/entities/skill.entity';
 import { Project } from '../../repositories/entities/project.entity';
 import { Contact } from '../../repositories/entities/contact.entity';
-import { Technology } from '../../repositories/entities/technology.entity';
 import { BulletPoint } from '../../repositories/entities/bullet-point.entity';
 import { UserRepository } from '../../repositories/user.repository';
 import { EducationRepository } from '../../repositories/education.repository';
@@ -28,7 +27,6 @@ import { Tag } from '../../repositories/entities/tag.entity';
       Skill,
       Project,
       Contact,
-      Technology,
       BulletPoint,
       Link,
       Paragraph,

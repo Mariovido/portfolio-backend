@@ -31,23 +31,22 @@ import { SkillRepository } from '../../../src/repositories/skill.repository';
 import { ContactRepository } from '../../../src/repositories/contact.repository';
 import { BulletPointRepository } from '../../../src/repositories/bullet-point.repository';
 import { TagRepository } from '../../../src/repositories/tag.repository';
-import { TechnologyRepository } from '../../../src/repositories/technology.repository';
+import { LinkRepository } from '../../../src/repositories/link.repository';
 import { mockBulletPointRepository } from '../../factories/repositories/bullet-point.repository.factory';
 import { mockTagRepository } from '../../factories/repositories/tag.repository.factory';
-import { mockTechnologyRepository } from '../../factories/repositories/technology.repository.factory';
+import { mockLinkRepository } from '../../factories/repositories/link.repository.factory';
 import { WorkExperience } from '../../../src/repositories/entities/work-experience.entity';
 import { Project } from '../../../src/repositories/entities/project.entity';
 import { Skill } from '../../../src/repositories/entities/skill.entity';
 import { Contact } from '../../../src/repositories/entities/contact.entity';
 import { BulletPoint } from '../../../src/repositories/entities/bullet-point.entity';
-import { Technology } from '../../../src/repositories/entities/technology.entity';
 import { CreateWorkExperienceDto } from '../../../src/models/dto/admin/create-work-experience.dto';
 import { CreateProjectDto } from '../../../src/models/dto/admin/create-project.dto';
 import { CreateSkillDto } from '../../../src/models/dto/admin/create-skill.dto';
 import { CreateContactDto } from '../../../src/models/dto/admin/create-contact.dto';
 import { CreateBulletPointDto } from '../../../src/models/dto/admin/create-bullet-point.dto';
 import { CreateTagDto } from '../../../src/models/dto/admin/create-tag.dto';
-import { CreateTechnologyDto } from '../../../src/models/dto/admin/create-technology.dto';
+import { CreateLinkDto } from '../../../src/models/dto/admin/create-link.dto';
 import { UpdateEducationDto } from '../../../src/models/dto/admin/update-education.dto';
 import { UpdateWorkExperienceDto } from '../../../src/models/dto/admin/update-work-experience.dto';
 import { UpdateProjectDto } from '../../../src/models/dto/admin/update-project.dto';
@@ -55,27 +54,25 @@ import { UpdateSkillDto } from '../../../src/models/dto/admin/update-skill.dto';
 import { UpdateContactDto } from '../../../src/models/dto/admin/update-contact.dto';
 import { UpdateBulletPointDto } from '../../../src/models/dto/admin/update-bullet-point.dto';
 import { UpdateTagDto } from '../../../src/models/dto/admin/update-tag.dto';
-import { UpdateTechnologyDto } from '../../../src/models/dto/admin/update-technology.dto';
+import { UpdateLinkDto } from '../../../src/models/dto/admin/update-link.dto';
 import { WorkExperienceDto } from '../../../src/models/dto/work-experience.dto';
 import { ProjectDto } from '../../../src/models/dto/project.dto';
 import { SkillDto } from '../../../src/models/dto/skill.dto';
 import { ContactDto } from '../../../src/models/dto/contact.dto';
 import { BulletPointDto } from '../../../src/models/dto/bullet-point.dto';
-import { TechnologyDto } from '../../../src/models/dto/technology.dto';
 import { WorkExperienceFactory } from '../../factories/repositories/entities/work-experience.entity.factory';
 import { ProjectFactory } from '../../factories/repositories/entities/project.entity.factory';
 import { SkillFactory } from '../../factories/repositories/entities/skill.entity.factory';
 import { ContactFactory } from '../../factories/repositories/entities/contact.entity.factory';
 import { BulletPointFactory } from '../../factories/repositories/entities/bullet-point.entity.factory';
 import { TagFactory } from '../../factories/repositories/entities/tag.entity.factory';
-import { TechnologyFactory } from '../../factories/repositories/entities/technology.entity.factory';
 import { CreateWorkExperienceDtoFactory } from '../../factories/models/dto/admin/create-work-experience.dto.factory';
 import { CreateProjectDtoFactory } from '../../factories/models/dto/admin/create-project.dto.factory';
 import { CreateSkillDtoFactory } from '../../factories/models/dto/admin/create-skill.dto.factory';
 import { CreateContactDtoFactory } from '../../factories/models/dto/admin/create-contact.dto.factory';
 import { CreateBulletPointDtoFactory } from '../../factories/models/dto/admin/create-bullet-point.dto.factory';
 import { CreateTagDtoFactory } from '../../factories/models/dto/admin/create-tag.dto.factory';
-import { CreateTechnologyDtoFactory } from '../../factories/models/dto/admin/create-technology.dto.factory';
+import { CreateLinkDtoFactory } from '../../factories/models/dto/admin/create-link.dto.factory';
 import { UpdateEducationDtoFactory } from '../../factories/models/dto/admin/update-education.dto.factory';
 import { UpdateWorkExperienceDtoFactory } from '../../factories/models/dto/admin/update-work-experience.dto.factory';
 import { UpdateProjectDtoFactory } from '../../factories/models/dto/admin/update-project.dto.factory';
@@ -83,14 +80,14 @@ import { UpdateSkillDtoFactory } from '../../factories/models/dto/admin/update-s
 import { UpdateContactDtoFactory } from '../../factories/models/dto/admin/update-contact.dto.factory';
 import { UpdateBulletPointDtoFactory } from '../../factories/models/dto/admin/update-bullet-point.dto.factory';
 import { UpdateTagDtoFactory } from '../../factories/models/dto/admin/update-tag.dto.factory';
-import { UpdateTechnologyDtoFactory } from '../../factories/models/dto/admin/update-technology.dto.factory';
+import { UpdateLinkDtoFactory } from '../../factories/models/dto/admin/update-link.dto.factory';
 import { WorkExperienceDtoFactory } from '../../factories/models/dto/work-experience.dto.factory';
 import { ProjectDtoFactory } from '../../factories/models/dto/project.dto.factory';
 import { SkillDtoFactory } from '../../factories/models/dto/skill.dto.factory';
 import { ContactDtoFactory } from '../../factories/models/dto/contact.dto.factory';
 import { BulletPointDtoFactory } from '../../factories/models/dto/bullet-point.dto.factory';
 import { TagDtoFactory } from '../../factories/models/dto/tag.dto.factory';
-import { TechnologyDtoFactory } from '../../factories/models/dto/technology.dto.factory';
+import { LinkDtoFactory } from '../../factories/models/dto/link.dto.factory';
 import { DeleteResultFactory } from '../../factories/database/delete-result.factory';
 import { DeleteResult } from 'typeorm';
 import { Tag } from '../../../src/repositories/entities/tag.entity';
@@ -104,6 +101,9 @@ import { FooterFactory } from '../../factories/repositories/entities/footer.enti
 import { CreateFooterDtoFactory } from '../../factories/models/dto/admin/create-footer.dto.factory';
 import { FooterDtoFactory } from '../../factories/models/dto/footer.dto.factory';
 import { ParagraphDto } from '../../../src/models/dto/paragraph.dto';
+import { Link } from '../../../src/repositories/entities/link.entity';
+import { LinkDto } from '../../../src/models/dto/link.dto';
+import { LinkFactory } from '../../factories/repositories/entities/link.entity.factory';
 
 describe('AdminService', () => {
   let adminService: AdminService;
@@ -116,7 +116,7 @@ describe('AdminService', () => {
   let contactRepository: jest.Mocked<ContactRepository>;
   let bulletPointRepository: jest.Mocked<BulletPointRepository>;
   let tagRepository: jest.Mocked<TagRepository>;
-  let technologyRepository: jest.Mocked<TechnologyRepository>;
+  let linkRepository: jest.Mocked<LinkRepository>;
   let footerRepository: jest.Mocked<FooterRepository>;
 
   let mockUser: User;
@@ -133,8 +133,8 @@ describe('AdminService', () => {
   let mockBulletPointList: BulletPoint[];
   let mockTag: Tag;
   let mockTagList: Tag[];
-  let mockTechnology: Technology;
-  let mockTechnologyList: Technology[];
+  let mockLink: Link;
+  let mockLinkList: Link[];
   let mockFooter: Footer;
 
   let mockCreateEducationDto: CreateEducationDto;
@@ -144,7 +144,7 @@ describe('AdminService', () => {
   let mockCreateContactDto: CreateContactDto;
   let mockCreateBulletPointDto: CreateBulletPointDto;
   let mockCreateTagDto: CreateTagDto;
-  let mockCreateTechnologyDto: CreateTechnologyDto;
+  let mockCreateLinkDto: CreateLinkDto;
   let mockCreateFooterDto: CreateFooterDto;
 
   let mockUpdateUserDto: UpdateUserDto;
@@ -155,7 +155,7 @@ describe('AdminService', () => {
   let mockUpdateContactDto: UpdateContactDto;
   let mockUpdateBulletPointDto: UpdateBulletPointDto;
   let mockUpdateTagDto: UpdateTagDto;
-  let mockUpdateTechnologyDto: UpdateTechnologyDto;
+  let mockUpdateLinkDto: UpdateLinkDto;
 
   let mockUserDto: UserDto;
   let mockEducationDto: EducationDto;
@@ -171,8 +171,8 @@ describe('AdminService', () => {
   let mockBulletPointDtoList: BulletPointDto[];
   let mockTagDto: TagDto;
   let mockTagDtoList: TagDto[];
-  let mockTechnologyDto: TechnologyDto;
-  let mockTechnologyDtoList: TechnologyDto[];
+  let mockLinkDto: LinkDto;
+  let mockLinkDtoList: LinkDto[];
   let mockFooterDto: FooterDto;
 
   let mockDeleteResult: DeleteResult;
@@ -195,7 +195,7 @@ describe('AdminService', () => {
           useFactory: mockBulletPointRepository,
         },
         { provide: TagRepository, useFactory: mockTagRepository },
-        { provide: TechnologyRepository, useFactory: mockTechnologyRepository },
+        { provide: LinkRepository, useFactory: mockLinkRepository },
         { provide: FooterRepository, useFactory: mockFooterRepository },
       ],
     }).compile();
@@ -210,7 +210,7 @@ describe('AdminService', () => {
     contactRepository = module.get(ContactRepository);
     bulletPointRepository = module.get(BulletPointRepository);
     tagRepository = module.get(TagRepository);
-    technologyRepository = module.get(TechnologyRepository);
+    linkRepository = module.get(LinkRepository);
     footerRepository = module.get(FooterRepository);
 
     mockUser = UserFactory.build();
@@ -227,8 +227,8 @@ describe('AdminService', () => {
     mockBulletPointList = BulletPointFactory.buildList(2, true);
     mockTag = TagFactory.build();
     mockTagList = TagFactory.buildList(2);
-    mockTechnology = TechnologyFactory.build();
-    mockTechnologyList = TechnologyFactory.buildList(2);
+    mockLink = LinkFactory.build({ isParagraph: true });
+    mockLinkList = LinkFactory.buildList(2, { isParagraph: true });
     mockFooter = FooterFactory.build();
 
     mockCreateEducationDto = CreateEducationDtoFactory.build();
@@ -238,7 +238,7 @@ describe('AdminService', () => {
     mockCreateContactDto = CreateContactDtoFactory.build();
     mockCreateBulletPointDto = CreateBulletPointDtoFactory.build(true);
     mockCreateTagDto = CreateTagDtoFactory.build();
-    mockCreateTechnologyDto = CreateTechnologyDtoFactory.build();
+    mockCreateLinkDto = CreateLinkDtoFactory.build({ isParagraph: true });
     mockCreateFooterDto = CreateFooterDtoFactory.build();
 
     mockUpdateUserDto = UpdateUserDtoFactory.build();
@@ -249,7 +249,7 @@ describe('AdminService', () => {
     mockUpdateContactDto = UpdateContactDtoFactory.build();
     mockUpdateBulletPointDto = UpdateBulletPointDtoFactory.build();
     mockUpdateTagDto = UpdateTagDtoFactory.build();
-    mockUpdateTechnologyDto = UpdateTechnologyDtoFactory.build();
+    mockUpdateLinkDto = UpdateLinkDtoFactory.build();
 
     mockUserDto = UserDtoFactory.build(mockUser, mockUpdateUserDto);
     mockEducationDto = EducationDtoFactory.build(
@@ -280,12 +280,8 @@ describe('AdminService', () => {
       BulletPointDtoFactory.buildListByBulletPointList(mockBulletPointList);
     mockTagDto = TagDtoFactory.build(mockTag, mockCreateTagDto);
     mockTagDtoList = TagDtoFactory.buildListByTagList(mockTagList);
-    mockTechnologyDto = TechnologyDtoFactory.build(
-      mockTechnology,
-      mockCreateTechnologyDto,
-    );
-    mockTechnologyDtoList =
-      TechnologyDtoFactory.buildListByTechnologyList(mockTechnologyList);
+    mockLinkDto = LinkDtoFactory.build(mockLink, mockCreateLinkDto);
+    mockLinkDtoList = LinkDtoFactory.buildListByLinkList(mockLinkList);
     mockFooterDto = FooterDtoFactory.build(mockFooter, mockCreateFooterDto);
 
     mockDeleteResult = DeleteResultFactory.build({ affected: 1 });
@@ -1279,136 +1275,198 @@ describe('AdminService', () => {
     });
   });
 
-  // TODO - RETOCAR
-  // describe('getTechnologies', () => {
-  //   it('calls the service to get a technologies. -> OK', async () => {
-  //     projectRepository.findProjectsByUserId.mockResolvedValue(mockProjectList);
-  //     technologyRepository.findTechnologyByProjects.mockResolvedValue(
-  //       mockTechnologyList,
-  //     );
-  //     const result = await adminService.getTechnologies(mockUser.id, mockUser);
-  //     expect(result).toEqual(mockTechnologyDtoList);
-  //   });
-  //   it('calls the service to get the technologies but the user is not authorized. -> KO', async () => {
-  //     const result = async () => {
-  //       await adminService.getTechnologies(
-  //         'ff5d8359-b6f7-4a08-893f-fbdbb53a79b3',
-  //         mockUser,
-  //       );
-  //     };
-  //     await expect(result).rejects.toThrow(UnauthorizedException);
-  //   });
-  //   it('calls the service to get the technologies but the projects are not found. -> KO', async () => {
-  //     projectRepository.findProjectsByUserId.mockResolvedValue([]);
-  //     const result = async () => {
-  //       await adminService.getTechnologies(mockUser.id, mockUser);
-  //     };
-  //     await expect(result).rejects.toThrow(NotFoundException);
-  //   });
-  //   it('calls the service to get the technologies but the technologies are not found. -> KO', async () => {
-  //     projectRepository.findProjectsByUserId.mockResolvedValue(mockProjectList);
-  //     technologyRepository.findTechnologyByProjects.mockResolvedValue([]);
-  //     const result = async () => {
-  //       await adminService.getTechnologies(mockUser.id, mockUser);
-  //     };
-  //     await expect(result).rejects.toThrow(NotFoundException);
-  //   });
-  // });
+  describe('getLinks', () => {
+    // TODO - REVISAR CON PARAGRAPHS DONE
+    // it('calls the service to get a links with paragraphs. -> OK', async () => {
+    //   paragraphRepository.findParagraphByUserId.mockResolvedValue(
+    //     mockParagraphList,
+    //   );
+    //   workExperienceRepository.findWorkExperienceByUserId.mockResolvedValue([]);
+    //   contactRepository.findContactsByUserId.mockResolvedValue(null);
+    //   linkRepository.findLinksByParagraphs.mockResolvedValue(mockLinkList);
+    //   const result = await adminService.getLinks(mockUser.id, mockUser);
+    //   expect(result).toEqual(mockLinkDtoList);
+    // });
+    it('calls the service to get a links with work experiences. -> OK', async () => {
+      // TODO - REVISAR CON PARAGRAPHS DONE
+      // paragraphRepository.findParagraphByUserId.mockResolvedValue([]);
+      workExperienceRepository.findWorkExperienceByUserId.mockResolvedValue(
+        mockWorkExperienceList,
+      );
+      contactRepository.findContactsByUserId.mockResolvedValue(null);
+      linkRepository.findLinksByWorkExperiences.mockResolvedValue(mockLinkList);
+      const result = await adminService.getLinks(mockUser.id, mockUser);
+      expect(result).toEqual(mockLinkDtoList);
+    });
+    it('calls the service to get a links with contacts. -> OK', async () => {
+      // TODO - REVISAR CON PARAGRAPHS DONE
+      // paragraphRepository.findParagraphByUserId.mockResolvedValue([]);
+      workExperienceRepository.findWorkExperienceByUserId.mockResolvedValue([]);
+      contactRepository.findContactsByUserId.mockResolvedValue(mockContact);
+      linkRepository.findLinksByContacts.mockResolvedValue(mockLinkList);
+      const result = await adminService.getLinks(mockUser.id, mockUser);
+      expect(result).toEqual(mockLinkDtoList);
+    });
+    it('calls the service to get the technologies but the user is not authorized. -> KO', async () => {
+      const result = async () => {
+        await adminService.getLinks(
+          'ff5d8359-b6f7-4a08-893f-fbdbb53a79b3',
+          mockUser,
+        );
+      };
+      await expect(result).rejects.toThrow(UnauthorizedException);
+    });
+    it('calls the service to get the links but the paragraphs, work experiences and contacts are not found. -> KO', async () => {
+      // TODO - REVISAR CON PARAGRAPHS DONE
+      // paragraphRepository.findParagraphByUserId.mockResolvedValue([]);
+      workExperienceRepository.findWorkExperienceByUserId.mockResolvedValue([]);
+      contactRepository.findContactsByUserId.mockResolvedValue(null);
+      const result = async () => {
+        await adminService.getLinks(mockUser.id, mockUser);
+      };
+      await expect(result).rejects.toThrow(NotFoundException);
+    });
+    it('calls the service to get the links but the links are not found. -> KO', async () => {
+      // TODO - REVISAR CON PARAGRAPHS DONE
+      // paragraphRepository.findParagraphByUserId.mockResolvedValue([]);
+      workExperienceRepository.findWorkExperienceByUserId.mockResolvedValue(
+        mockWorkExperienceList,
+      );
+      contactRepository.findContactsByUserId.mockResolvedValue(null);
+      linkRepository.findLinksByWorkExperiences.mockResolvedValue([]);
+      const result = async () => {
+        await adminService.getLinks(mockUser.id, mockUser);
+      };
+      await expect(result).rejects.toThrow(NotFoundException);
+    });
+  });
 
-  // describe('createTechnology', () => {
-  //   it('calls the service to create a technology. -> OK', async () => {
-  //     mockTechnologyDto = TechnologyDtoFactory.build(mockTechnology);
-  //     technologyRepository.createTechnology.mockResolvedValue(mockTechnology);
-  //     const result = await adminService.createTechnology(
-  //       mockUser.id,
-  //       mockCreateTechnologyDto,
-  //       mockUser,
-  //     );
-  //     expect(result).toEqual(mockTechnologyDto);
-  //   });
-  //   it('calls the service to create a technology but the user is not authorized. -> KO', async () => {
-  //     const result = async () => {
-  //       await adminService.createTechnology(
-  //         'ff5d8359-b6f7-4a08-893f-fbdbb53a79b3',
-  //         mockCreateTechnologyDto,
-  //         mockUser,
-  //       );
-  //     };
-  //     await expect(result).rejects.toThrow(UnauthorizedException);
-  //   });
-  // });
+  describe('createLink', () => {
+    it('calls the service to create a link. -> OK', async () => {
+      mockLinkDto = LinkDtoFactory.build(mockLink);
+      linkRepository.createLink.mockResolvedValue(mockLink);
+      const result = await adminService.createLink(
+        mockUser.id,
+        mockCreateLinkDto,
+        mockUser,
+      );
+      expect(result).toEqual(mockLinkDto);
+    });
+    it('calls the service to create a link but the user is not authorized. -> KO', async () => {
+      const result = async () => {
+        await adminService.createLink(
+          'ff5d8359-b6f7-4a08-893f-fbdbb53a79b3',
+          mockCreateLinkDto,
+          mockUser,
+        );
+      };
+      await expect(result).rejects.toThrow(UnauthorizedException);
+    });
+    it('calls the service to create a link but paragraph, work experience and contacts are not empty. -> KO', async () => {
+      mockCreateLinkDto.paragraph = '4f8d94aa-a7c8-485d-9c7f-e71cc5423ab3';
+      mockCreateLinkDto.workExperience = '4f8d94aa-a7c8-485d-9c7f-e71cc5423ab3';
+      mockCreateLinkDto.contact = '4f8d94aa-a7c8-485d-9c7f-e71cc5423ab3';
+      const result = async () => {
+        await adminService.createLink(mockUser.id, mockCreateLinkDto, mockUser);
+      };
+      await expect(result).rejects.toThrow(BadRequestException);
+    });
+    it('calls the service to create a link but paragraph and work experience are not empty. -> KO', async () => {
+      mockCreateLinkDto.paragraph = '4f8d94aa-a7c8-485d-9c7f-e71cc5423ab3';
+      mockCreateLinkDto.workExperience = '4f8d94aa-a7c8-485d-9c7f-e71cc5423ab3';
+      mockCreateLinkDto.contact = undefined;
+      const result = async () => {
+        await adminService.createLink(mockUser.id, mockCreateLinkDto, mockUser);
+      };
+      await expect(result).rejects.toThrow(BadRequestException);
+    });
+    it('calls the service to create a link but work experience and contacts are not empty. -> KO', async () => {
+      mockCreateLinkDto.paragraph = undefined;
+      mockCreateLinkDto.workExperience = '4f8d94aa-a7c8-485d-9c7f-e71cc5423ab3';
+      mockCreateLinkDto.contact = '4f8d94aa-a7c8-485d-9c7f-e71cc5423ab3';
+      const result = async () => {
+        await adminService.createLink(mockUser.id, mockCreateLinkDto, mockUser);
+      };
+      await expect(result).rejects.toThrow(BadRequestException);
+    });
+  });
+  it('calls the service to create a link but paragraphs, work experiences and contacts are empty. -> KO', async () => {
+    mockCreateLinkDto.paragraph = undefined;
+    mockCreateLinkDto.workExperience = undefined;
+    mockCreateLinkDto.contact = undefined;
+    const result = async () => {
+      await adminService.createLink(mockUser.id, mockCreateLinkDto, mockUser);
+    };
+    await expect(result).rejects.toThrow(BadRequestException);
+  });
 
-  // describe('updateTechnology', () => {
-  //   it('calls the service to update a technology. -> OK', async () => {
-  //     mockTechnologyDto = TechnologyDtoFactory.build(mockTechnology);
-  //     technologyRepository.updateTechnology.mockResolvedValue(mockTechnology);
-  //     technologyRepository.findOneBy.mockResolvedValue(mockTechnology);
-  //     const result = await adminService.updateTechnology(
-  //       mockUser.id,
-  //       mockTechnology.id,
-  //       mockUpdateTechnologyDto,
-  //       mockUser,
-  //     );
-  //     expect(result).toEqual(mockTechnologyDto);
-  //   });
-  //   it('calls the service to update a technology but the user is not authorized. -> KO', async () => {
-  //     const result = async () => {
-  //       await adminService.updateTechnology(
-  //         'ff5d8359-b6f7-4a08-893f-fbdbb53a79b3',
-  //         mockTechnology.id,
-  //         mockUpdateTechnologyDto,
-  //         mockUser,
-  //       );
-  //     };
-  //     await expect(result).rejects.toThrow(UnauthorizedException);
-  //   });
-  //   it('calls the service to update a technology but the technology is not found. -> KO', async () => {
-  //     technologyRepository.findOneBy.mockResolvedValue(null);
-  //     const result = async () => {
-  //       await adminService.updateTechnology(
-  //         mockUser.id,
-  //         mockTechnology.id,
-  //         mockUpdateTechnologyDto,
-  //         mockUser,
-  //       );
-  //     };
-  //     await expect(result).rejects.toThrow(NotFoundException);
-  //   });
-  // });
+  describe('updateLink', () => {
+    it('calls the service to update a link. -> OK', async () => {
+      mockLinkDto = LinkDtoFactory.build(mockLink);
+      linkRepository.updateLink.mockResolvedValue(mockLink);
+      linkRepository.findOneBy.mockResolvedValue(mockLink);
+      const result = await adminService.updateLink(
+        mockUser.id,
+        mockLink.id,
+        mockUpdateLinkDto,
+        mockUser,
+      );
+      expect(result).toEqual(mockLinkDto);
+    });
+    it('calls the service to update a link but the user is not authorized. -> KO', async () => {
+      const result = async () => {
+        await adminService.updateLink(
+          'ff5d8359-b6f7-4a08-893f-fbdbb53a79b3',
+          mockLink.id,
+          mockUpdateLinkDto,
+          mockUser,
+        );
+      };
+      await expect(result).rejects.toThrow(UnauthorizedException);
+    });
+    it('calls the service to update a link but the link is not found. -> KO', async () => {
+      linkRepository.findOneBy.mockResolvedValue(null);
+      const result = async () => {
+        await adminService.updateLink(
+          mockUser.id,
+          mockLink.id,
+          mockUpdateLinkDto,
+          mockUser,
+        );
+      };
+      await expect(result).rejects.toThrow(NotFoundException);
+    });
+  });
 
-  // describe('deleteTechnology', () => {
-  //   it('calls the service to delete a technology. -> OK', async () => {
-  //     technologyRepository.delete.mockResolvedValue(mockDeleteResult);
-  //     const result = await adminService.deleteTechnology(
-  //       mockUser.id,
-  //       mockTechnology.id,
-  //       mockUser,
-  //     );
-  //     expect(result).toBeUndefined();
-  //   });
-  //   it('calls the service to delete a technology but the user is not authorized. -> KO', async () => {
-  //     const result = async () => {
-  //       await adminService.deleteTechnology(
-  //         'ff5d8359-b6f7-4a08-893f-fbdbb53a79b3',
-  //         mockTechnology.id,
-  //         mockUser,
-  //       );
-  //     };
-  //     await expect(result).rejects.toThrow(UnauthorizedException);
-  //   });
-  //   it('calls the service to delete a technology but the education is not found. -> KO', async () => {
-  //     mockDeleteResult.affected = 0;
-  //     technologyRepository.delete.mockResolvedValue(mockDeleteResult);
-  //     const result = async () => {
-  //       await adminService.deleteTechnology(
-  //         mockUser.id,
-  //         mockTechnology.id,
-  //         mockUser,
-  //       );
-  //     };
-  //     await expect(result).rejects.toThrow(NotFoundException);
-  //   });
-  // });
+  describe('deleteLink', () => {
+    it('calls the service to delete a link. -> OK', async () => {
+      linkRepository.delete.mockResolvedValue(mockDeleteResult);
+      const result = await adminService.deleteLink(
+        mockUser.id,
+        mockLink.id,
+        mockUser,
+      );
+      expect(result).toBeUndefined();
+    });
+    it('calls the service to delete a link but the user is not authorized. -> KO', async () => {
+      const result = async () => {
+        await adminService.deleteLink(
+          'ff5d8359-b6f7-4a08-893f-fbdbb53a79b3',
+          mockLink.id,
+          mockUser,
+        );
+      };
+      await expect(result).rejects.toThrow(UnauthorizedException);
+    });
+    it('calls the service to delete a link but the link is not found. -> KO', async () => {
+      mockDeleteResult.affected = 0;
+      linkRepository.delete.mockResolvedValue(mockDeleteResult);
+      const result = async () => {
+        await adminService.deleteLink(mockUser.id, mockLink.id, mockUser);
+      };
+      await expect(result).rejects.toThrow(NotFoundException);
+    });
+  });
 
   describe('getFooters', () => {
     it('calls the service to get a footer. -> OK', async () => {
@@ -1461,30 +1519,30 @@ describe('AdminService', () => {
   });
 
   describe('deleteFooter', () => {
-    it('calls the service to delete a contact. -> OK', async () => {
-      contactRepository.delete.mockResolvedValue(mockDeleteResult);
-      const result = await adminService.deleteContact(
+    it('calls the service to delete a footer. -> OK', async () => {
+      footerRepository.delete.mockResolvedValue(mockDeleteResult);
+      const result = await adminService.deleteFooter(
         mockUser.id,
-        mockContact.id,
+        mockFooter.id,
         mockUser,
       );
       expect(result).toBeUndefined();
     });
-    it('calls the service to delete a contact but the user is not authorized. -> KO', async () => {
+    it('calls the service to delete a footer but the user is not authorized. -> KO', async () => {
       const result = async () => {
-        await adminService.deleteContact(
+        await adminService.deleteFooter(
           'ff5d8359-b6f7-4a08-893f-fbdbb53a79b3',
-          mockContact.id,
+          mockFooter.id,
           mockUser,
         );
       };
       await expect(result).rejects.toThrow(UnauthorizedException);
     });
-    it('calls the service to delete a contact but the contact is not found. -> KO', async () => {
+    it('calls the service to delete a footer but the footer is not found. -> KO', async () => {
       mockDeleteResult.affected = 0;
-      contactRepository.delete.mockResolvedValue(mockDeleteResult);
+      footerRepository.delete.mockResolvedValue(mockDeleteResult);
       const result = async () => {
-        await adminService.deleteContact(mockUser.id, mockContact.id, mockUser);
+        await adminService.deleteFooter(mockUser.id, mockFooter.id, mockUser);
       };
       await expect(result).rejects.toThrow(NotFoundException);
     });

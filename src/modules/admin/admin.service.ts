@@ -30,16 +30,15 @@ import { BulletPointDto } from '../../models/dto/bullet-point.dto';
 import { BulletPointRepository } from '../../repositories/bullet-point.repository';
 import { CreateTagDto } from '../../models/dto/admin/create-tag.dto';
 import { TagRepository } from '../../repositories/tag.repository';
-import { CreateTechnologyDto } from '../../models/dto/admin/create-technology.dto';
-import { TechnologyDto } from '../../models/dto/technology.dto';
-import { TechnologyRepository } from '../../repositories/technology.repository';
+import { CreateLinkDto } from '../../models/dto/admin/create-link.dto';
+import { LinkRepository } from '../../repositories/link.repository';
 import { UpdateWorkExperienceDto } from '../../models/dto/admin/update-work-experience.dto';
 import { UpdateProjectDto } from '../../models/dto/admin/update-project.dto';
 import { UpdateSkillDto } from '../../models/dto/admin/update-skill.dto';
 import { UpdateContactDto } from '../../models/dto/admin/update-contact.dto';
 import { UpdateBulletPointDto } from '../../models/dto/admin/update-bullet-point.dto';
 import { UpdateTagDto } from '../../models/dto/admin/update-tag.dto';
-import { UpdateTechnologyDto } from '../../models/dto/admin/update-technology.dto';
+import { UpdateLinkDto } from '../../models/dto/admin/update-link.dto';
 import { BulletPoint } from '../../repositories/entities/bullet-point.entity';
 import { FooterDto } from '../../models/dto/footer.dto';
 import { ParagraphDto } from '../../models/dto/paragraph.dto';
@@ -47,6 +46,7 @@ import { LinkDto } from '../../models/dto/link.dto';
 import { TagDto } from '../../models/dto/tag.dto';
 import { FooterRepository } from '../../repositories/footer.repository';
 import { CreateFooterDto } from '../../models/dto/admin/create-footer.dto';
+import { Link } from '../../repositories/entities/link.entity';
 
 @Injectable()
 export class AdminService {
@@ -61,7 +61,7 @@ export class AdminService {
     private readonly contactRepository: ContactRepository,
     private readonly bulletPointRepository: BulletPointRepository,
     private readonly tagRepository: TagRepository,
-    private readonly technologyRepository: TechnologyRepository,
+    private readonly linkRepository: LinkRepository,
     private readonly footerRepository: FooterRepository,
   ) {}
 
@@ -893,7 +893,9 @@ export class AdminService {
     this.logger.verbose(`Retrieving the projects by user ID. ID: ${id}`);
     const projects = await this.projectRepository.findProjectsByUserId(id);
 
-    this.logger.verbose(`Retrieving the projects by user ID. ID: ${id}`);
+    this.logger.verbose(
+      `Retrieving the work experiences by user ID. ID: ${id}`,
+    );
     const workExperiences =
       await this.workExperienceRepository.findWorkExperienceByUserId(id);
 
@@ -1171,137 +1173,190 @@ export class AdminService {
     );
   }
 
-  // async getTechnologies(id: string, user: User): Promise<TechnologyDto[]> {
-  //   this.logger.verbose(
-  //     `Checking if the user that gets is the same to the one that is getting. user: ${user.id} userGetting: ${id}`,
-  //   );
-  //   if (user.id !== id)
-  //     throw new UnauthorizedException(
-  //       `User with ID "${user.id}" can not get user with ID "${id}"`,
-  //     );
+  async getLinks(id: string, user: User): Promise<LinkDto[]> {
+    this.logger.verbose(
+      `Checking if the user that gets is the same to the one that is getting. user: ${user.id} userGetting: ${id}`,
+    );
+    if (user.id !== id)
+      throw new UnauthorizedException(
+        `User with ID "${user.id}" can not get user with ID "${id}"`,
+      );
 
-  //   this.logger.verbose(`Retrieving the projects by user ID. ID: ${id}`);
-  //   const projects = await this.projectRepository.findProjectsByUserId(id);
+    // TODO - REVISAR CON PARAGRAPHS DONE
+    // this.logger.verbose(`Retrieving the paragraphs by user ID. ID: ${id}`);
+    // const paragraphs = await this.paragraphRepository.findParagraphByUserId(id);
 
-  //   if (!projects.length)
-  //     throw new NotFoundException(
-  //       `There is no projects for the user with ID "${id}"`,
-  //     );
+    this.logger.verbose(
+      `Retrieving the work experiences by user ID. ID: ${id}`,
+    );
+    const workExperiences =
+      await this.workExperienceRepository.findWorkExperienceByUserId(id);
 
-  //   this.logger.verbose(`Retrieving the technology by user ID. ID: ${id}`);
-  //   const technology =
-  //     await this.technologyRepository.findTechnologyByProjects(projects);
-  //   if (!technology.length)
-  //     throw new NotFoundException(
-  //       `There is no technology for the user with ID "${id}"`,
-  //     );
+    this.logger.verbose(`Retrieving the contacts by user ID. ID: ${id}`);
+    const contacts = await this.contactRepository.findContactsByUserId(id);
 
-  //   this.logger.verbose(`Creating the technology DTO of the user. ID: ${id}`);
-  //   const technologyDtoList: TechnologyDto[] = [];
-  //   technology.forEach((technologyItem) => {
-  //     const technologyDto = new TechnologyDto();
-  //     technologyDto.id = technologyItem.id;
-  //     technologyDto.technologyName = technologyItem.technologyName;
-  //     technologyDto.project = technologyItem.project.id;
+    // TODO - REVISAR CON PARAGRAPHS DONE
+    // if (!paragraphs.length && !workExperiences.length && !contacts)
+    if (!workExperiences.length && !contacts)
+      throw new NotFoundException(
+        `There is no paragraphs, work experiences or contacts for the user with ID "${id}`,
+      );
 
-  //     technologyDtoList.push(technologyDto);
-  //   });
+    this.logger.verbose(`Retrieving the links by user ID. ID: ${id}`);
+    const links: Link[] = [];
+    // TODO - REVISAR CON PARAGRAPHS DONE
+    // if (paragraphs.length) {
+    //   const linksParagraph =
+    //     await this.linkRepository.findLinksByParagraphs(paragraphs);
+    //   linksParagraph.forEach((linkParagraph) => links.push(linkParagraph));
+    // }
 
-  //   return technologyDtoList;
-  // }
+    if (workExperiences.length) {
+      const linksWorkExperiences =
+        await this.linkRepository.findLinksByWorkExperiences(workExperiences);
+      linksWorkExperiences.forEach((linkWorkExperience) =>
+        links.push(linkWorkExperience),
+      );
+    }
 
-  // async createTechnology(
-  //   id: string,
-  //   createTechnologyDto: CreateTechnologyDto,
-  //   user: User,
-  // ): Promise<TechnologyDto> {
-  //   this.logger.verbose(
-  //     `Checking if the user that creates is the same to the one that technology will be created. user: ${user.id} userToTechnology: ${id}`,
-  //   );
-  //   if (user.id !== id)
-  //     throw new UnauthorizedException(
-  //       `User with ID "${user.id}" can not create technology for user with ID "${id}"`,
-  //     );
+    if (contacts) {
+      const linksContacts =
+        await this.linkRepository.findLinksByContacts(contacts);
+      linksContacts.forEach((linkContact) => links.push(linkContact));
+    }
 
-  //   this.logger.verbose(`Creating a technology`);
-  //   const technologyCreated = await this.technologyRepository.createTechnology(
-  //     id,
-  //     createTechnologyDto,
-  //   );
+    if (!links.length)
+      throw new NotFoundException(
+        `There is no bullet point for the user with ID "${id}"`,
+      );
 
-  //   this.logger.verbose(`Creating the technology DTO of the user. ID: ${id}`);
-  //   const technologyDto = new TechnologyDto();
-  //   technologyDto.id = technologyCreated.id;
-  //   technologyDto.technologyName = technologyCreated.technologyName;
-  //   technologyDto.project = technologyCreated.project.id;
+    this.logger.verbose(`Creating the link DTO of the user. ID: ${id}`);
+    const linkDtoList: LinkDto[] = [];
+    links.forEach((linkItem) => {
+      const linkDto = new LinkDto();
+      linkDto.id = linkItem.id;
+      linkDto.tag = linkItem.tag;
+      linkDto.name = linkItem.name;
+      linkDto.link = linkItem.link;
+      linkDto.target = linkItem.target;
+      linkDto.paragraph = linkItem.paragraph?.id;
+      linkDto.workExperience = linkItem.workExperience?.id;
+      linkDto.contact = linkItem.contact?.id;
 
-  //   return technologyDto;
-  // }
+      linkDtoList.push(linkDto);
+    });
 
-  // async updateTechnology(
-  //   id: string,
-  //   idTechnology: string,
-  //   updateTechnologyDto: UpdateTechnologyDto,
-  //   user: User,
-  // ): Promise<TechnologyDto> {
-  //   this.logger.verbose(
-  //     `Checking if the user that edits is the same to the one that technology will be edited. user: ${user.id} userEdited: ${id}`,
-  //   );
-  //   if (user.id !== id)
-  //     throw new UnauthorizedException(
-  //       `User with ID "${user.id}" can not edit technology of the user with ID "${id}"`,
-  //     );
+    return linkDtoList;
+  }
 
-  //   const technology = await this.technologyRepository.findOneBy({
-  //     id: idTechnology,
-  //   });
+  async createLink(
+    id: string,
+    createLinkDto: CreateLinkDto,
+    user: User,
+  ): Promise<LinkDto> {
+    this.logger.verbose(
+      `Checking if the user that creates is the same to the one that link will be created. user: ${user.id} userToLink: ${id}`,
+    );
+    if (user.id !== id)
+      throw new UnauthorizedException(
+        `User with ID "${user.id}" can not create link for user with ID "${id}"`,
+      );
 
-  //   if (!technology)
-  //     throw new NotFoundException(
-  //       `User with ID "${id}" has no technology assigned with ID "${idTechnology}"`,
-  //     );
+    const { paragraph, workExperience, contact } = createLinkDto;
+    this.logger.verbose(
+      `Checking if the link has any assigned paragraph, work experience or contact. idParagraph: ${paragraph} idWorkExperience: ${workExperience} idContact: ${contact}`,
+    );
+    if (
+      (paragraph && workExperience && contact) ||
+      (paragraph && workExperience) ||
+      (paragraph && contact) ||
+      (workExperience && contact) ||
+      (!paragraph && !workExperience && !contact)
+    )
+      throw new BadRequestException(
+        `A bullet point must be assigned to only one paragraph, work experience or contact. idParagraph: ${paragraph} idWorkExperience: ${workExperience} idContact: ${contact}`,
+      );
 
-  //   this.logger.verbose(`Updating the technology with the new information`);
-  //   const technologyUpdated = await this.technologyRepository.updateTechnology(
-  //     technology,
-  //     updateTechnologyDto,
-  //   );
+    this.logger.verbose(`Creating a link`);
+    const linkCreated = await this.linkRepository.createLink(id, createLinkDto);
 
-  //   this.logger.verbose(
-  //     `Creating the technology updated DTO of the user. ID: ${id}`,
-  //   );
-  //   const interestDto = new TechnologyDto();
-  //   interestDto.id = technologyUpdated.id;
-  //   interestDto.technologyName = technologyUpdated.technologyName;
-  //   interestDto.project = technologyUpdated.project.id;
+    this.logger.verbose(`Creating the technology DTO of the user. ID: ${id}`);
+    const linkDto = new LinkDto();
+    linkDto.id = linkCreated.id;
+    linkDto.tag = linkCreated.tag;
+    linkDto.name = linkCreated.name;
+    linkDto.link = linkCreated.link;
+    linkDto.target = linkCreated.target;
+    linkDto.paragraph = linkCreated.paragraph?.id;
+    linkDto.workExperience = linkCreated.workExperience?.id;
+    linkDto.contact = linkCreated.contact?.id;
 
-  //   return interestDto;
-  // }
+    return linkDto;
+  }
 
-  // async deleteTechnology(
-  //   id: string,
-  //   idTechnology: string,
-  //   user: User,
-  // ): Promise<void> {
-  //   this.logger.verbose(
-  //     `Checking if the user that deletes is the same to the one that technology will be deleted. user: ${user.id} userEdited: ${id}`,
-  //   );
-  //   if (user.id !== id)
-  //     throw new UnauthorizedException(
-  //       `User with ID "${user.id}" can not delete technology of user with ID "${id}"`,
-  //     );
+  async updateLink(
+    id: string,
+    idLink: string,
+    updateLinkDto: UpdateLinkDto,
+    user: User,
+  ): Promise<LinkDto> {
+    this.logger.verbose(
+      `Checking if the user that edits is the same to the one that link will be edited. user: ${user.id} userEdited: ${id}`,
+    );
+    if (user.id !== id)
+      throw new UnauthorizedException(
+        `User with ID "${user.id}" can not edit link of the user with ID "${id}"`,
+      );
 
-  //   const result = await this.technologyRepository.delete({
-  //     id: idTechnology,
-  //   });
+    const link = await this.linkRepository.findOneBy({
+      id: idLink,
+    });
 
-  //   if (result.affected === 0)
-  //     throw new NotFoundException(`Technology with ID "${id}" not found`);
+    if (!link)
+      throw new NotFoundException(
+        `User with ID "${id}" has no link assigned with ID "${idLink}"`,
+      );
 
-  //   return this.logger.verbose(
-  //     `Technology deleted successfully for the user. ID: ${id}`,
-  //   );
-  // }
+    this.logger.verbose(`Updating the link with the new information`);
+    const linkUpdated = await this.linkRepository.updateLink(
+      link,
+      updateLinkDto,
+    );
+
+    this.logger.verbose(`Creating the link updated DTO of the user. ID: ${id}`);
+    const linkDto = new LinkDto();
+    linkDto.id = linkUpdated.id;
+    linkDto.tag = linkUpdated.tag;
+    linkDto.name = linkUpdated.name;
+    linkDto.link = linkUpdated.link;
+    linkDto.target = linkUpdated.target;
+    linkDto.paragraph = linkUpdated.paragraph?.id;
+    linkDto.workExperience = linkUpdated.workExperience?.id;
+    linkDto.contact = linkUpdated.contact?.id;
+
+    return linkDto;
+  }
+
+  async deleteLink(id: string, idLink: string, user: User): Promise<void> {
+    this.logger.verbose(
+      `Checking if the user that deletes is the same to the one that link will be deleted. user: ${user.id} userEdited: ${id}`,
+    );
+    if (user.id !== id)
+      throw new UnauthorizedException(
+        `User with ID "${user.id}" can not delete link of user with ID "${id}"`,
+      );
+
+    const result = await this.linkRepository.delete({
+      id: idLink,
+    });
+
+    if (result.affected === 0)
+      throw new NotFoundException(`Link with ID "${id}" not found`);
+
+    return this.logger.verbose(
+      `Link deleted successfully for the user. ID: ${id}`,
+    );
+  }
 
   async getFooters(id: string, user: User): Promise<FooterDto> {
     this.logger.verbose(

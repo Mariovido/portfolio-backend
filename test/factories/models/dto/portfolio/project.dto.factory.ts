@@ -7,10 +7,10 @@ export class ProjectPortfolioDtoFactory {
     const projectPortfolioDto = new ProjectPortfolioDto();
     projectPortfolioDto.projectName = mockProject.projectName;
 
-    const technologies = mockProject.technologies.map(
-      (technology) => technology.technologyName,
-    );
-    projectPortfolioDto.technologies = technologies;
+    // const technologies = mockProject.technologies.map(
+    //   (technology) => technology.technologyName,
+    // );
+    // projectPortfolioDto.technologies = technologies;
 
     const bulletPoints = mockProject.bulletPoints.map(
       (bulletPoint) => bulletPoint.bulletPoint,

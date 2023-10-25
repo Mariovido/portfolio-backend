@@ -31,12 +31,10 @@ export const mockAdminService = () => ({
   createTag: jest.fn(),
   updateTag: jest.fn(),
   deleteTag: jest.fn(),
-  // TODO - RETOCAR
-  getTechnologies: jest.fn(),
-  createTechnology: jest.fn(),
-  updateTechnology: jest.fn(),
-  deleteTechnology: jest.fn(),
-  // ---------------------
+  getLinks: jest.fn(),
+  createLink: jest.fn(),
+  updateLink: jest.fn(),
+  deleteLink: jest.fn(),
   getFooters: jest.fn(),
   createFooter: jest.fn(),
   deleteFooter: jest.fn(),

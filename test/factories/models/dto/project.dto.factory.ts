@@ -15,10 +15,10 @@ export class ProjectDtoFactory {
       ? mockProjectUpdateDto.projectName
       : mockProject.projectName;
 
-    const technologies = mockProject.technologies.map(
-      (technology) => technology.technologyName,
-    );
-    projectDto.technologies = technologies;
+    // const technologies = mockProject.technologies.map(
+    //   (technology) => technology.technologyName,
+    // );
+    // projectDto.technologies = technologies;
 
     const bulletPoints = mockProject.bulletPoints.map(
       (bulletPoint) => bulletPoint.bulletPoint,

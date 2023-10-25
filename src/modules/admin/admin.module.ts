@@ -9,7 +9,6 @@ import { Project } from '../../repositories/entities/project.entity';
 import { Skill } from '../../repositories/entities/skill.entity';
 import { Contact } from '../../repositories/entities/contact.entity';
 import { BulletPoint } from '../../repositories/entities/bullet-point.entity';
-import { Technology } from '../../repositories/entities/technology.entity';
 import { UserRepository } from '../../repositories/user.repository';
 import { EducationRepository } from '../../repositories/education.repository';
 import { WorkExperienceRepository } from '../../repositories/work-experience.repository';
@@ -19,10 +18,11 @@ import { ContactRepository } from '../../repositories/contact.repository';
 import { AuthModule } from '../auth/auth.module';
 import { BulletPointRepository } from '../../repositories/bullet-point.repository';
 import { TagRepository } from '../../repositories/tag.repository';
-import { TechnologyRepository } from '../../repositories/technology.repository';
+import { LinkRepository } from '../../repositories/link.repository';
 import { Tag } from '../../repositories/entities/tag.entity';
 import { Footer } from '../../repositories/entities/footer.entity';
 import { FooterRepository } from '../../repositories/footer.repository';
+import { Link } from '../../repositories/entities/link.entity';
 
 @Module({
   imports: [
@@ -35,7 +35,7 @@ import { FooterRepository } from '../../repositories/footer.repository';
       Contact,
       BulletPoint,
       Tag,
-      Technology,
+      Link,
       Footer,
     ]),
     AuthModule,
@@ -51,7 +51,7 @@ import { FooterRepository } from '../../repositories/footer.repository';
     ContactRepository,
     BulletPointRepository,
     TagRepository,
-    TechnologyRepository,
+    LinkRepository,
     FooterRepository,
   ],
 })

@@ -253,9 +253,9 @@ export class PortfolioService {
     this.logger.verbose(`Creating projects DTO of the user. ID: ${id}`);
     const projectsPortfolioList: ProjectPortfolioDto[] = [];
     projects.forEach((projectItem) => {
-      const technologies = projectItem.technologies.map(
-        (technology) => technology.technologyName,
-      );
+      // const technologies = projectItem.technologies.map(
+      //   (technology) => technology.technologyName,
+      // );
 
       const bulletPoints = projectItem.bulletPoints.map(
         (bulletPoint) => bulletPoint.bulletPoint,
@@ -263,7 +263,7 @@ export class PortfolioService {
 
       const projectPortfolioDto = new ProjectPortfolioDto();
       projectPortfolioDto.projectName = projectItem.projectName;
-      projectPortfolioDto.technologies = technologies;
+      // projectPortfolioDto.technologies = technologies;
       projectPortfolioDto.bulletPoints = bulletPoints;
 
       projectsPortfolioList.push(projectPortfolioDto);
