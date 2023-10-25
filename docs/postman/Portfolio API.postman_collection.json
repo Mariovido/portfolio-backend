@@ -155,7 +155,7 @@
 			"name": "Auth",
 			"item": [
 				{
-					"name": "Sign up -> REDO",
+					"name": "Sign up",
 					"request": {
 						"method": "POST",
 						"header": [],
@@ -985,6 +985,87 @@
 										{
 											"key": "idTag",
 											"value": "6ac62112-e0ef-4390-a5c1-e33e60d272ff"
+										}
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Footer",
+					"item": [
+						{
+							"name": "Get footer by ID",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://{{portfolio-api-host}}/admin/{{idUser}}/footer",
+									"protocol": "http",
+									"host": [
+										"{{portfolio-api-host}}"
+									],
+									"path": [
+										"admin",
+										"{{idUser}}",
+										"footer"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Create footer by ID",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"user\": \"d7d9fb13-0fb6-4c1e-9bb3-2467fc69f05e\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://{{portfolio-api-host}}/admin/{{idUser}}/footer",
+									"protocol": "http",
+									"host": [
+										"{{portfolio-api-host}}"
+									],
+									"path": [
+										"admin",
+										"{{idUser}}",
+										"footer"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Delete footer by ID",
+							"request": {
+								"method": "DELETE",
+								"header": [],
+								"url": {
+									"raw": "http://{{portfolio-api-host}}/admin/{{idUser}}/footer/:idFooter",
+									"protocol": "http",
+									"host": [
+										"{{portfolio-api-host}}"
+									],
+									"path": [
+										"admin",
+										"{{idUser}}",
+										"footer",
+										":idFooter"
+									],
+									"variable": [
+										{
+											"key": "idFooter",
+											"value": "8f9b1ed2-be64-4086-aeb7-0e105ae0d58c"
 										}
 									]
 								}

@@ -24,7 +24,7 @@ export class ContactRepository extends Repository<Contact> {
   }
 
   async findContactsByUserId(userId: string): Promise<Contact> {
-    this.logger.verbose(`Finding projects by UserId. UserId: ${userId}`);
+    this.logger.verbose(`Finding contacts by UserId. UserId: ${userId}`);
     return await this.contactRepository.findOne({
       where: {
         user: { id: userId },

@@ -21,6 +21,8 @@ import { BulletPointRepository } from '../../repositories/bullet-point.repositor
 import { TagRepository } from '../../repositories/tag.repository';
 import { TechnologyRepository } from '../../repositories/technology.repository';
 import { Tag } from '../../repositories/entities/tag.entity';
+import { Footer } from '../../repositories/entities/footer.entity';
+import { FooterRepository } from '../../repositories/footer.repository';
 
 @Module({
   imports: [
@@ -34,6 +36,7 @@ import { Tag } from '../../repositories/entities/tag.entity';
       BulletPoint,
       Tag,
       Technology,
+      Footer,
     ]),
     AuthModule,
   ],
@@ -49,6 +52,7 @@ import { Tag } from '../../repositories/entities/tag.entity';
     BulletPointRepository,
     TagRepository,
     TechnologyRepository,
+    FooterRepository,
   ],
 })
 export class AdminModule {}

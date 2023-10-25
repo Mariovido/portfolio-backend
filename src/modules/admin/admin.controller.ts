@@ -41,10 +41,11 @@ import { UpdateBulletPointDto } from '../../models/dto/admin/update-bullet-point
 import { UpdateTagDto } from '../../models/dto/admin/update-tag.dto';
 import { UpdateTechnologyDto } from '../../models/dto/admin/update-technology.dto';
 import { TagDto } from '../../models/dto/tag.dto';
+import { FooterDto } from '../../models/dto/footer.dto';
+import { CreateFooterDto } from '../../models/dto/admin/create-footer.dto';
 
-// TODO - RETOCAR
 @Controller('admin')
-@UseGuards(AuthGuard())
+@UseGuards(AuthGuard('jwt'))
 @ApiTags('admin')
 export class AdminController {
   private logger = new Logger('AdminController', { timestamp: true });
@@ -692,7 +693,57 @@ export class AdminController {
   //   return this.adminService.deleteTechnology(id, idTechnology, user);
   // }
 
-  // TODO - DO FOOTER GET/POST/PUT/DELETE
+  @Get('/:id/footer')
+  @ApiOperation({
+    summary: 'Get footers',
+  })
+  @ApiResponse({ status: 200, type: FooterDto })
+  getFooters(
+    @Param('id') id: string,
+    @GetUser() user: User,
+  ): Promise<FooterDto> {
+    this.logger.verbose(
+      `User "${user.username}" getting footer. UserID: ${id}`,
+    );
+    return this.adminService.getFooters(id, user);
+  }
+
+  @Post('/:id/footer')
+  @ApiOperation({
+    summary: 'Creates a footer',
+  })
+  @ApiResponse({ status: 201, type: FooterDto })
+  createFooter(
+    @Param('id') id: string,
+    @Body() createFooterDto: CreateFooterDto,
+    @GetUser() user: User,
+  ): Promise<FooterDto> {
+    this.logger.verbose(
+      `User "${
+        user.username
+      }" creating a footer. UserID: ${id} Data: ${JSON.stringify(
+        createFooterDto,
+      )}`,
+    );
+    return this.adminService.createFooter(id, createFooterDto, user);
+  }
+
+  @Delete('/:id/footer/:idFooter')
+  @ApiOperation({
+    summary: 'Deletes a footer',
+  })
+  @ApiResponse({ status: 200 })
+  deleteFooter(
+    @Param('id') id: string,
+    @Param('idFooter') idFooter: string,
+    @GetUser() user: User,
+  ): Promise<void> {
+    this.logger.verbose(
+      `User "${user.username}" deleting a footer. UserID: ${id} FooterID: ${idFooter}`,
+    );
+    return this.adminService.deleteFooter(id, idFooter, user);
+  }
+
   // TODO - DO LINK GET/POST/PUT/DELETE
   // TODO - DO PARAGRAPH GET/POST/PUT/DELETE
 }

@@ -1,6 +1,8 @@
 import { CreateWorkExperienceDto } from '../../../../src/models/dto/admin/create-work-experience.dto';
 import { UpdateWorkExperienceDto } from '../../../../src/models/dto/admin/update-work-experience.dto';
 import { BulletPointDto } from '../../../../src/models/dto/bullet-point.dto';
+import { LinkDto } from '../../../../src/models/dto/link.dto';
+import { TagDto } from '../../../../src/models/dto/tag.dto';
 import { WorkExperienceDto } from '../../../../src/models/dto/work-experience.dto';
 import { WorkExperience } from '../../../../src/repositories/entities/work-experience.entity';
 
@@ -22,6 +24,9 @@ export class WorkExperienceDtoFactory {
     workExperienceDto.companyLink = mockWorkExperienceUpdate
       ? mockWorkExperienceUpdate.companyLink
       : mockWorkExperience.companyLink;
+    workExperienceDto.companyLink = mockWorkExperienceUpdate
+      ? mockWorkExperienceUpdate.companyLink
+      : mockWorkExperience.companyLink;
     workExperienceDto.startDate = mockWorkExperienceUpdate
       ? mockWorkExperienceUpdate.startDate
       : mockWorkExperience.startDate;
@@ -37,6 +42,27 @@ export class WorkExperienceDtoFactory {
       return bulletPointDto;
     });
     workExperienceDto.bulletPoints = bulletPoints;
+
+    const links = mockWorkExperience.links.map((link) => {
+      const linkDto = new LinkDto();
+      linkDto.id = link.id;
+      linkDto.link = link.link;
+      linkDto.name = link.name;
+      linkDto.tag = link.tag;
+      linkDto.target = link.target;
+
+      return linkDto;
+    });
+    workExperienceDto.links = links;
+
+    const tags = mockWorkExperience.tags.map((tag) => {
+      const tagDto = new TagDto();
+      tagDto.id = tag.id;
+      tagDto.tag = tag.tag;
+
+      return tagDto;
+    });
+    workExperienceDto.tags = tags;
     workExperienceDto.user = mockWorkExperience.user.id;
 
     return workExperienceDto;

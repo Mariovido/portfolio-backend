@@ -14,6 +14,7 @@ export const mockAdminService = () => ({
   createProject: jest.fn(),
   updateProject: jest.fn(),
   deleteProject: jest.fn(),
+  // ---------------------
   getSkills: jest.fn(),
   createSkill: jest.fn(),
   updateSkill: jest.fn(),
@@ -35,4 +36,8 @@ export const mockAdminService = () => ({
   createTechnology: jest.fn(),
   updateTechnology: jest.fn(),
   deleteTechnology: jest.fn(),
+  // ---------------------
+  getFooters: jest.fn(),
+  createFooter: jest.fn(),
+  deleteFooter: jest.fn(),
 });

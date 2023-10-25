@@ -24,7 +24,7 @@ export class ParagraphDto {
 
   @IsArray()
   @Type(() => LinkDto)
-  links: LinkDto[];
+  links?: LinkDto[];
 
   @IsUUID()
   @IsOptional()

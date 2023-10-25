@@ -45,6 +45,8 @@ import { FooterDto } from '../../models/dto/footer.dto';
 import { ParagraphDto } from '../../models/dto/paragraph.dto';
 import { LinkDto } from '../../models/dto/link.dto';
 import { TagDto } from '../../models/dto/tag.dto';
+import { FooterRepository } from '../../repositories/footer.repository';
+import { CreateFooterDto } from '../../models/dto/admin/create-footer.dto';
 
 @Injectable()
 export class AdminService {
@@ -60,6 +62,7 @@ export class AdminService {
     private readonly bulletPointRepository: BulletPointRepository,
     private readonly tagRepository: TagRepository,
     private readonly technologyRepository: TechnologyRepository,
+    private readonly footerRepository: FooterRepository,
   ) {}
 
   async getUser(id: string, user: User): Promise<UserDto> {
@@ -403,6 +406,7 @@ export class AdminService {
     workExperienceDto.id = workExperienceCreated.id;
     workExperienceDto.role = workExperienceCreated.role;
     workExperienceDto.company = workExperienceCreated.company;
+    workExperienceDto.companyLink = workExperienceCreated.companyLink;
     workExperienceDto.startDate = workExperienceCreated.startDate;
     workExperienceDto.endDate = workExperienceCreated.endDate;
     workExperienceDto.user = workExperienceCreated.user.id;
@@ -450,6 +454,7 @@ export class AdminService {
     workExperienceDto.id = workExperienceUpdated.id;
     workExperienceDto.role = workExperienceUpdated.role;
     workExperienceDto.company = workExperienceUpdated.company;
+    workExperienceDto.companyLink = workExperienceUpdated.companyLink;
     workExperienceDto.startDate = workExperienceUpdated.startDate;
     workExperienceDto.endDate = workExperienceUpdated.endDate;
     workExperienceDto.user = workExperienceUpdated.user.id;
@@ -794,7 +799,7 @@ export class AdminService {
         `User with ID "${user.id}" can not create contact for user with ID "${id}"`,
       );
 
-    this.logger.verbose(`Creating a project`);
+    this.logger.verbose(`Creating a contact`);
     const contactCreated = await this.contactRepository.createContact(
       id,
       createContactDto,
@@ -1297,4 +1302,99 @@ export class AdminService {
   //     `Technology deleted successfully for the user. ID: ${id}`,
   //   );
   // }
+
+  async getFooters(id: string, user: User): Promise<FooterDto> {
+    this.logger.verbose(
+      `Checking if the user that gets is the same to the one that is getting. user: ${user.id} userGetting: ${id}`,
+    );
+    if (user.id !== id)
+      throw new UnauthorizedException(
+        `User with ID "${user.id}" can not get user with ID "${id}"`,
+      );
+
+    this.logger.verbose(`Retrieving the footer by user ID. ID: ${id}`);
+    const footer = await this.footerRepository.findFootersByUserId(id);
+    if (!footer)
+      throw new NotFoundException(
+        `There is no footer for the user with ID "${id}"`,
+      );
+
+    this.logger.verbose(`Creating the footer DTO of the user. ID: ${id}`);
+    const footerDto = new FooterDto();
+    footerDto.id = footer.id;
+
+    const paragraphs = footer.paragraph.map((paragraphItem) => {
+      const paragraphDto = new ParagraphDto();
+      paragraphDto.id = paragraphItem.id;
+      paragraphDto.paragraph = paragraphItem.paragraph;
+      paragraphDto.order = paragraphItem.order;
+
+      const links = paragraphItem.links.map((linkItem) => {
+        const linkDto = new LinkDto();
+        linkDto.id = linkItem.id;
+        linkDto.link = linkItem.link;
+        linkDto.name = linkItem.name;
+        linkDto.tag = linkItem.tag;
+        linkDto.target = linkItem.target;
+
+        return linkDto;
+      });
+      paragraphDto.links = links;
+
+      return paragraphDto;
+    });
+    footerDto.paragraph = paragraphs;
+    footerDto.user = id;
+
+    return footerDto;
+  }
+
+  async createFooter(
+    id: string,
+    createFooterDto: CreateFooterDto,
+    user: User,
+  ): Promise<FooterDto> {
+    this.logger.verbose(
+      `Checking if the user that creates is the same to the one that footer will be created. user: ${user.id} userToFooter: ${id}`,
+    );
+    if (user.id !== id)
+      throw new UnauthorizedException(
+        `User with ID "${user.id}" can not create footer for user with ID "${id}"`,
+      );
+
+    this.logger.verbose(`Creating a footer`);
+    const footerCreated = await this.footerRepository.createFooter(
+      id,
+      createFooterDto,
+    );
+
+    this.logger.verbose(`Creating the footer DTO of the user. ID: ${id}`);
+    const footerDto = new FooterDto();
+    footerDto.id = footerCreated.id;
+    footerDto.user = footerCreated.user.id;
+
+    return footerDto;
+  }
+
+  async deleteFooter(id: string, idFooter: string, user: User): Promise<void> {
+    this.logger.verbose(
+      `Checking if the user that deletes is the same to the one that footer will be deleted. user: ${user.id} userEdited: ${id}`,
+    );
+    if (user.id !== id)
+      throw new UnauthorizedException(
+        `User with ID "${user.id}" can not delete footer of user with ID "${id}"`,
+      );
+
+    const result = await this.footerRepository.delete({
+      id: idFooter,
+      user: { id },
+    });
+
+    if (result.affected === 0)
+      throw new NotFoundException(`Footer with ID "${id}" not found`);
+
+    return this.logger.verbose(
+      `Footer deleted successfully for the user. ID: ${id}`,
+    );
+  }
 }

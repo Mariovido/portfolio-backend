@@ -796,6 +796,69 @@ paths:
           description: ''
       tags:
         - admin
+  /admin/{id}/footer:
+    get:
+      operationId: AdminController_getFooters
+      summary: Get footers
+      parameters:
+        - name: id
+          required: true
+          in: path
+          schema:
+            type: string
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/FooterDto'
+      tags:
+        - admin
+    post:
+      operationId: AdminController_createFooter
+      summary: Creates a footer
+      parameters:
+        - name: id
+          required: true
+          in: path
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateFooterDto'
+      responses:
+        '201':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/FooterDto'
+      tags:
+        - admin
+  /admin/{id}/footer/{idFooter}:
+    delete:
+      operationId: AdminController_deleteFooter
+      summary: Deletes a footer
+      parameters:
+        - name: id
+          required: true
+          in: path
+          schema:
+            type: string
+        - name: idFooter
+          required: true
+          in: path
+          schema:
+            type: string
+      responses:
+        '200':
+          description: ''
+      tags:
+        - admin
 info:
   title: Portfolio API
   description: The OpenAPI of the Portoflio API
@@ -1307,3 +1370,20 @@ components:
           type: string
       required:
         - tag
+    FooterDto:
+      type: object
+      properties:
+        id:
+          type: string
+        user:
+          type: string
+      required:
+        - id
+        - user
+    CreateFooterDto:
+      type: object
+      properties:
+        user:
+          type: string
+      required:
+        - user
