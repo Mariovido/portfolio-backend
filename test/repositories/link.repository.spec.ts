@@ -18,6 +18,8 @@ import { Contact } from '../../src/repositories/entities/contact.entity';
 import { ParagraphFactory } from '../factories/repositories/entities/paragraph.entity.factory';
 import { WorkExperienceFactory } from '../factories/repositories/entities/work-experience.entity.factory';
 import { ContactFactory } from '../factories/repositories/entities/contact.entity.factory';
+import { Project } from '../../src/repositories/entities/project.entity';
+import { ProjectFactory } from '../factories/repositories/entities/project.entity.factory';
 
 describe('LinkRepository', () => {
   let linkRepository: LinkRepository;
@@ -29,6 +31,7 @@ describe('LinkRepository', () => {
   let mockLinkList: Link[];
   let mockParagraphsList: Paragraph[];
   let mockWorkExperiencesList: WorkExperience[];
+  let mockProjectList: Project[];
   let mockContact: Contact;
 
   let mockCreateLinkDto: CreateLinkDto;
@@ -56,6 +59,7 @@ describe('LinkRepository', () => {
     mockLinkList = LinkFactory.buildList(2, { isParagraph: true });
     mockParagraphsList = ParagraphFactory.buildList(1, false);
     mockWorkExperiencesList = WorkExperienceFactory.buildList(1);
+    mockProjectList = ProjectFactory.buildList(1);
     mockContact = ContactFactory.build();
 
     mockCreateLinkDto = CreateLinkDtoFactory.build({ isParagraph: true });
@@ -91,6 +95,14 @@ describe('LinkRepository', () => {
     });
   });
 
+  describe('findLinksByProjects', () => {
+    it('gets the links', async () => {
+      mockLinkRepository.find = jest.fn().mockResolvedValue(mockLinkList);
+      const result = await linkRepository.findLinksByProjects(mockProjectList);
+      expect(result).toEqual(mockLinkList);
+    });
+  });
+
   describe('createLink', () => {
     it('creates a link with paragraph', async () => {
       mockLinkRepository.create = jest.fn().mockResolvedValue(mockLink);
@@ -116,6 +128,18 @@ describe('LinkRepository', () => {
     it('creates a link with contact', async () => {
       mockCreateLinkDto = CreateLinkDtoFactory.build({
         isContact: true,
+      });
+      mockLinkRepository.create = jest.fn().mockResolvedValue(mockLink);
+      mockLinkRepository.save = jest.fn().mockResolvedValue(mockLink);
+      const result = await linkRepository.createLink(
+        mockUser.id,
+        mockCreateLinkDto,
+      );
+      expect(result).toEqual(mockLink);
+    });
+    it('creates a link with project', async () => {
+      mockCreateLinkDto = CreateLinkDtoFactory.build({
+        isProject: true,
       });
       mockLinkRepository.create = jest.fn().mockResolvedValue(mockLink);
       mockLinkRepository.save = jest.fn().mockResolvedValue(mockLink);
@@ -189,6 +213,34 @@ describe('LinkRepository', () => {
         ...mockLink,
         contactId: 'ff5d8359-b6f7-4a08-893f-fbdbb53a79b3',
         contact: {
+          id: 'ff5d8359-b6f7-4a08-893f-fbdbb53a79b3',
+        },
+      } as any;
+      mockUpdateResult = UpdateResultFactory.build({ raw: [mockLink] });
+      const updateQueryBuilder = {
+        update: jest.fn().mockReturnThis(),
+        set: jest.fn().mockReturnThis(),
+        where: jest.fn().mockReturnThis(),
+        returning: jest.fn().mockReturnThis(),
+        execute: jest.fn().mockResolvedValue(mockUpdateResult),
+      };
+      jest
+        .spyOn(mockLinkRepository, 'createQueryBuilder')
+        .mockReturnValue(updateQueryBuilder as any);
+      const result = await linkRepository.updateLink(
+        mockLink,
+        mockUpdateLinkDto,
+      );
+      expect(result).toEqual(mockLink);
+    });
+    it('update a link with project', async () => {
+      mockLink = LinkFactory.build({
+        isProject: true,
+      });
+      mockLink = {
+        ...mockLink,
+        projectId: 'ff5d8359-b6f7-4a08-893f-fbdbb53a79b3',
+        project: {
           id: 'ff5d8359-b6f7-4a08-893f-fbdbb53a79b3',
         },
       } as any;

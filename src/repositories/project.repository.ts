@@ -19,6 +19,18 @@ export class ProjectRepository extends Repository<Project> {
     );
   }
 
+  async findProjectsByUserIdForPortfolio(userId: string): Promise<Project[]> {
+    this.logger.verbose(
+      `Finding projects by UserId for portfolio. UserId: ${userId}`,
+    );
+    return await this.projectRepository.find({
+      where: {
+        isDisplayed: true,
+        user: { id: userId },
+      },
+    });
+  }
+
   async findProjectsByUserId(userId: string): Promise<Project[]> {
     this.logger.verbose(`Finding projects by UserId. UserId: ${userId}`);
     return await this.projectRepository.find({
@@ -32,11 +44,17 @@ export class ProjectRepository extends Repository<Project> {
     id: string,
     createProjectDto: CreateProjectDto,
   ): Promise<Project> {
-    const { projectName } = createProjectDto;
+    const { title, subtitle, date, projectLink, imageLink, isDisplayed } =
+      createProjectDto;
     this.logger.verbose(`Creating new project entity for user. ID: ${id}`);
 
     const project = this.projectRepository.create({
-      projectName,
+      title,
+      subtitle,
+      date,
+      projectLink,
+      imageLink,
+      isDisplayed,
       user: { id },
     });
 

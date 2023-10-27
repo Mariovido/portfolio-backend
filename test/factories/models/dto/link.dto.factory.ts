@@ -20,10 +20,12 @@ export class LinkDtoFactory {
       linkDto.workExperience = mockLinkUpdateDto.workExperience;
       linkDto.paragraph = mockLinkUpdateDto.paragraph;
       linkDto.contact = mockLinkUpdateDto.contact;
+      linkDto.project = mockLinkUpdateDto.project;
     } else {
       linkDto.workExperience = mockLink.workExperience?.id;
       linkDto.paragraph = mockLink.paragraph?.id;
       linkDto.contact = mockLink.contact?.id;
+      linkDto.project = mockLink.project?.id;
     }
 
     return linkDto;

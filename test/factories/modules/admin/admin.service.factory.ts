@@ -9,12 +9,10 @@ export const mockAdminService = () => ({
   createWorkExperience: jest.fn(),
   updateWorkExperience: jest.fn(),
   deleteWorkExperience: jest.fn(),
-  // TODO - RETOCAR
   getProjects: jest.fn(),
   createProject: jest.fn(),
   updateProject: jest.fn(),
   deleteProject: jest.fn(),
-  // ---------------------
   getSkills: jest.fn(),
   createSkill: jest.fn(),
   updateSkill: jest.fn(),

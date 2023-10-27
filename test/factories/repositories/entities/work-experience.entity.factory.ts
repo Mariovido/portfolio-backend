@@ -19,7 +19,7 @@ export class WorkExperienceFactory {
     workExperience.endDate = new Date();
     workExperience.bulletPoints = BulletPointFactory.buildList(2, true);
     workExperience.links = LinkFactory.buildList(2, { isWorkExperience: true });
-    workExperience.tags = TagFactory.buildList(2);
+    workExperience.tags = TagFactory.buildList(2, true);
     workExperience.user = new User();
 
     return workExperience;

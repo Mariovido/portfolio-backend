@@ -1,7 +1,17 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { IsString, IsArray, IsUUID } from 'class-validator';
+import {
+  IsString,
+  IsArray,
+  IsUUID,
+  IsBoolean,
+  IsOptional,
+  IsUrl,
+} from 'class-validator';
+import { TagDto } from './tag.dto';
+import { Type } from 'class-transformer';
+import { LinkDto } from './link.dto';
+import { BulletPointDto } from './bullet-point.dto';
 
-// TODO - RETOCAR
 export class ProjectDto {
   @IsUUID()
   @ApiProperty()
@@ -9,15 +19,46 @@ export class ProjectDto {
 
   @IsString()
   @ApiProperty()
-  projectName: string;
+  date: Date;
+
+  @IsString()
+  @ApiProperty()
+  title: string;
+
+  @IsString()
+  @ApiProperty()
+  subtitle: string;
+
+  @IsUrl()
+  @IsOptional()
+  @ApiProperty()
+  projectLink?: string;
+
+  @IsUrl()
+  @IsOptional()
+  @ApiProperty()
+  imageLink?: string;
+
+  @IsBoolean()
+  @ApiProperty()
+  isDisplayed: boolean;
 
   @IsArray()
+  @Type(() => BulletPointDto)
   @ApiProperty()
-  technologies: string[];
+  bulletPoints: BulletPointDto[];
 
   @IsArray()
+  @Type(() => LinkDto)
+  @IsOptional()
   @ApiProperty()
-  bulletPoints: string[];
+  links?: LinkDto[];
+
+  @IsArray()
+  @Type(() => TagDto)
+  @IsOptional()
+  @ApiProperty()
+  tags?: TagDto[];
 
   @IsUUID()
   @ApiProperty()

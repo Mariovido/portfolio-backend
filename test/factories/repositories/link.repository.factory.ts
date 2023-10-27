@@ -6,4 +6,5 @@ export const mockLinkRepository = () => ({
   findLinksByParagraphs: jest.fn(),
   findLinksByWorkExperiences: jest.fn(),
   findLinksByContacts: jest.fn(),
+  findLinksByProjects: jest.fn(),
 });

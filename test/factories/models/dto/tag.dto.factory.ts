@@ -11,9 +11,13 @@ export class TagDtoFactory {
     const tagDto = new TagDto();
     tagDto.id = mockTag.id;
     tagDto.tag = mockTagUpdateDto ? mockTagUpdateDto.tag : mockTag.tag;
-    if (mockTagUpdateDto instanceof CreateTagDto)
+    if (mockTagUpdateDto instanceof CreateTagDto) {
       tagDto.workExperience = mockTagUpdateDto.workExperience;
-    else tagDto.workExperience = mockTag.workExperience.id;
+      tagDto.project = mockTagUpdateDto.project;
+    } else {
+      tagDto.workExperience = mockTag.workExperience?.id;
+      tagDto.project = mockTag.project?.id;
+    }
 
     return tagDto;
   }

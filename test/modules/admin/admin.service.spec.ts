@@ -225,8 +225,8 @@ describe('AdminService', () => {
     mockContact = ContactFactory.build();
     mockBulletPoint = BulletPointFactory.build(true);
     mockBulletPointList = BulletPointFactory.buildList(2, true);
-    mockTag = TagFactory.build();
-    mockTagList = TagFactory.buildList(2);
+    mockTag = TagFactory.build(true);
+    mockTagList = TagFactory.buildList(2, true);
     mockLink = LinkFactory.build({ isParagraph: true });
     mockLinkList = LinkFactory.buildList(2, { isParagraph: true });
     mockFooter = FooterFactory.build();
@@ -237,7 +237,7 @@ describe('AdminService', () => {
     mockCreateSkillDto = CreateSkillDtoFactory.build();
     mockCreateContactDto = CreateContactDtoFactory.build();
     mockCreateBulletPointDto = CreateBulletPointDtoFactory.build(true);
-    mockCreateTagDto = CreateTagDtoFactory.build();
+    mockCreateTagDto = CreateTagDtoFactory.build(true);
     mockCreateLinkDto = CreateLinkDtoFactory.build({ isParagraph: true });
     mockCreateFooterDto = CreateFooterDtoFactory.build();
 
@@ -628,128 +628,129 @@ describe('AdminService', () => {
     });
   });
 
-  // TODO - RETOCAR
-  // describe('getProjects', () => {
-  //   it('calls the service to get a projects. -> OK', async () => {
-  //     mockProjectDtoList.forEach(
-  //       (mockProjectAux) => (mockProjectAux.user = mockUser.id),
-  //     );
-  //     projectRepository.findProjectsByUserId.mockResolvedValue(mockProjectList);
-  //     const result = await adminService.getProjects(mockUser.id, mockUser);
-  //     expect(result).toEqual(mockProjectDtoList);
-  //   });
-  //   it('calls the service to get the projects but the user is not authorized. -> KO', async () => {
-  //     const result = async () => {
-  //       await adminService.getProjects(
-  //         'ff5d8359-b6f7-4a08-893f-fbdbb53a79b3',
-  //         mockUser,
-  //       );
-  //     };
-  //     await expect(result).rejects.toThrow(UnauthorizedException);
-  //   });
-  //   it('calls the service to get the projects but the projects are not found. -> KO', async () => {
-  //     projectRepository.findProjectsByUserId.mockResolvedValue([]);
-  //     const result = async () => {
-  //       await adminService.getProjects(mockUser.id, mockUser);
-  //     };
-  //     await expect(result).rejects.toThrow(NotFoundException);
-  //   });
-  // });
+  describe('getProjects', () => {
+    it('calls the service to get a projects. -> OK', async () => {
+      mockProjectDtoList.forEach(
+        (mockProjectAux) => (mockProjectAux.user = mockUser.id),
+      );
+      projectRepository.findProjectsByUserId.mockResolvedValue(mockProjectList);
+      const result = await adminService.getProjects(mockUser.id, mockUser);
+      expect(result).toEqual(mockProjectDtoList);
+    });
+    it('calls the service to get the projects but the user is not authorized. -> KO', async () => {
+      const result = async () => {
+        await adminService.getProjects(
+          'ff5d8359-b6f7-4a08-893f-fbdbb53a79b3',
+          mockUser,
+        );
+      };
+      await expect(result).rejects.toThrow(UnauthorizedException);
+    });
+    it('calls the service to get the projects but the projects are not found. -> KO', async () => {
+      projectRepository.findProjectsByUserId.mockResolvedValue([]);
+      const result = async () => {
+        await adminService.getProjects(mockUser.id, mockUser);
+      };
+      await expect(result).rejects.toThrow(NotFoundException);
+    });
+  });
 
-  // describe('createProject', () => {
-  //   it('calls the service to create a project. -> OK', async () => {
-  //     mockProjectDto = ProjectDtoFactory.build(mockProject);
-  //     delete mockProjectDto.bulletPoints;
-  //     delete mockProjectDto.technologies;
-  //     projectRepository.createProject.mockResolvedValue(mockProject);
-  //     const result = await adminService.createProject(
-  //       mockUser.id,
-  //       mockCreateProjectDto,
-  //       mockUser,
-  //     );
-  //     expect(result).toEqual(mockProjectDto);
-  //   });
-  //   it('calls the service to create a project but the user is not authorized. -> KO', async () => {
-  //     const result = async () => {
-  //       await adminService.createProject(
-  //         'ff5d8359-b6f7-4a08-893f-fbdbb53a79b3',
-  //         mockCreateProjectDto,
-  //         mockUser,
-  //       );
-  //     };
-  //     await expect(result).rejects.toThrow(UnauthorizedException);
-  //   });
-  // });
+  describe('createProject', () => {
+    it('calls the service to create a project. -> OK', async () => {
+      mockProjectDto = ProjectDtoFactory.build(mockProject);
+      delete mockProjectDto.bulletPoints;
+      delete mockProjectDto.links;
+      delete mockProjectDto.tags;
+      projectRepository.createProject.mockResolvedValue(mockProject);
+      const result = await adminService.createProject(
+        mockUser.id,
+        mockCreateProjectDto,
+        mockUser,
+      );
+      expect(result).toEqual(mockProjectDto);
+    });
+    it('calls the service to create a project but the user is not authorized. -> KO', async () => {
+      const result = async () => {
+        await adminService.createProject(
+          'ff5d8359-b6f7-4a08-893f-fbdbb53a79b3',
+          mockCreateProjectDto,
+          mockUser,
+        );
+      };
+      await expect(result).rejects.toThrow(UnauthorizedException);
+    });
+  });
 
-  // describe('updateProject', () => {
-  //   it('calls the service to update a project. -> OK', async () => {
-  //     mockProjectDto = ProjectDtoFactory.build(mockProject);
-  //     delete mockProjectDto.bulletPoints;
-  //     delete mockProjectDto.technologies;
-  //     projectRepository.updateProject.mockResolvedValue(mockProject);
-  //     projectRepository.findOneBy.mockResolvedValue(mockProject);
-  //     const result = await adminService.updateProject(
-  //       mockUser.id,
-  //       mockProject.id,
-  //       mockUpdateProjectDto,
-  //       mockUser,
-  //     );
-  //     expect(result).toEqual(mockProjectDto);
-  //   });
-  //   it('calls the service to update a project but the user is not authorized. -> KO', async () => {
-  //     const result = async () => {
-  //       await adminService.updateProject(
-  //         'ff5d8359-b6f7-4a08-893f-fbdbb53a79b3',
-  //         mockProject.id,
-  //         mockUpdateProjectDto,
-  //         mockUser,
-  //       );
-  //     };
-  //     await expect(result).rejects.toThrow(UnauthorizedException);
-  //   });
-  //   it('calls the service to update a project but the project is not found. -> KO', async () => {
-  //     projectRepository.findOneBy.mockResolvedValue(null);
-  //     const result = async () => {
-  //       await adminService.updateProject(
-  //         mockUser.id,
-  //         mockProject.id,
-  //         mockUpdateProjectDto,
-  //         mockUser,
-  //       );
-  //     };
-  //     await expect(result).rejects.toThrow(NotFoundException);
-  //   });
-  // });
+  describe('updateProject', () => {
+    it('calls the service to update a project. -> OK', async () => {
+      mockProjectDto = ProjectDtoFactory.build(mockProject);
+      delete mockProjectDto.bulletPoints;
+      delete mockProjectDto.links;
+      delete mockProjectDto.tags;
+      projectRepository.updateProject.mockResolvedValue(mockProject);
+      projectRepository.findOneBy.mockResolvedValue(mockProject);
+      const result = await adminService.updateProject(
+        mockUser.id,
+        mockProject.id,
+        mockUpdateProjectDto,
+        mockUser,
+      );
+      expect(result).toEqual(mockProjectDto);
+    });
+    it('calls the service to update a project but the user is not authorized. -> KO', async () => {
+      const result = async () => {
+        await adminService.updateProject(
+          'ff5d8359-b6f7-4a08-893f-fbdbb53a79b3',
+          mockProject.id,
+          mockUpdateProjectDto,
+          mockUser,
+        );
+      };
+      await expect(result).rejects.toThrow(UnauthorizedException);
+    });
+    it('calls the service to update a project but the project is not found. -> KO', async () => {
+      projectRepository.findOneBy.mockResolvedValue(null);
+      const result = async () => {
+        await adminService.updateProject(
+          mockUser.id,
+          mockProject.id,
+          mockUpdateProjectDto,
+          mockUser,
+        );
+      };
+      await expect(result).rejects.toThrow(NotFoundException);
+    });
+  });
 
-  // describe('deleteProject', () => {
-  //   it('calls the service to delete a project. -> OK', async () => {
-  //     projectRepository.delete.mockResolvedValue(mockDeleteResult);
-  //     const result = await adminService.deleteProject(
-  //       mockUser.id,
-  //       mockProject.id,
-  //       mockUser,
-  //     );
-  //     expect(result).toBeUndefined();
-  //   });
-  //   it('calls the service to delete a project but the user is not authorized. -> KO', async () => {
-  //     const result = async () => {
-  //       await adminService.deleteProject(
-  //         'ff5d8359-b6f7-4a08-893f-fbdbb53a79b3',
-  //         mockProject.id,
-  //         mockUser,
-  //       );
-  //     };
-  //     await expect(result).rejects.toThrow(UnauthorizedException);
-  //   });
-  //   it('calls the service to delete a project but the project is not found. -> KO', async () => {
-  //     mockDeleteResult.affected = 0;
-  //     projectRepository.delete.mockResolvedValue(mockDeleteResult);
-  //     const result = async () => {
-  //       await adminService.deleteProject(mockUser.id, mockProject.id, mockUser);
-  //     };
-  //     await expect(result).rejects.toThrow(NotFoundException);
-  //   });
-  // });
+  describe('deleteProject', () => {
+    it('calls the service to delete a project. -> OK', async () => {
+      projectRepository.delete.mockResolvedValue(mockDeleteResult);
+      const result = await adminService.deleteProject(
+        mockUser.id,
+        mockProject.id,
+        mockUser,
+      );
+      expect(result).toBeUndefined();
+    });
+    it('calls the service to delete a project but the user is not authorized. -> KO', async () => {
+      const result = async () => {
+        await adminService.deleteProject(
+          'ff5d8359-b6f7-4a08-893f-fbdbb53a79b3',
+          mockProject.id,
+          mockUser,
+        );
+      };
+      await expect(result).rejects.toThrow(UnauthorizedException);
+    });
+    it('calls the service to delete a project but the project is not found. -> KO', async () => {
+      mockDeleteResult.affected = 0;
+      projectRepository.delete.mockResolvedValue(mockDeleteResult);
+      const result = async () => {
+        await adminService.deleteProject(mockUser.id, mockProject.id, mockUser);
+      };
+      await expect(result).rejects.toThrow(NotFoundException);
+    });
+  });
 
   describe('getSkills', () => {
     it('calls the service to get a skill. -> OK', async () => {
@@ -1148,11 +1149,19 @@ describe('AdminService', () => {
   });
 
   describe('getTags', () => {
-    it('calls the service to get a tag. -> OK', async () => {
+    it('calls the service to get a tag with work experiences. -> OK', async () => {
+      projectRepository.findProjectsByUserId.mockResolvedValue([]);
       workExperienceRepository.findWorkExperienceByUserId.mockResolvedValue(
         mockWorkExperienceList,
       );
       tagRepository.findTagByWorkExperiences.mockResolvedValue(mockTagList);
+      const result = await adminService.getTags(mockUser.id, mockUser);
+      expect(result).toEqual(mockTagDtoList);
+    });
+    it('calls the service to get a tag with projects. -> OK', async () => {
+      workExperienceRepository.findWorkExperienceByUserId.mockResolvedValue([]);
+      projectRepository.findProjectsByUserId.mockResolvedValue(mockProjectList);
+      tagRepository.findTagByProjects.mockResolvedValue(mockTagList);
       const result = await adminService.getTags(mockUser.id, mockUser);
       expect(result).toEqual(mockTagDtoList);
     });
@@ -1165,8 +1174,9 @@ describe('AdminService', () => {
       };
       await expect(result).rejects.toThrow(UnauthorizedException);
     });
-    it('calls the service to get the tags but the work experiences are not found. -> KO', async () => {
+    it('calls the service to get the tags but the work experiences or projects are not found. -> KO', async () => {
       workExperienceRepository.findWorkExperienceByUserId.mockResolvedValue([]);
+      projectRepository.findProjectsByUserId.mockResolvedValue([]);
       const result = async () => {
         await adminService.getTags(mockUser.id, mockUser);
       };
@@ -1176,6 +1186,7 @@ describe('AdminService', () => {
       workExperienceRepository.findWorkExperienceByUserId.mockResolvedValue(
         mockWorkExperienceList,
       );
+      projectRepository.findProjectsByUserId.mockResolvedValue([]);
       tagRepository.findTagByWorkExperiences.mockResolvedValue([]);
       const result = async () => {
         await adminService.getTags(mockUser.id, mockUser);
@@ -1204,6 +1215,13 @@ describe('AdminService', () => {
         );
       };
       await expect(result).rejects.toThrow(UnauthorizedException);
+    });
+    it('calls the service to create a tag but project and work experience are both not empty. -> KO', async () => {
+      mockCreateTagDto.project = '4f8d94aa-a7c8-485d-9c7f-e71cc5423ab3';
+      const result = async () => {
+        await adminService.createTag(mockUser.id, mockCreateTagDto, mockUser);
+      };
+      await expect(result).rejects.toThrow(BadRequestException);
     });
   });
 
@@ -1283,6 +1301,7 @@ describe('AdminService', () => {
     //   );
     //   workExperienceRepository.findWorkExperienceByUserId.mockResolvedValue([]);
     //   contactRepository.findContactsByUserId.mockResolvedValue(null);
+    //   projectRepository.findProjectsByUserId.mockResolvedValue([]);
     //   linkRepository.findLinksByParagraphs.mockResolvedValue(mockLinkList);
     //   const result = await adminService.getLinks(mockUser.id, mockUser);
     //   expect(result).toEqual(mockLinkDtoList);
@@ -1294,6 +1313,7 @@ describe('AdminService', () => {
         mockWorkExperienceList,
       );
       contactRepository.findContactsByUserId.mockResolvedValue(null);
+      projectRepository.findProjectsByUserId.mockResolvedValue([]);
       linkRepository.findLinksByWorkExperiences.mockResolvedValue(mockLinkList);
       const result = await adminService.getLinks(mockUser.id, mockUser);
       expect(result).toEqual(mockLinkDtoList);
@@ -1303,11 +1323,22 @@ describe('AdminService', () => {
       // paragraphRepository.findParagraphByUserId.mockResolvedValue([]);
       workExperienceRepository.findWorkExperienceByUserId.mockResolvedValue([]);
       contactRepository.findContactsByUserId.mockResolvedValue(mockContact);
+      projectRepository.findProjectsByUserId.mockResolvedValue([]);
       linkRepository.findLinksByContacts.mockResolvedValue(mockLinkList);
       const result = await adminService.getLinks(mockUser.id, mockUser);
       expect(result).toEqual(mockLinkDtoList);
     });
-    it('calls the service to get the technologies but the user is not authorized. -> KO', async () => {
+    it('calls the service to get a links with projects. -> OK', async () => {
+      // TODO - REVISAR CON PARAGRAPHS DONE
+      // paragraphRepository.findParagraphByUserId.mockResolvedValue([]);
+      workExperienceRepository.findWorkExperienceByUserId.mockResolvedValue([]);
+      contactRepository.findContactsByUserId.mockResolvedValue(null);
+      projectRepository.findProjectsByUserId.mockResolvedValue(mockProjectList);
+      linkRepository.findLinksByProjects.mockResolvedValue(mockLinkList);
+      const result = await adminService.getLinks(mockUser.id, mockUser);
+      expect(result).toEqual(mockLinkDtoList);
+    });
+    it('calls the service to get the links but the user is not authorized. -> KO', async () => {
       const result = async () => {
         await adminService.getLinks(
           'ff5d8359-b6f7-4a08-893f-fbdbb53a79b3',
@@ -1316,11 +1347,12 @@ describe('AdminService', () => {
       };
       await expect(result).rejects.toThrow(UnauthorizedException);
     });
-    it('calls the service to get the links but the paragraphs, work experiences and contacts are not found. -> KO', async () => {
+    it('calls the service to get the links but the paragraphs, work experiences, contacts or projects are not found. -> KO', async () => {
       // TODO - REVISAR CON PARAGRAPHS DONE
       // paragraphRepository.findParagraphByUserId.mockResolvedValue([]);
       workExperienceRepository.findWorkExperienceByUserId.mockResolvedValue([]);
       contactRepository.findContactsByUserId.mockResolvedValue(null);
+      projectRepository.findProjectsByUserId.mockResolvedValue([]);
       const result = async () => {
         await adminService.getLinks(mockUser.id, mockUser);
       };
@@ -1333,6 +1365,7 @@ describe('AdminService', () => {
         mockWorkExperienceList,
       );
       contactRepository.findContactsByUserId.mockResolvedValue(null);
+      projectRepository.findProjectsByUserId.mockResolvedValue([]);
       linkRepository.findLinksByWorkExperiences.mockResolvedValue([]);
       const result = async () => {
         await adminService.getLinks(mockUser.id, mockUser);
@@ -1380,6 +1413,15 @@ describe('AdminService', () => {
       };
       await expect(result).rejects.toThrow(BadRequestException);
     });
+    it('calls the service to create a link but paragraph and contact are not empty. -> KO', async () => {
+      mockCreateLinkDto.paragraph = '4f8d94aa-a7c8-485d-9c7f-e71cc5423ab3';
+      mockCreateLinkDto.workExperience = undefined;
+      mockCreateLinkDto.contact = '4f8d94aa-a7c8-485d-9c7f-e71cc5423ab3';
+      const result = async () => {
+        await adminService.createLink(mockUser.id, mockCreateLinkDto, mockUser);
+      };
+      await expect(result).rejects.toThrow(BadRequestException);
+    });
     it('calls the service to create a link but work experience and contacts are not empty. -> KO', async () => {
       mockCreateLinkDto.paragraph = undefined;
       mockCreateLinkDto.workExperience = '4f8d94aa-a7c8-485d-9c7f-e71cc5423ab3';
@@ -1389,15 +1431,46 @@ describe('AdminService', () => {
       };
       await expect(result).rejects.toThrow(BadRequestException);
     });
-  });
-  it('calls the service to create a link but paragraphs, work experiences and contacts are empty. -> KO', async () => {
-    mockCreateLinkDto.paragraph = undefined;
-    mockCreateLinkDto.workExperience = undefined;
-    mockCreateLinkDto.contact = undefined;
-    const result = async () => {
-      await adminService.createLink(mockUser.id, mockCreateLinkDto, mockUser);
-    };
-    await expect(result).rejects.toThrow(BadRequestException);
+    it('calls the service to create a link but paragraphs, work experiences, contacts and projects are empty. -> KO', async () => {
+      mockCreateLinkDto.paragraph = undefined;
+      mockCreateLinkDto.workExperience = undefined;
+      mockCreateLinkDto.contact = undefined;
+      mockCreateLinkDto.project = undefined;
+      const result = async () => {
+        await adminService.createLink(mockUser.id, mockCreateLinkDto, mockUser);
+      };
+      await expect(result).rejects.toThrow(BadRequestException);
+    });
+    it('calls the service to create a link but paragraphs and projects are not empty. -> KO', async () => {
+      mockCreateLinkDto.paragraph = '4f8d94aa-a7c8-485d-9c7f-e71cc5423ab3';
+      mockCreateLinkDto.workExperience = undefined;
+      mockCreateLinkDto.contact = undefined;
+      mockCreateLinkDto.project = '4f8d94aa-a7c8-485d-9c7f-e71cc5423ab3';
+      const result = async () => {
+        await adminService.createLink(mockUser.id, mockCreateLinkDto, mockUser);
+      };
+      await expect(result).rejects.toThrow(BadRequestException);
+    });
+    it('calls the service to create a link but work experiences and projects are not empty. -> KO', async () => {
+      mockCreateLinkDto.paragraph = undefined;
+      mockCreateLinkDto.workExperience = '4f8d94aa-a7c8-485d-9c7f-e71cc5423ab3';
+      mockCreateLinkDto.contact = undefined;
+      mockCreateLinkDto.project = '4f8d94aa-a7c8-485d-9c7f-e71cc5423ab3';
+      const result = async () => {
+        await adminService.createLink(mockUser.id, mockCreateLinkDto, mockUser);
+      };
+      await expect(result).rejects.toThrow(BadRequestException);
+    });
+    it('calls the service to create a link but contacts and projects are not empty. -> KO', async () => {
+      mockCreateLinkDto.paragraph = undefined;
+      mockCreateLinkDto.workExperience = undefined;
+      mockCreateLinkDto.contact = '4f8d94aa-a7c8-485d-9c7f-e71cc5423ab3';
+      mockCreateLinkDto.project = '4f8d94aa-a7c8-485d-9c7f-e71cc5423ab3';
+      const result = async () => {
+        await adminService.createLink(mockUser.id, mockCreateLinkDto, mockUser);
+      };
+      await expect(result).rejects.toThrow(BadRequestException);
+    });
   });
 
   describe('updateLink', () => {

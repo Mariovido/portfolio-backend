@@ -164,7 +164,7 @@ describe('AdminController', () => {
     mockSkill = SkillFactory.build();
     mockContact = ContactFactory.build();
     mockBulletPoint = BulletPointFactory.build(true);
-    mockTag = TagFactory.build();
+    mockTag = TagFactory.build(true);
     mockLink = LinkFactory.build({ isParagraph: true });
     mockFooter = FooterFactory.build();
 
@@ -174,7 +174,7 @@ describe('AdminController', () => {
     mockCreateSkillDto = CreateSkillDtoFactory.build();
     mockCreateContactDto = CreateContactDtoFactory.build();
     mockCreateBulletPointDto = CreateBulletPointDtoFactory.build(true);
-    mockCreateTagDto = CreateTagDtoFactory.build();
+    mockCreateTagDto = CreateTagDtoFactory.build(true);
     mockCreateLinkDto = CreateLinkDtoFactory.build({ isParagraph: true });
     mockCreateFooterDto = CreateFooterDtoFactory.build();
 
@@ -339,50 +339,49 @@ describe('AdminController', () => {
     });
   });
 
-  // TODO - RETOCAR
-  // describe('getProjects', () => {
-  //   it('calls the controller to get the projects. -> OK', async () => {
-  //     adminService.getProjects.mockResolvedValue(mockProjectDtoList);
-  //     const result = await adminController.getProjects(mockUser.id, mockUser);
-  //     expect(result).toEqual(mockProjectDtoList);
-  //   });
-  // });
+  describe('getProjects', () => {
+    it('calls the controller to get the projects. -> OK', async () => {
+      adminService.getProjects.mockResolvedValue(mockProjectDtoList);
+      const result = await adminController.getProjects(mockUser.id, mockUser);
+      expect(result).toEqual(mockProjectDtoList);
+    });
+  });
 
-  // describe('createProject', () => {
-  //   it('calls the controller to create a new project. -> OK', async () => {
-  //     adminService.createProject.mockResolvedValue(mockProjectDto);
-  //     const result = await adminController.createProject(
-  //       mockUser.id,
-  //       mockCreateProjectDto,
-  //       mockUser,
-  //     );
-  //     expect(result).toEqual(mockProjectDto);
-  //   });
-  // });
+  describe('createProject', () => {
+    it('calls the controller to create a new project. -> OK', async () => {
+      adminService.createProject.mockResolvedValue(mockProjectDto);
+      const result = await adminController.createProject(
+        mockUser.id,
+        mockCreateProjectDto,
+        mockUser,
+      );
+      expect(result).toEqual(mockProjectDto);
+    });
+  });
 
-  // describe('updateProject', () => {
-  //   it('calls the controller to update a project. -> OK', async () => {
-  //     adminService.updateProject.mockResolvedValue(mockProjectDto);
-  //     const result = await adminController.updateProject(
-  //       mockUser.id,
-  //       mockProject.id,
-  //       mockUpdateProjectDto,
-  //       mockUser,
-  //     );
-  //     expect(result).toEqual(mockProjectDto);
-  //   });
-  // });
+  describe('updateProject', () => {
+    it('calls the controller to update a project. -> OK', async () => {
+      adminService.updateProject.mockResolvedValue(mockProjectDto);
+      const result = await adminController.updateProject(
+        mockUser.id,
+        mockProject.id,
+        mockUpdateProjectDto,
+        mockUser,
+      );
+      expect(result).toEqual(mockProjectDto);
+    });
+  });
 
-  // describe('deleteProject', () => {
-  //   it('calls the controller to delete a project. -> OK', async () => {
-  //     const result = await adminController.deleteProject(
-  //       mockUser.id,
-  //       mockProject.id,
-  //       mockUser,
-  //     );
-  //     expect(result).toBeUndefined();
-  //   });
-  // });
+  describe('deleteProject', () => {
+    it('calls the controller to delete a project. -> OK', async () => {
+      const result = await adminController.deleteProject(
+        mockUser.id,
+        mockProject.id,
+        mockUser,
+      );
+      expect(result).toBeUndefined();
+    });
+  });
 
   describe('getSkills', () => {
     it('calls the controller to get the skills. -> OK', async () => {

@@ -1,5 +1,5 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { IsAlphanumeric, IsUUID, MaxLength } from 'class-validator';
+import { IsAlphanumeric, IsOptional, IsUUID, MaxLength } from 'class-validator';
 
 export class CreateTagDto {
   @IsAlphanumeric()
@@ -8,6 +8,12 @@ export class CreateTagDto {
   tag: string;
 
   @IsUUID()
+  @IsOptional()
   @ApiProperty()
-  workExperience: string;
+  workExperience?: string;
+
+  @IsUUID()
+  @IsOptional()
+  @ApiProperty()
+  project?: string;
 }

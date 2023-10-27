@@ -8,6 +8,8 @@ import {
 import { User } from './user.entity';
 import { Exclude } from 'class-transformer';
 import { BulletPoint } from './bullet-point.entity';
+import { Link } from './link.entity';
+import { Tag } from './tag.entity';
 
 @Entity()
 export class Project {
@@ -15,17 +17,40 @@ export class Project {
   id: string;
 
   @Column()
-  projectName: string;
+  title: string;
 
-  // @OneToMany(() => Technology, (technology) => technology.project, {
-  //   eager: true,
-  // })
-  // technologies: Technology[];
+  @Column()
+  subtitle: string;
+
+  @Column({ nullable: true })
+  projectLink?: string;
+
+  @Column({ nullable: true })
+  imageLink?: string;
+
+  @Column()
+  date: Date;
+
+  @Column({ default: false })
+  isDisplayed: boolean;
 
   @OneToMany(() => BulletPoint, (bulletPoint) => bulletPoint.project, {
     eager: true,
+    nullable: true,
   })
-  bulletPoints: BulletPoint[];
+  bulletPoints?: BulletPoint[];
+
+  @OneToMany(() => Link, (link) => link.project, {
+    eager: true,
+    nullable: true,
+  })
+  links?: Link[];
+
+  @OneToMany(() => Tag, (tag) => tag.project, {
+    eager: true,
+    nullable: true,
+  })
+  tags?: Tag[];
 
   @ManyToOne(() => User, (user) => user.projects, { eager: false })
   @Exclude({ toPlainOnly: true })

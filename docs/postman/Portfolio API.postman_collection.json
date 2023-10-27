@@ -130,7 +130,7 @@
 					"response": []
 				},
 				{
-					"name": "Get projects by user ID -> REDO",
+					"name": "Get projects by user ID",
 					"request": {
 						"method": "GET",
 						"header": [],
@@ -789,7 +789,7 @@
 								"header": [],
 								"body": {
 									"mode": "raw",
-									"raw": "{\r\n    \"bulletPoint\": \"Developed a web application\",\r\n    // \"workExperience\": \"9b067528-cd53-4913-87a8-1bd5c9f904c8\",\r\n    \"project\": \"4f8d94aa-a7c8-485d-9c7f-e71cc5423ab3\"\r\n}",
+									"raw": "{\r\n    \"bulletPoint\": \"Developed a web application\",\r\n    // \"workExperience\": \"9b067528-cd53-4913-87a8-1bd5c9f904c8\",\r\n    \"project\": \"57477c22-d44f-46d7-8099-216241696745\"\r\n}",
 									"options": {
 										"raw": {
 											"language": "json"
@@ -906,7 +906,7 @@
 								"header": [],
 								"body": {
 									"mode": "raw",
-									"raw": "{\r\n    \"tag\": \"Tag\",\r\n    \"workExperience\": \"6efccabe-1354-485b-b04d-515824afa889\"\r\n}",
+									"raw": "{\r\n    \"tag\": \"Tag\",\r\n    \"workExperience\": \"6efccabe-1354-485b-b04d-515824afa889\"\r\n    // \"project\": \"57477c22-d44f-46d7-8099-216241696745\"\r\n}",
 									"options": {
 										"raw": {
 											"language": "json"
@@ -1104,7 +1104,7 @@
 								"header": [],
 								"body": {
 									"mode": "raw",
-									"raw": "{\r\n    \"tag\": \"thetag\",\r\n    \"name\": \"linkedin\",\r\n    \"link\": \"https://www.linkedin.com/in/mariovidaldominguez/\",\r\n    \"target\": \"_blank\",\r\n    \"paragraph\": \"69272a58-07fd-4c07-9d9a-440ac28b70bc\"\r\n    // \"workExperience\": \"6efccabe-1354-485b-b04d-515824afa889\"\r\n    // \"contact\": \"5c3b428a-8236-4187-8175-3f71fc952af9\"\r\n}",
+									"raw": "{\r\n    \"tag\": \"thetag\",\r\n    \"name\": \"linkedin\",\r\n    \"link\": \"https://www.linkedin.com/in/mariovidaldominguez/\",\r\n    \"target\": \"_blank\",\r\n    \"paragraph\": \"69272a58-07fd-4c07-9d9a-440ac28b70bc\"\r\n    // \"workExperience\": \"6efccabe-1354-485b-b04d-515824afa889\"\r\n    // \"contact\": \"5c3b428a-8236-4187-8175-3f71fc952af9\"\r\n    // \"project\": \"57477c22-d44f-46d7-8099-216241696745\"\r\n}",
 									"options": {
 										"raw": {
 											"language": "json"
@@ -1192,7 +1192,7 @@
 					]
 				},
 				{
-					"name": "Project -> REDO",
+					"name": "Project",
 					"item": [
 						{
 							"name": "Get projects by ID",
@@ -1221,7 +1221,7 @@
 								"header": [],
 								"body": {
 									"mode": "raw",
-									"raw": "{\r\n    \"projectName\": \"Fantastic Project\"\r\n}",
+									"raw": "{\r\n    \"date\": \"2022-04-13 22:00:00+00\",\r\n    \"title\": \"The Project\",\r\n    \"subtitle\": \"The subtitle\",\r\n    \"projectLink\": \"http://testLink.com\",\r\n    \"imageLink\": \"http://testImage.com\",\r\n    \"isDisplayed\": false\r\n}",
 									"options": {
 										"raw": {
 											"language": "json"
@@ -1250,7 +1250,7 @@
 								"header": [],
 								"body": {
 									"mode": "raw",
-									"raw": "{\r\n    \"projectName\": \"Project Awesome\"\r\n}",
+									"raw": "{\r\n    \"date\": \"2022-04-13 22:00:00+00\",\r\n    \"title\": \"The Project 2\",\r\n    \"subtitle\": \"The subtitle\",\r\n    \"projectLink\": \"http://testLink.com\",\r\n    \"imageLink\": \"http://testImage.com\",\r\n    \"isDisplayed\": true\r\n}",
 									"options": {
 										"raw": {
 											"language": "json"
@@ -1272,7 +1272,7 @@
 									"variable": [
 										{
 											"key": "idProject",
-											"value": "36c80e1c-6b61-4d91-a0dc-a5027527d686"
+											"value": "57477c22-d44f-46d7-8099-216241696745"
 										}
 									]
 								}
@@ -1299,7 +1299,7 @@
 									"variable": [
 										{
 											"key": "idProject",
-											"value": "e4c0e036-6ec2-4289-a97c-281a8d3e9b99"
+											"value": "57477c22-d44f-46d7-8099-216241696745"
 										}
 									]
 								}

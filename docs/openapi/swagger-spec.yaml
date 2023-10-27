@@ -422,6 +422,100 @@ paths:
           description: ''
       tags:
         - admin
+  /admin/{id}/project:
+    get:
+      operationId: AdminController_getProjects
+      summary: Get projects
+      parameters:
+        - name: id
+          required: true
+          in: path
+          schema:
+            type: string
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/ProjectDto'
+      tags:
+        - admin
+    post:
+      operationId: AdminController_createProject
+      summary: Creates a project
+      parameters:
+        - name: id
+          required: true
+          in: path
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateProjectDto'
+      responses:
+        '201':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProjectDto'
+      tags:
+        - admin
+  /admin/{id}/project/{idProject}:
+    put:
+      operationId: AdminController_updateProject
+      summary: Updates a project
+      parameters:
+        - name: id
+          required: true
+          in: path
+          schema:
+            type: string
+        - name: idProject
+          required: true
+          in: path
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdateProjectDto'
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProjectDto'
+      tags:
+        - admin
+    delete:
+      operationId: AdminController_deleteProject
+      summary: Deletes a project
+      parameters:
+        - name: id
+          required: true
+          in: path
+          schema:
+            type: string
+        - name: idProject
+          required: true
+          in: path
+          schema:
+            type: string
+      responses:
+        '200':
+          description: ''
+      tags:
+        - admin
   /admin/{id}/skill:
     get:
       operationId: AdminController_getSkills
@@ -1070,20 +1164,40 @@ components:
     ProjectPortfolioDto:
       type: object
       properties:
-        projectName:
+        id:
           type: string
-        technologies:
+        date:
+          type: number
+        title:
+          type: string
+        subtitle:
+          type: string
+        projectLink:
+          type: string
+        imageLink:
+          type: string
+        description:
           type: array
           items:
             type: string
-        bulletPoints:
+        links:
+          type: array
+          items:
+            type: string
+        tags:
           type: array
           items:
             type: string
       required:
-        - projectName
-        - technologies
-        - bulletPoints
+        - id
+        - date
+        - title
+        - subtitle
+        - projectLink
+        - imageLink
+        - description
+        - links
+        - tags
     FooterPortfolioDto:
       type: object
       properties:
@@ -1335,6 +1449,96 @@ components:
         - companyLink
         - startDate
         - endDate
+    ProjectDto:
+      type: object
+      properties:
+        id:
+          type: string
+        date:
+          format: date-time
+          type: string
+        title:
+          type: string
+        subtitle:
+          type: string
+        projectLink:
+          type: string
+        imageLink:
+          type: string
+        isDisplayed:
+          type: boolean
+        bulletPoints:
+          type: array
+          items:
+            type: string
+        links:
+          type: array
+          items:
+            type: string
+        tags:
+          type: array
+          items:
+            type: string
+        user:
+          type: string
+      required:
+        - id
+        - date
+        - title
+        - subtitle
+        - projectLink
+        - imageLink
+        - isDisplayed
+        - bulletPoints
+        - links
+        - tags
+        - user
+    CreateProjectDto:
+      type: object
+      properties:
+        date:
+          format: date-time
+          type: string
+        title:
+          type: string
+        subtitle:
+          type: string
+        projectLink:
+          type: string
+        imageLink:
+          type: string
+        isDisplayed:
+          type: boolean
+      required:
+        - date
+        - title
+        - subtitle
+        - projectLink
+        - imageLink
+        - isDisplayed
+    UpdateProjectDto:
+      type: object
+      properties:
+        date:
+          format: date-time
+          type: string
+        title:
+          type: string
+        subtitle:
+          type: string
+        projectLink:
+          type: string
+        imageLink:
+          type: string
+        isDisplayed:
+          type: boolean
+      required:
+        - date
+        - title
+        - subtitle
+        - projectLink
+        - imageLink
+        - isDisplayed
     SkillDto:
       type: object
       properties:
@@ -1443,10 +1647,13 @@ components:
           type: string
         workExperience:
           type: string
+        project:
+          type: string
       required:
         - id
         - tag
         - workExperience
+        - project
     CreateTagDto:
       type: object
       properties:
@@ -1454,9 +1661,12 @@ components:
           type: string
         workExperience:
           type: string
+        project:
+          type: string
       required:
         - tag
         - workExperience
+        - project
     UpdateTagDto:
       type: object
       properties:
@@ -1483,6 +1693,8 @@ components:
           type: string
         contact:
           type: string
+        project:
+          type: string
       required:
         - id
         - tag
@@ -1492,6 +1704,7 @@ components:
         - workExperience
         - paragraph
         - contact
+        - project
     CreateLinkDto:
       type: object
       properties:
@@ -1509,6 +1722,8 @@ components:
           type: string
         contact:
           type: string
+        project:
+          type: string
       required:
         - tag
         - name
@@ -1517,6 +1732,7 @@ components:
         - workExperience
         - paragraph
         - contact
+        - project
     UpdateLinkDto:
       type: object
       properties:

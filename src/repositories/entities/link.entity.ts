@@ -3,6 +3,7 @@ import { Exclude } from 'class-transformer';
 import { WorkExperience } from './work-experience.entity';
 import { Paragraph } from './paragraph.entity';
 import { Contact } from './contact.entity';
+import { Project } from './project.entity';
 
 @Entity()
 export class Link {
@@ -41,4 +42,11 @@ export class Link {
   })
   @Exclude({ toPlainOnly: true })
   contact?: Contact;
+
+  @ManyToOne(() => Project, (project) => project.links, {
+    eager: false,
+    nullable: true,
+  })
+  @Exclude({ toPlainOnly: true })
+  project?: Project;
 }

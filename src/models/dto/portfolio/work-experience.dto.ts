@@ -1,5 +1,5 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { IsString, IsArray, IsUUID, IsOptional } from 'class-validator';
+import { IsString, IsArray, IsUUID, IsOptional, IsUrl } from 'class-validator';
 import { BulletPointDto } from '../bullet-point.dto';
 import { Type } from 'class-transformer';
 import { LinkDto } from '../link.dto';
@@ -18,7 +18,7 @@ export class WorkExperiencePortfolioDto {
   @ApiProperty()
   company: string;
 
-  @IsString()
+  @IsUrl()
   @ApiProperty()
   companyLink?: string;
 
@@ -32,13 +32,13 @@ export class WorkExperiencePortfolioDto {
   description: BulletPointDto[];
 
   @IsArray()
-  @Type()
+  @Type(() => LinkDto)
   @IsOptional()
   @ApiProperty()
   links?: LinkDto[];
 
   @IsArray()
-  @Type()
+  @Type(() => TagDto)
   @IsOptional()
   @ApiProperty()
   tags?: TagDto[];

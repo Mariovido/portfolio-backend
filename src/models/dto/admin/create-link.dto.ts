@@ -35,4 +35,9 @@ export class CreateLinkDto {
   @IsOptional()
   @ApiProperty()
   contact?: string;
+
+  @IsUUID()
+  @IsOptional()
+  @ApiProperty()
+  project?: string;
 }

@@ -47,6 +47,7 @@ import { TagDto } from '../../models/dto/tag.dto';
 import { FooterRepository } from '../../repositories/footer.repository';
 import { CreateFooterDto } from '../../models/dto/admin/create-footer.dto';
 import { Link } from '../../repositories/entities/link.entity';
+import { Tag } from '../../repositories/entities/tag.entity';
 
 @Injectable()
 export class AdminService {
@@ -488,141 +489,175 @@ export class AdminService {
     );
   }
 
-  // async getProjects(id: string, user: User): Promise<ProjectDto[]> {
-  //   this.logger.verbose(
-  //     `Checking if the user that gets is the same to the one that is getting. user: ${user.id} userGetting: ${id}`,
-  //   );
-  //   if (user.id !== id)
-  //     throw new UnauthorizedException(
-  //       `User with ID "${user.id}" can not get user with ID "${id}"`,
-  //     );
+  async getProjects(id: string, user: User): Promise<ProjectDto[]> {
+    this.logger.verbose(
+      `Checking if the user that gets is the same to the one that is getting. user: ${user.id} userGetting: ${id}`,
+    );
+    if (user.id !== id)
+      throw new UnauthorizedException(
+        `User with ID "${user.id}" can not get user with ID "${id}"`,
+      );
 
-  //   this.logger.verbose(`Retrieving the project by user ID. ID: ${id}`);
-  //   const project = await this.projectRepository.findProjectsByUserId(id);
-  //   if (!project.length)
-  //     throw new NotFoundException(
-  //       `There is no project for the user with ID "${id}"`,
-  //     );
+    this.logger.verbose(`Retrieving the project by user ID. ID: ${id}`);
+    const project = await this.projectRepository.findProjectsByUserId(id);
+    if (!project.length)
+      throw new NotFoundException(
+        `There is no project for the user with ID "${id}"`,
+      );
 
-  //   this.logger.verbose(`Creating the project DTO of the user. ID: ${id}`);
-  //   const projectDtoList: ProjectDto[] = [];
-  //   project.forEach((projectItem) => {
-  //     const projectDto = new ProjectDto();
-  //     projectDto.id = projectItem.id;
-  //     projectDto.projectName = projectItem.projectName;
+    this.logger.verbose(`Creating the project DTO of the user. ID: ${id}`);
+    const projectDtoList: ProjectDto[] = [];
+    project.forEach((projectItem) => {
+      const projectDto = new ProjectDto();
+      projectDto.id = projectItem.id;
+      projectDto.title = projectItem.title;
+      projectDto.subtitle = projectItem.subtitle;
+      projectDto.projectLink = projectItem.projectLink;
+      projectDto.imageLink = projectItem.imageLink;
+      projectDto.date = projectItem.date;
+      projectDto.isDisplayed = projectItem.isDisplayed;
 
-  //     const technologies = projectItem.technologies.map(
-  //       (technology) => technology.technologyName,
-  //     );
-  //     projectDto.technologies = technologies;
+      const bulletPoints = projectItem.bulletPoints.map((bulletPoint) => {
+        const bulletPointDto = new BulletPointDto();
+        bulletPointDto.id = bulletPoint.id;
+        bulletPointDto.bulletPoint = bulletPoint.bulletPoint;
 
-  //     const bulletPoints = projectItem.bulletPoints.map(
-  //       (bulletPoint) => bulletPoint.bulletPoint,
-  //     );
-  //     projectDto.bulletPoints = bulletPoints;
-  //     projectDto.user = id;
+        return bulletPointDto;
+      });
+      projectDto.bulletPoints = bulletPoints;
 
-  //     projectDtoList.push(projectDto);
-  //   });
+      const links = projectItem.links.map((link) => {
+        const linkDto = new LinkDto();
+        linkDto.id = link.id;
+        linkDto.link = link.link;
+        linkDto.name = link.name;
+        linkDto.tag = link.tag;
+        linkDto.target = link.target;
 
-  //   return projectDtoList;
-  // }
+        return linkDto;
+      });
+      projectDto.links = links;
+      const tags = projectItem.tags.map((tag) => {
+        const tagDto = new TagDto();
+        tagDto.id = tag.id;
+        tagDto.tag = tag.tag;
 
-  // async createProject(
-  //   id: string,
-  //   createProjectDto: CreateProjectDto,
-  //   user: User,
-  // ): Promise<ProjectDto> {
-  //   this.logger.verbose(
-  //     `Checking if the user that creates is the same to the one that project will be created. user: ${user.id} userToProject: ${id}`,
-  //   );
+        return tagDto;
+      });
+      projectDto.tags = tags;
+      projectDto.user = id;
 
-  //   if (user.id !== id)
-  //     throw new UnauthorizedException(
-  //       `User with ID "${user.id}" can not create project for user with ID "${id}"`,
-  //     );
+      projectDtoList.push(projectDto);
+    });
 
-  //   this.logger.verbose(`Creating a project`);
-  //   const projectCreated = await this.projectRepository.createProject(
-  //     id,
-  //     createProjectDto,
-  //   );
+    return projectDtoList;
+  }
 
-  //   this.logger.verbose(`Creating the project DTO of the user. ID: ${id}`);
-  //   const projectDto = new ProjectDto();
-  //   projectDto.id = projectCreated.id;
-  //   projectDto.projectName = projectCreated.projectName;
-  //   projectDto.user = projectCreated.user.id;
+  async createProject(
+    id: string,
+    createProjectDto: CreateProjectDto,
+    user: User,
+  ): Promise<ProjectDto> {
+    this.logger.verbose(
+      `Checking if the user that creates is the same to the one that project will be created. user: ${user.id} userToProject: ${id}`,
+    );
 
-  //   return projectDto;
-  // }
+    if (user.id !== id)
+      throw new UnauthorizedException(
+        `User with ID "${user.id}" can not create project for user with ID "${id}"`,
+      );
 
-  // async updateProject(
-  //   id: string,
-  //   idProject: string,
-  //   updateProjectDto: UpdateProjectDto,
-  //   user: User,
-  // ): Promise<ProjectDto> {
-  //   this.logger.verbose(
-  //     `Checking if the user that edits is the same to the one that project will be edited. user: ${user.id} userEdited: ${id}`,
-  //   );
-  //   if (user.id !== id)
-  //     throw new UnauthorizedException(
-  //       `User with ID "${user.id}" can not edit project of the user with ID "${id}"`,
-  //     );
+    this.logger.verbose(`Creating a project`);
+    const projectCreated = await this.projectRepository.createProject(
+      id,
+      createProjectDto,
+    );
 
-  //   const project = await this.projectRepository.findOneBy({
-  //     id: idProject,
-  //     user: { id },
-  //   });
+    this.logger.verbose(`Creating the project DTO of the user. ID: ${id}`);
+    const projectDto = new ProjectDto();
+    projectDto.id = projectCreated.id;
+    projectDto.title = projectCreated.title;
+    projectDto.subtitle = projectCreated.subtitle;
+    projectDto.projectLink = projectCreated.projectLink;
+    projectDto.imageLink = projectCreated.imageLink;
+    projectDto.date = projectCreated.date;
+    projectDto.isDisplayed = projectCreated.isDisplayed;
+    projectDto.user = projectCreated.user.id;
 
-  //   if (!project)
-  //     throw new NotFoundException(
-  //       `User with ID "${id}" has no project assigned with ID "${idProject}"`,
-  //     );
+    return projectDto;
+  }
 
-  //   this.logger.verbose(`Updating the project with the new information`);
-  //   const projectUpdated = await this.projectRepository.updateProject(
-  //     project,
-  //     updateProjectDto,
-  //   );
+  async updateProject(
+    id: string,
+    idProject: string,
+    updateProjectDto: UpdateProjectDto,
+    user: User,
+  ): Promise<ProjectDto> {
+    this.logger.verbose(
+      `Checking if the user that edits is the same to the one that project will be edited. user: ${user.id} userEdited: ${id}`,
+    );
+    if (user.id !== id)
+      throw new UnauthorizedException(
+        `User with ID "${user.id}" can not edit project of the user with ID "${id}"`,
+      );
 
-  //   this.logger.verbose(
-  //     `Creating the project updated DTO of the user. ID: ${id}`,
-  //   );
-  //   const projectDto = new ProjectDto();
-  //   projectDto.id = projectUpdated.id;
-  //   projectDto.projectName = projectUpdated.projectName;
-  //   projectDto.user = projectUpdated.user.id;
+    const project = await this.projectRepository.findOneBy({
+      id: idProject,
+      user: { id },
+    });
 
-  //   return projectDto;
-  // }
+    if (!project)
+      throw new NotFoundException(
+        `User with ID "${id}" has no project assigned with ID "${idProject}"`,
+      );
 
-  // async deleteProject(
-  //   id: string,
-  //   idProject: string,
-  //   user: User,
-  // ): Promise<void> {
-  //   this.logger.verbose(
-  //     `Checking if the user that deletes is the same to the one that project will be deleted. user: ${user.id} userEdited: ${id}`,
-  //   );
-  //   if (user.id !== id)
-  //     throw new UnauthorizedException(
-  //       `User with ID "${user.id}" can not delete project of user with ID "${id}"`,
-  //     );
+    this.logger.verbose(`Updating the project with the new information`);
+    const projectUpdated = await this.projectRepository.updateProject(
+      project,
+      updateProjectDto,
+    );
 
-  //   const result = await this.projectRepository.delete({
-  //     id: idProject,
-  //     user: { id },
-  //   });
+    this.logger.verbose(
+      `Creating the project updated DTO of the user. ID: ${id}`,
+    );
+    const projectDto = new ProjectDto();
+    projectDto.id = projectUpdated.id;
+    projectDto.title = projectUpdated.title;
+    projectDto.subtitle = projectUpdated.subtitle;
+    projectDto.projectLink = projectUpdated.projectLink;
+    projectDto.imageLink = projectUpdated.imageLink;
+    projectDto.date = projectUpdated.date;
+    projectDto.isDisplayed = projectUpdated.isDisplayed;
+    projectDto.user = projectUpdated.user.id;
 
-  //   if (result.affected === 0)
-  //     throw new NotFoundException(`Project with ID "${id}" not found`);
+    return projectDto;
+  }
 
-  //   return this.logger.verbose(
-  //     `Project deleted successfully for the user. ID: ${id}`,
-  //   );
-  // }
+  async deleteProject(
+    id: string,
+    idProject: string,
+    user: User,
+  ): Promise<void> {
+    this.logger.verbose(
+      `Checking if the user that deletes is the same to the one that project will be deleted. user: ${user.id} userEdited: ${id}`,
+    );
+    if (user.id !== id)
+      throw new UnauthorizedException(
+        `User with ID "${user.id}" can not delete project of user with ID "${id}"`,
+      );
+
+    const result = await this.projectRepository.delete({
+      id: idProject,
+      user: { id },
+    });
+
+    if (result.affected === 0)
+      throw new NotFoundException(`Project with ID "${id}" not found`);
+
+    return this.logger.verbose(
+      `Project deleted successfully for the user. ID: ${id}`,
+    );
+  }
 
   async getSkills(id: string, user: User): Promise<SkillDto[]> {
     this.logger.verbose(
@@ -1065,22 +1100,37 @@ export class AdminService {
     const workExperiences =
       await this.workExperienceRepository.findWorkExperienceByUserId(id);
 
-    if (!workExperiences.length)
+    this.logger.verbose(`Retrieving the projects by user ID. ID: ${id}`);
+    const projects = await this.projectRepository.findProjectsByUserId(id);
+
+    if (!workExperiences.length && !projects.length)
       throw new NotFoundException(
-        `There is no work experiences for the user with ID "${id}"`,
+        `There is no work experiences or projects for the user with ID "${id}"`,
       );
 
     this.logger.verbose(`Retrieving the tag by user ID. ID: ${id}`);
-    const tag =
-      await this.tagRepository.findTagByWorkExperiences(workExperiences);
-    if (!tag.length)
+    const tags: Tag[] = [];
+    if (workExperiences.length) {
+      const tagsWorkExperiences =
+        await this.tagRepository.findTagByWorkExperiences(workExperiences);
+      tagsWorkExperiences.forEach((tagWorkExperience) =>
+        tags.push(tagWorkExperience),
+      );
+    }
+
+    if (projects.length) {
+      const tagsProjects = await this.tagRepository.findTagByProjects(projects);
+      tagsProjects.forEach((tagProject) => tags.push(tagProject));
+    }
+
+    if (!tags.length)
       throw new NotFoundException(
         `There is no tags for the user with ID "${id}"`,
       );
 
     this.logger.verbose(`Creating the tag DTO of the user. ID: ${id}`);
     const tagDtoList: TagDto[] = [];
-    tag.forEach((tagItem) => {
+    tags.forEach((tagItem) => {
       const tagDto = new TagDto();
       tagDto.id = tagItem.id;
       tagDto.tag = tagItem.tag;
@@ -1103,6 +1153,15 @@ export class AdminService {
     if (user.id !== id)
       throw new UnauthorizedException(
         `User with ID "${user.id}" can not create tag for user with ID "${id}"`,
+      );
+
+    const { project, workExperience } = createTagDto;
+    this.logger.verbose(
+      `Checking if the tag has any assigned project, work experience or both. idProject: ${project} idWorkExperience: ${workExperience}`,
+    );
+    if ((project && workExperience) || (!project && !workExperience))
+      throw new BadRequestException(
+        `A tag must be assigned to only one project or work experience. idProject: ${project} idWorkExperience: ${workExperience}`,
       );
 
     this.logger.verbose(`Creating a tag`);
@@ -1195,11 +1254,14 @@ export class AdminService {
     this.logger.verbose(`Retrieving the contacts by user ID. ID: ${id}`);
     const contacts = await this.contactRepository.findContactsByUserId(id);
 
+    this.logger.verbose(`Retrieving the projects by user ID. ID: ${id}`);
+    const projects = await this.projectRepository.findProjectsByUserId(id);
+
     // TODO - REVISAR CON PARAGRAPHS DONE
-    // if (!paragraphs.length && !workExperiences.length && !contacts)
-    if (!workExperiences.length && !contacts)
+    // if (!paragraphs.length && !workExperiences.length && !contacts && !projects)
+    if (!workExperiences.length && !contacts && !projects.length)
       throw new NotFoundException(
-        `There is no paragraphs, work experiences or contacts for the user with ID "${id}`,
+        `There is no paragraphs, work experiences, contacts or projects for the user with ID "${id}`,
       );
 
     this.logger.verbose(`Retrieving the links by user ID. ID: ${id}`);
@@ -1225,9 +1287,15 @@ export class AdminService {
       linksContacts.forEach((linkContact) => links.push(linkContact));
     }
 
+    if (projects.length) {
+      const linksProjects =
+        await this.linkRepository.findLinksByProjects(projects);
+      linksProjects.forEach((linkProject) => links.push(linkProject));
+    }
+
     if (!links.length)
       throw new NotFoundException(
-        `There is no bullet point for the user with ID "${id}"`,
+        `There is no links for the user with ID "${id}"`,
       );
 
     this.logger.verbose(`Creating the link DTO of the user. ID: ${id}`);
@@ -1262,19 +1330,20 @@ export class AdminService {
         `User with ID "${user.id}" can not create link for user with ID "${id}"`,
       );
 
-    const { paragraph, workExperience, contact } = createLinkDto;
+    const { paragraph, workExperience, contact, project } = createLinkDto;
     this.logger.verbose(
-      `Checking if the link has any assigned paragraph, work experience or contact. idParagraph: ${paragraph} idWorkExperience: ${workExperience} idContact: ${contact}`,
+      `Checking if the link has any assigned paragraph, work experience or contact. idParagraph: ${paragraph} idWorkExperience: ${workExperience} idContact: ${contact} idProject: ${project}`,
     );
     if (
       (paragraph && workExperience && contact) ||
       (paragraph && workExperience) ||
       (paragraph && contact) ||
       (workExperience && contact) ||
-      (!paragraph && !workExperience && !contact)
+      (!paragraph && !workExperience && !contact && !project) ||
+      ((paragraph || workExperience || contact) && project)
     )
       throw new BadRequestException(
-        `A bullet point must be assigned to only one paragraph, work experience or contact. idParagraph: ${paragraph} idWorkExperience: ${workExperience} idContact: ${contact}`,
+        `A bullet point must be assigned to only one paragraph, work experience, contact or project. idParagraph: ${paragraph} idWorkExperience: ${workExperience} idContact: ${contact} idProject: ${project}`,
       );
 
     this.logger.verbose(`Creating a link`);

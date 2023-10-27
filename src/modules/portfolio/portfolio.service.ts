@@ -243,7 +243,8 @@ export class PortfolioService {
 
   async getProjects(id: string): Promise<ProjectPortfolioDto[]> {
     this.logger.verbose(`Retrieving the projects by user ID. ID: ${id}`);
-    const projects = await this.projectRepository.findProjectsByUserId(id);
+    const projects =
+      await this.projectRepository.findProjectsByUserIdForPortfolio(id);
 
     if (!projects.length)
       throw new NotFoundException(
@@ -253,18 +254,43 @@ export class PortfolioService {
     this.logger.verbose(`Creating projects DTO of the user. ID: ${id}`);
     const projectsPortfolioList: ProjectPortfolioDto[] = [];
     projects.forEach((projectItem) => {
-      // const technologies = projectItem.technologies.map(
-      //   (technology) => technology.technologyName,
-      // );
+      const date = projectItem.date.getFullYear();
 
-      const bulletPoints = projectItem.bulletPoints.map(
-        (bulletPoint) => bulletPoint.bulletPoint,
-      );
+      const bulletPoints = projectItem.bulletPoints.map((bulletPoint) => {
+        const bulletPointDto = new BulletPointDto();
+        bulletPointDto.id = bulletPoint.id;
+        bulletPointDto.bulletPoint = bulletPoint.bulletPoint;
+
+        return bulletPointDto;
+      });
+
+      const links = projectItem.links.map((link) => {
+        const linkDto = new LinkDto();
+        linkDto.id = link.id;
+        linkDto.link = link.link;
+        linkDto.name = link.name;
+
+        return linkDto;
+      });
+
+      const tags = projectItem.tags.map((tag) => {
+        const tagDto = new TagDto();
+        tagDto.id = tag.id;
+        tagDto.tag = tag.tag;
+
+        return tagDto;
+      });
 
       const projectPortfolioDto = new ProjectPortfolioDto();
-      projectPortfolioDto.projectName = projectItem.projectName;
-      // projectPortfolioDto.technologies = technologies;
-      projectPortfolioDto.bulletPoints = bulletPoints;
+      projectPortfolioDto.id = projectItem.id;
+      projectPortfolioDto.title = projectItem.title;
+      projectPortfolioDto.subtitle = projectItem.subtitle;
+      projectPortfolioDto.projectLink = projectItem.projectLink;
+      projectPortfolioDto.imageLink = projectItem.imageLink;
+      projectPortfolioDto.date = date;
+      projectPortfolioDto.description = bulletPoints;
+      projectPortfolioDto.links = links;
+      projectPortfolioDto.tags = tags;
 
       projectsPortfolioList.push(projectPortfolioDto);
     });

@@ -4,4 +4,5 @@ export const mockTagRepository = () => ({
   delete: jest.fn(),
   findOneBy: jest.fn(),
   findTagByWorkExperiences: jest.fn(),
+  findTagByProjects: jest.fn(),
 });

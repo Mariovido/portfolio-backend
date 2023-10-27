@@ -74,7 +74,6 @@ export class PortfolioController {
     return this.portfolioService.getSkills(id);
   }
 
-  // TODO - RETOCAR
   @Get('/:id/projects')
   @ApiOperation({
     summary: 'Returns the projects of a user',

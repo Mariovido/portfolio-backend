@@ -17,7 +17,7 @@ import { SkillPortfolioDtoFactory } from '../../factories/models/dto/portfolio/s
 import { SkillPortfolioDto } from '../../../src/models/dto/portfolio/skill-portfolio.dto';
 import { ProjectPortfolioDto } from '../../../src/models/dto/portfolio/project-portfolio.dto';
 import { ProjectFactory } from '../../factories/repositories/entities/project.entity.factory';
-import { ProjectPortfolioDtoFactory } from '../../factories/models/dto/portfolio/project.dto.factory';
+import { ProjectPortfolioDtoFactory } from '../../factories/models/dto/portfolio/project-portfolio.dto.factory';
 import { Project } from '../../../src/repositories/entities/project.entity';
 import { HeaderDtoFactory } from '../../factories/models/dto/portfolio/header.dto.factory';
 import { FooterPortfolioDtoFactory } from '../../factories/models/dto/portfolio/footer-portfolio.dto.factory';

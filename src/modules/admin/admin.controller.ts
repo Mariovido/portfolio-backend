@@ -240,86 +240,82 @@ export class AdminController {
     return this.adminService.deleteWorkExperience(id, idWorkExperience, user);
   }
 
-  // TODO - RETOCAR
-  // @Get('/:id/project')
-  // @ApiOperation({
-  //   summary: 'Get projects',
-  // })
-  // @ApiResponse({ status: 200, type: [ProjectDto] })
-  // getProjects(
-  //   @Param('id') id: string,
-  //   @GetUser() user: User,
-  // ): Promise<ProjectDto[]> {
-  //   this.logger.verbose(
-  //     `User "${user.username}" getting projects. UserID: ${id}`,
-  //   );
-  //   return this.adminService.getProjects(id, user);
-  // }
+  @Get('/:id/project')
+  @ApiOperation({
+    summary: 'Get projects',
+  })
+  @ApiResponse({ status: 200, type: [ProjectDto] })
+  getProjects(
+    @Param('id') id: string,
+    @GetUser() user: User,
+  ): Promise<ProjectDto[]> {
+    this.logger.verbose(
+      `User "${user.username}" getting projects. UserID: ${id}`,
+    );
+    return this.adminService.getProjects(id, user);
+  }
 
-  // TODO - RETOCAR
-  // @Post('/:id/project')
-  // @ApiOperation({
-  //   summary: 'Creates a project',
-  // })
-  // @ApiResponse({ status: 201, type: ProjectDto })
-  // createProject(
-  //   @Param('id') id: string,
-  //   @Body() createProjectDto: CreateProjectDto,
-  //   @GetUser() user: User,
-  // ): Promise<ProjectDto> {
-  //   this.logger.verbose(
-  //     `User "${
-  //       user.username
-  //     }" creating a new project. UserID: ${id} Data: ${JSON.stringify(
-  //       createProjectDto,
-  //     )}`,
-  //   );
-  //   return this.adminService.createProject(id, createProjectDto, user);
-  // }
+  @Post('/:id/project')
+  @ApiOperation({
+    summary: 'Creates a project',
+  })
+  @ApiResponse({ status: 201, type: ProjectDto })
+  createProject(
+    @Param('id') id: string,
+    @Body() createProjectDto: CreateProjectDto,
+    @GetUser() user: User,
+  ): Promise<ProjectDto> {
+    this.logger.verbose(
+      `User "${
+        user.username
+      }" creating a new project. UserID: ${id} Data: ${JSON.stringify(
+        createProjectDto,
+      )}`,
+    );
+    return this.adminService.createProject(id, createProjectDto, user);
+  }
 
-  // TODO - RETOCAR
-  // @Put('/:id/project/:idProject')
-  // @ApiOperation({
-  //   summary: 'Updates a project',
-  // })
-  // @ApiResponse({ status: 200, type: ProjectDto })
-  // updateProject(
-  //   @Param('id') id: string,
-  //   @Param('idProject') idProject: string,
-  //   @Body() updateProjectDto: UpdateProjectDto,
-  //   @GetUser() user: User,
-  // ): Promise<ProjectDto> {
-  //   this.logger.verbose(
-  //     `User "${
-  //       user.username
-  //     }" updating a project. UserID: ${id} Data: ${JSON.stringify(
-  //       updateProjectDto,
-  //     )} ProjectID: ${idProject}`,
-  //   );
-  //   return this.adminService.updateProject(
-  //     id,
-  //     idProject,
-  //     updateProjectDto,
-  //     user,
-  //   );
-  // }
+  @Put('/:id/project/:idProject')
+  @ApiOperation({
+    summary: 'Updates a project',
+  })
+  @ApiResponse({ status: 200, type: ProjectDto })
+  updateProject(
+    @Param('id') id: string,
+    @Param('idProject') idProject: string,
+    @Body() updateProjectDto: UpdateProjectDto,
+    @GetUser() user: User,
+  ): Promise<ProjectDto> {
+    this.logger.verbose(
+      `User "${
+        user.username
+      }" updating a project. UserID: ${id} Data: ${JSON.stringify(
+        updateProjectDto,
+      )} ProjectID: ${idProject}`,
+    );
+    return this.adminService.updateProject(
+      id,
+      idProject,
+      updateProjectDto,
+      user,
+    );
+  }
 
-  // TODO - RETOCAR
-  // @Delete('/:id/project/:idProject')
-  // @ApiOperation({
-  //   summary: 'Deletes a project',
-  // })
-  // @ApiResponse({ status: 200 })
-  // deleteProject(
-  //   @Param('id') id: string,
-  //   @Param('idProject') idProject: string,
-  //   @GetUser() user: User,
-  // ): Promise<void> {
-  //   this.logger.verbose(
-  //     `User "${user.username}" deleting a project. UserID: ${id} ProjectID: ${idProject}`,
-  //   );
-  //   return this.adminService.deleteProject(id, idProject, user);
-  // }
+  @Delete('/:id/project/:idProject')
+  @ApiOperation({
+    summary: 'Deletes a project',
+  })
+  @ApiResponse({ status: 200 })
+  deleteProject(
+    @Param('id') id: string,
+    @Param('idProject') idProject: string,
+    @GetUser() user: User,
+  ): Promise<void> {
+    this.logger.verbose(
+      `User "${user.username}" deleting a project. UserID: ${id} ProjectID: ${idProject}`,
+    );
+    return this.adminService.deleteProject(id, idProject, user);
+  }
 
   @Get('/:id/skill')
   @ApiOperation({

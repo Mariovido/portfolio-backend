@@ -13,7 +13,6 @@ import { CreateProjectDtoFactory } from '../factories/models/dto/admin/create-pr
 import { UpdateResultFactory } from '../factories/database/update-result.factory';
 import { InternalServerErrorException } from '@nestjs/common';
 
-// TODO - RETOCAR
 describe('ProjectRepository', () => {
   let projectRepository: ProjectRepository;
 
@@ -51,6 +50,24 @@ describe('ProjectRepository', () => {
     mockUpdateProjectDto = UpdateProjectDtoFactory.build();
 
     mockUpdateResult = UpdateResultFactory.build({ raw: [mockProject] });
+  });
+
+  describe('findProjectsByUserIdForPortfolio', () => {
+    it('project exists on the database for the user ID', async () => {
+      mockProjectRepository.find = jest.fn().mockResolvedValue(mockProjectList);
+      const result = await projectRepository.findProjectsByUserIdForPortfolio(
+        mockUser.id,
+      );
+      expect(result).toEqual(mockProjectList);
+    });
+
+    it('project does not exist on the database for the user ID', async () => {
+      mockProjectRepository.find = jest.fn().mockResolvedValue([]);
+      const result = await projectRepository.findProjectsByUserIdForPortfolio(
+        mockUser.id,
+      );
+      expect(result).toEqual([]);
+    });
   });
 
   describe('findProjectsByUserId', () => {

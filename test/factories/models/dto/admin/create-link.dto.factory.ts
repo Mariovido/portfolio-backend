@@ -5,10 +5,12 @@ export class CreateLinkDtoFactory {
     isWorkExperience,
     isParagraph,
     isContact,
+    isProject,
   }: {
     isWorkExperience?: boolean;
     isParagraph?: boolean;
     isContact?: boolean;
+    isProject?: boolean;
   }): CreateLinkDto {
     const createLinkDto = new CreateLinkDto();
     createLinkDto.tag = 'thetag';
@@ -20,6 +22,8 @@ export class CreateLinkDtoFactory {
       createLinkDto.paragraph = '69272a58-07fd-4c07-9d9a-440ac28b70bc';
     if (isContact)
       createLinkDto.contact = '5c3b428a-8236-4187-8175-3f71fc952af9';
+    if (isProject)
+      createLinkDto.project = '5c3b428a-8236-4187-8175-3f71fc952af9';
 
     return createLinkDto;
   }
